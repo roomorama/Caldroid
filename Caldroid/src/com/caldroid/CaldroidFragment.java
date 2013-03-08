@@ -170,6 +170,26 @@ public class CaldroidFragment extends DialogFragment {
 	public void clearDisableDates() {
 		disableDates.clear();
 	}
+	
+	/**
+	 * Set disableDates from ArrayList of Date
+	 * @param disableDateList
+	 */
+	public void setDisableDates(ArrayList<Date> disableDateList) {
+		disableDates.clear();
+		if (disableDateList == null || disableDateList.size() == 0) {
+			return;
+		}
+
+		for (Date date : disableDateList) {
+			DateTime dateTime = CalendarHelper.convertDateToDateTime(date);
+			disableDates.add(dateTime);
+		}
+
+		if (datesGridAdapter != null) {
+			datesGridAdapter.notifyDataSetChanged();
+		}
+	}
 
 	/**
 	 * Set disableDates from ArrayList of String. By default, the date formatter
@@ -177,8 +197,8 @@ public class CaldroidFragment extends DialogFragment {
 	 * 
 	 * @param disableDateStrings
 	 */
-	public void setDisableDates(ArrayList<String> disableDateStrings) {
-		setDisableDates(disableDateStrings, null);
+	public void setDisableDatesFromString(ArrayList<String> disableDateStrings) {
+		setDisableDatesFromString(disableDateStrings, null);
 	}
 
 	/**
@@ -190,7 +210,7 @@ public class CaldroidFragment extends DialogFragment {
 	 * @param disableDateStrings
 	 * @param dateFormat
 	 */
-	public void setDisableDates(ArrayList<String> disableDateStrings,
+	public void setDisableDatesFromString(ArrayList<String> disableDateStrings,
 			String dateFormat) {
 		disableDates.clear();
 		if (disableDateStrings == null) {
@@ -294,6 +314,10 @@ public class CaldroidFragment extends DialogFragment {
 	 * @param minDate
 	 */
 	public void setMinDate(Date minDate) {
+		if (minDate == null) {
+			minDateTime = null;
+			return;
+		}
 		this.minDateTime = CalendarHelper.convertDateToDateTime(minDate);
 	}
 
@@ -305,6 +329,10 @@ public class CaldroidFragment extends DialogFragment {
 	 * @param dateFormat
 	 */
 	public void setMinDateFromString(String minDateString, String dateFormat) {
+		if (minDateString == null) {
+			minDateTime = null;
+			return;
+		}
 		this.minDateTime = CalendarHelper.getDateTimeFromString(minDateString,
 				dateFormat);
 	}
@@ -315,6 +343,10 @@ public class CaldroidFragment extends DialogFragment {
 	 * @param maxDate
 	 */
 	public void setMaxDate(Date maxDate) {
+		if (maxDate == null) {
+			maxDateTime = null;
+			return;
+		}
 		this.maxDateTime = CalendarHelper.convertDateToDateTime(maxDate);
 	}
 
@@ -326,6 +358,9 @@ public class CaldroidFragment extends DialogFragment {
 	 * @param dateFormat
 	 */
 	public void setMaxDateFromString(String maxDateString, String dateFormat) {
+		if (maxDateString == null) {
+			maxDateTime = null;
+		}
 		this.maxDateTime = CalendarHelper.getDateTimeFromString(maxDateString,
 				dateFormat);
 	}

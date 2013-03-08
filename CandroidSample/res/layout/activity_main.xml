@@ -14,43 +14,26 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:orientation="horizontal" >
 
         <Button
+            android:id="@+id/customize_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/select_date" />
-
+            android:text="@string/customize" />
+        
         <Button
+            android:id="@+id/show_dialog_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/enable_arrows" />
+            android:text="@string/show_dialog" />
     </LinearLayout>
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/textview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/set_min_date" />
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/set_max_date" />
-    </LinearLayout>
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/set_disabled_date" />
+        android:layout_height="wrap_content" />
 
 </LinearLayout>
