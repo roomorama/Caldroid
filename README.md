@@ -6,6 +6,12 @@ Caldroid is a fragment that display calendar with dates in a month. Caldroid can
 <img src="https://raw.github.com/thomasdao/Caldroid/master/screenshot/1.png" width="270">
 <img src="https://raw.github.com/thomasdao/Caldroid/master/screenshot/2.png" width="270">
 
+Setup
+=====
+Just clone the repo and check out the CaldroidSample to see how the library works.
+
+To use in your project, just reference the child Caldroid project as a project library. If you see JAR mismatched error, just replace your android-support-v4.jar to the jar inside Caldroid.
+
 
 Features
 ========
