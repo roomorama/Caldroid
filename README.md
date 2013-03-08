@@ -26,7 +26,7 @@ t.add(R.id.calendar1, caldroidFragment);
 t.commit();
 ```
 
-Caldroid accepts numerous argument during start up: 
+Caldroid accepts numerous arguments during start up: 
 
 ```
 int month
@@ -102,24 +102,24 @@ setShowNavigationArrows(boolean showNavigationArrows)
 Caldroid inform clients via CaldroidListener. 
 
 ```
-    CaldroidListener listener = new CaldroidListener() {
+CaldroidListener listener = new CaldroidListener() {
 
-			@Override
-			public void onSelectDate(Date date, TextView textView) {
-				Toast.makeText(getApplicationContext(), formatter.format(date),
-						Toast.LENGTH_LONG).show();
-			}
+	@Override
+	public void onSelectDate(Date date, TextView textView) {
+		Toast.makeText(getApplicationContext(), formatter.format(date),
+				Toast.LENGTH_LONG).show();
+	}
 
-			@Override
-			public void onChangeMonth(int month, int year) {
-				String text = "month: " + month + " year: " + year;
-				Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG)
-						.show();
-			}
+	@Override
+	public void onChangeMonth(int month, int year) {
+		String text = "month: " + month + " year: " + year;
+		Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG)
+				.show();
+	}
 
-		};
+};
     
-    caldroidFragment.setCaldroidListener(listener);
+caldroidFragment.setCaldroidListener(listener);
 
 ```
 
@@ -139,6 +139,14 @@ Caldroid fragment includes 4 main parts:
 4) Dates gridview: contains dates within a month, and any dates in previous/
   next month. This dates gridview is main component of this library.
   
-Caldroid fragment supports setting min/max date, selecting dates in a range, setting disabled dates, highlighting today. It includes convenient methods to  work with date and string, enable or disable the navigation arrows.
+
+Others
+======
   
 Caldroid code is simple and clean partly because of powerful JODA DateTime library!
+
+
+License
+=======
+See LICENSE.md
+
