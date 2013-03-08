@@ -1,4 +1,4 @@
 Caldroid
 ========
 
-A better calendar for Android
+Calendar library for Android
