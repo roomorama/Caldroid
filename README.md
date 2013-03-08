@@ -2,9 +2,11 @@ Caldroid
 ========
 
 Caldroid is a fragment that display calendar with dates in a month. Caldroid can be used as embedded fragment, or as dialog fragment.
-![Screenshot 1](https://raw.github.com/thomasdao/Caldroid/master/screenshot/1.png)
-![Screenshot 2](https://raw.github.com/thomasdao/Caldroid/master/screenshot/2.png)
-  
+
+<img src="https://raw.github.com/thomasdao/Caldroid/master/screenshot/1.png" width="150">
+<img src="https://raw.github.com/thomasdao/Caldroid/master/screenshot/2.png" width="150">
+
+
 Caldroid fragment includes 4 main parts:
   
 1) Month title view: show the month and year (e.g MARCH, 2013)
