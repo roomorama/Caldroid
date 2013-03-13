@@ -25,6 +25,7 @@
             android:layout_toLeftOf="@+id/calendar_right_arrow"
             android:layout_toRightOf="@+id/calendar_left_arrow"
             android:gravity="center_horizontal"
+            android:textIsSelectable="true"
             android:textSize="24sp" />
 
         <Button
@@ -41,7 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/calendar_title_view"
-        android:layout_marginTop="-7dp"
+        android:layout_marginTop="-15dp"
         android:numColumns="7"
         android:stretchMode="columnWidth" >
     </GridView>
@@ -51,7 +52,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/weekday_gridview"
-        android:layout_marginTop="-7dp"
+        android:layout_marginTop="-10dp"
         android:adjustViewBounds="true"
         android:background="@color/caldroid_lighter_gray"
         android:gravity="center_horizontal"
@@ -59,7 +60,6 @@
         android:numColumns="7"
         android:padding="1dp"
         android:stretchMode="columnWidth"
-        android:verticalSpacing="1dp" >
-    </GridView>
+        android:verticalSpacing="1dp" />
 
 </RelativeLayout>
