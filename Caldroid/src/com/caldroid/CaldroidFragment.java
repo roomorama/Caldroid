@@ -13,7 +13,6 @@ import org.joda.time.format.DateTimeFormatter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.util.TypedValue;
@@ -61,13 +60,13 @@ public class CaldroidFragment extends DialogFragment {
 	/**
 	 * To customize the selected background drawable and text color
 	 */
-	public static Drawable selectedBackgroundDrawable;
+	public static int selectedBackgroundDrawable;
 	public static int selectedTextColor = Color.BLACK;
 
 	/**
 	 * To customize the disabled background drawable and text color
 	 */
-	public static Drawable disabledBackgroundDrawable;
+	public static int disabledBackgroundDrawable = -1;
 	public static int disabledTextColor = Color.GRAY;
 
 	/**

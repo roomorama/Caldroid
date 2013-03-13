@@ -81,6 +81,7 @@ public class CaldroidGridAdapter extends BaseAdapter {
 		if (convertView == null) {
 			cellView = (TextView) inflater.inflate(R.layout.date_cell, null);
 		}
+
 		DateTime dateTime = this.datetimeList.get(position);
 		Resources resources = context.getResources();
 
@@ -92,8 +93,7 @@ public class CaldroidGridAdapter extends BaseAdapter {
 
 		// Customize for today
 		if (dateTime.equals(getToday())) {
-			cellView.setBackground(resources.getDrawable(R.drawable.red_border));
-			cellView.setPadding(0, 30, 0, 30);
+			cellView.setBackgroundResource(R.drawable.red_border);
 		}
 
 		// Customize for disabled dates and date outside min/max dates
@@ -102,25 +102,22 @@ public class CaldroidGridAdapter extends BaseAdapter {
 				|| (disableDates != null && disableDates.indexOf(dateTime) != -1)) {
 
 			cellView.setTextColor(CaldroidFragment.disabledTextColor);
-			if (CaldroidFragment.disabledBackgroundDrawable == null) {
-				cellView.setBackground(resources
-						.getDrawable(R.drawable.disable_cell));
+			if (CaldroidFragment.disabledBackgroundDrawable == -1) {
+				cellView.setBackgroundResource(R.drawable.disable_cell);
 			} else {
-				cellView.setBackground(CaldroidFragment.disabledBackgroundDrawable);
+				cellView.setBackgroundResource(CaldroidFragment.disabledBackgroundDrawable);
 			}
 
 			if (dateTime.equals(getToday())) {
-				cellView.setBackground(resources
-						.getDrawable(R.drawable.red_border_gray_bg));
+				cellView.setBackgroundResource(R.drawable.red_border_gray_bg);
 			}
 
-			cellView.setPadding(0, 30, 0, 30);
 		}
 
 		// Customize for selected dates
 		if (selectedDates != null && selectedDates.indexOf(dateTime) != -1) {
-			if (CaldroidFragment.selectedBackgroundDrawable != null) {
-				cellView.setBackground(CaldroidFragment.selectedBackgroundDrawable);
+			if (CaldroidFragment.selectedBackgroundDrawable != -1) {
+				cellView.setBackgroundResource(CaldroidFragment.selectedBackgroundDrawable);
 			} else {
 				cellView.setBackgroundColor(resources
 						.getColor(R.color.caldroid_sky_blue));
@@ -128,7 +125,6 @@ public class CaldroidGridAdapter extends BaseAdapter {
 
 			cellView.setTextColor(CaldroidFragment.selectedTextColor);
 
-			cellView.setPadding(0, 30, 0, 30);
 		}
 
 		cellView.setText("" + dateTime.getDayOfMonth());
