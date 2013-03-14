@@ -407,8 +407,7 @@ public class CaldroidFragment extends DialogFragment {
 						return;
 					}
 
-					caldroidListener.onSelectDate(dateTime.toDate(),
-							(TextView) view);
+					caldroidListener.onSelectDate(dateTime.toDate(), view);
 				}
 			}
 

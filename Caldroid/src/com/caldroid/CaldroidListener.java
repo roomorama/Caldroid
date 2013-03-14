@@ -2,7 +2,7 @@ package com.caldroid;
 
 import java.util.Date;
 
-import android.widget.TextView;
+import android.view.View;
 
 /**
  * CaldroidListener inform when user clicks on a valid date (not within disabled
@@ -15,7 +15,7 @@ import android.widget.TextView;
  * 
  */
 public abstract class CaldroidListener {
-	public abstract void onSelectDate(Date date, TextView textView);
+	public abstract void onSelectDate(Date date, View view);
 
 	public void onChangeMonth(int month, int year) {
 		// Do nothing
