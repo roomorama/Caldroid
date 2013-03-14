@@ -130,6 +130,38 @@ caldroidFragment.setCaldroidListener(listener);
 ```
 
 
+##Allow customized cell for the dates gridView
+
+Caldroid provides flexible API to supply your own cell view. What you have to do is:
+
+1) Create your own cell view layout in your project
+
+2) Subclass CaldroidGridAdapter and override ```getView(int position, View convertView, ViewGroup parent)```. See CaldroidSampleCustomAdapter.java for more detail. Here you can customize everything: layout, text color, background for different states (normal, disable, selected)
+
+3) Subclass CaldroidFragment to use your custom adapter instead of the default CaldroidGridAdapter. This is simplest step:
+
+```
+public class CaldroidSampleCustomFragment extends CaldroidFragment {
+
+	@Override
+	public CaldroidGridAdapter getNewDatesGridAdapter() {
+		// TODO Auto-generated method stub
+		return new CaldroidSampleCustomAdapter(getActivity(), month, year, disableDates, selectedDates, minDateTime, maxDateTime);
+	}
+
+}
+```
+
+4) Use your new customized fragment in your project instead of the default CaldroidFragment.
+
+To see how it works, you can uncomment this line in CaldroidSampleActivity
+
+```
+// final CaldroidSampleCustomFragment caldroidFragment = new CaldroidSampleCustomFragment();
+```
+
+
+
 Basic Structure
 ===============
 
