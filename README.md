@@ -111,7 +111,7 @@ Caldroid inform clients via CaldroidListener.
 CaldroidListener listener = new CaldroidListener() {
 
 	@Override
-	public void onSelectDate(Date date, TextView textView) {
+	public void onSelectDate(Date date, View view) {
 		Toast.makeText(getApplicationContext(), formatter.format(date),
 				Toast.LENGTH_LONG).show();
 	}
