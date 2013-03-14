@@ -38,7 +38,7 @@ public class CaldroidSampleActivity extends FragmentActivity {
 		caldroidFragment.setArguments(args);
 
 		FragmentTransaction t = getSupportFragmentManager().beginTransaction();
-		t.add(R.id.calendar1, caldroidFragment);
+		t.replace(R.id.calendar1, caldroidFragment);
 		t.commit();
 
 		// Setup listener
