@@ -20,16 +20,16 @@ import android.widget.TextView;
  * 
  */
 public class CaldroidGridAdapter extends BaseAdapter {
-	private ArrayList<DateTime> datetimeList;
-	private int month;
-	private int year;
-	private Context context;
-	private ArrayList<DateTime> disableDates;
-	private ArrayList<DateTime> selectedDates;
-	private DateTime minDateTime;
-	private DateTime maxDateTime;
+	protected ArrayList<DateTime> datetimeList;
+	protected int month;
+	protected int year;
+	protected Context context;
+	protected ArrayList<DateTime> disableDates;
+	protected ArrayList<DateTime> selectedDates;
+	protected DateTime minDateTime;
+	protected DateTime maxDateTime;
 
-	private DateTime today;
+	protected DateTime today;
 
 	public CaldroidGridAdapter(Context context, int month, int year,
 			ArrayList<DateTime> disableDates,
@@ -46,7 +46,7 @@ public class CaldroidGridAdapter extends BaseAdapter {
 		this.datetimeList = CalendarHelper.getFullWeeks(this.month, this.year);
 	}
 
-	private DateTime getToday() {
+	protected DateTime getToday() {
 		if (today == null) {
 			today = CalendarHelper.convertDateToDateTime(new Date());
 		}
@@ -81,7 +81,8 @@ public class CaldroidGridAdapter extends BaseAdapter {
 		if (convertView == null) {
 			cellView = (TextView) inflater.inflate(R.layout.date_cell, null);
 		}
-
+		
+		// Get dateTime of this cell
 		DateTime dateTime = this.datetimeList.get(position);
 		Resources resources = context.getResources();
 

@@ -30,7 +30,14 @@ public class CaldroidSampleActivity extends FragmentActivity {
 		final SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
 
 		// Setup caldroid fragment
+		// **** If you want normal CaldroidFragment, use below line ****
 		final CaldroidFragment caldroidFragment = new CaldroidFragment();
+
+		// This is to show customized fragment
+		// **** If you want customized version, uncomment below line ****
+		// final CaldroidSampleCustomFragment caldroidFragment = new CaldroidSampleCustomFragment();
+		
+		// Setup arguments
 		Bundle args = new Bundle();
 		Calendar cal = Calendar.getInstance();
 		args.putInt("month", cal.get(Calendar.MONTH) + 1);
@@ -75,7 +82,7 @@ public class CaldroidSampleActivity extends FragmentActivity {
 				if (undo) {
 					customizeButton.setText(getString(R.string.customize));
 					textView.setText("");
-					
+
 					// Reset calendar
 					caldroidFragment.clearDisableDates();
 					caldroidFragment.clearSelectedDates();
@@ -86,7 +93,7 @@ public class CaldroidSampleActivity extends FragmentActivity {
 					undo = false;
 					return;
 				}
-				
+
 				// Else
 				undo = true;
 				customizeButton.setText(getString(R.string.undo));

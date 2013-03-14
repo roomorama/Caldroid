@@ -60,7 +60,7 @@ public class CaldroidFragment extends DialogFragment {
 	/**
 	 * To customize the selected background drawable and text color
 	 */
-	public static int selectedBackgroundDrawable;
+	public static int selectedBackgroundDrawable = -1;
 	public static int selectedTextColor = Color.BLACK;
 
 	/**
@@ -86,13 +86,13 @@ public class CaldroidFragment extends DialogFragment {
 	/**
 	 * Initial data
 	 */
-	private int month = -1;
-	private int year = -1;
-	private ArrayList<DateTime> disableDates = new ArrayList<DateTime>();
-	private ArrayList<DateTime> selectedDates = new ArrayList<DateTime>();
-	private DateTime minDateTime;
-	private DateTime maxDateTime;
-	private boolean showNavigationArrows = true;
+	protected int month = -1;
+	protected int year = -1;
+	protected ArrayList<DateTime> disableDates = new ArrayList<DateTime>();
+	protected ArrayList<DateTime> selectedDates = new ArrayList<DateTime>();
+	protected DateTime minDateTime;
+	protected DateTime maxDateTime;
+	protected boolean showNavigationArrows = true;
 
 	/**
 	 * For Listener
@@ -108,7 +108,17 @@ public class CaldroidFragment extends DialogFragment {
 	public CaldroidGridAdapter getDatesGridAdapter() {
 		return datesGridAdapter;
 	}
-
+	
+	/**
+	 * Meant to be subclassed. User who wants to provide custom view,
+	 * need to provide custom adapter here
+	 */
+	public CaldroidGridAdapter getNewDatesGridAdapter() {
+		return new CaldroidGridAdapter(getActivity(), month, year,
+				disableDates, selectedDates, minDateTime, maxDateTime);
+	}
+	
+	
 	/**
 	 * For client to customize the date gridview
 	 * 
@@ -414,8 +424,7 @@ public class CaldroidFragment extends DialogFragment {
 		monthTitleTextView.setText(new DateTime(year, month, 1, 0, 0)
 				.monthOfYear().getAsText().toUpperCase()
 				+ " " + year);
-		datesGridAdapter = new CaldroidGridAdapter(getActivity(), month, year,
-				disableDates, selectedDates, minDateTime, maxDateTime);
+		datesGridAdapter = getNewDatesGridAdapter();
 
 		datesGridView.setAdapter(datesGridAdapter);
 		datesGridView.setOnItemClickListener(getDateItemClickListener());
