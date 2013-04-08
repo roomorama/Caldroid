@@ -1,7 +1,7 @@
 Caldroid
 ========
 
-Caldroid is a fragment that display calendar with dates in a month. Caldroid can be used as embedded fragment, or as dialog fragment.
+Caldroid is a fragment that display calendar with dates in a month. Caldroid can be used as embedded fragment, or as dialog fragment. User can also swipe left/right to navigate to different months.
 
 <img src="https://raw.github.com/thomasdao/Caldroid/master/screenshot/1.png" width="270">
 <img src="https://raw.github.com/thomasdao/Caldroid/master/screenshot/2.png" width="270">
@@ -10,7 +10,7 @@ Setup
 =====
 Just clone the repo and check out the CaldroidSample to see how the library works.
 
-To use in your project, just reference the child Caldroid project as a project library. If you see JAR mismatched error, just replace your android-support-v4.jar to the jar inside Caldroid.
+To use in your project, just reference the child Caldroid project as a project library. If you see JAR mismatched error, just replace your android-support-v4.jar to the jar inside Caldroid. Make sure you compile the project against Android 4.2 and above. This is to allow nested fragment. See more at http://developer.android.com/about/versions/android-4.2.html#NestedFragments
 
 
 Features
@@ -43,6 +43,7 @@ ArrayList<String> disableDates
 ArrayList<String> selectedDates
 String minDate
 String maxDate with yyyy-MM-dd format
+boolean enableSwipe
 ```
 
 
@@ -102,6 +103,11 @@ To show/hide the navigation arrows:
 setShowNavigationArrows(boolean showNavigationArrows)
 ```
 
+To enable / disable swipe:
+
+```
+setEnableSwipe(boolean enableSwipe)
+```
 
 ##Allow user to select a date and inform listener
 
@@ -144,7 +150,7 @@ Caldroid provides flexible API to supply your own cell view. What you have to do
 public class CaldroidSampleCustomFragment extends CaldroidFragment {
 
 	@Override
-	public CaldroidGridAdapter getNewDatesGridAdapter() {
+	public CaldroidGridAdapter getNewDatesGridAdapter(int month, int year) {
 		// TODO Auto-generated method stub
 		return new CaldroidSampleCustomAdapter(getActivity(), month, year, disableDates, selectedDates, minDateTime, maxDateTime);
 	}
@@ -174,8 +180,9 @@ Caldroid fragment includes 4 main parts:
 3) Weekday gridview: contains only 1 row and 7 columns. To display
   "SUN, MON, TUE, WED, THU, FRI, SAT"
   
-4) Dates gridview: contains dates within a month, and any dates in previous/
-  next month. This dates gridview is main component of this library.
+4) An infinite view pager that allow user to swipe left/right to change month. This library is taken from https://github.com/antonyt/InfiniteViewPager
+
+This infinite view pager recycles 4 fragment, each fragment contains a gridview with 7 columns to display the dates in month. Whenever user swipes different screen, the date grid views are updated.
   
 
 Others

@@ -53,10 +53,8 @@ public class CaldroidSampleCustomAdapter extends CaldroidGridAdapter {
 					.getColor(com.caldroid.R.color.caldroid_darker_gray));
 		}
 
-		// Customize for today
-		if (dateTime.equals(getToday())) {
-			cellView.setBackgroundResource(com.caldroid.R.drawable.red_border);
-		}
+		boolean shouldResetDiabledView = false;
+		boolean shouldResetSelectedView = false;
 
 		// Customize for disabled dates and date outside min/max dates
 		if ((minDateTime != null && dateTime.isBefore(minDateTime))
@@ -74,6 +72,8 @@ public class CaldroidSampleCustomAdapter extends CaldroidGridAdapter {
 				cellView.setBackgroundResource(com.caldroid.R.drawable.red_border_gray_bg);
 			}
 
+		} else {
+			shouldResetDiabledView = true;
 		}
 
 		// Customize for selected dates
@@ -87,6 +87,17 @@ public class CaldroidSampleCustomAdapter extends CaldroidGridAdapter {
 
 			tv1.setTextColor(CaldroidFragment.selectedTextColor);
 
+		} else {
+			shouldResetSelectedView = true;
+		}
+
+		if (shouldResetDiabledView && shouldResetSelectedView) {
+			// Customize for today
+			if (dateTime.equals(getToday())) {
+				cellView.setBackgroundResource(com.caldroid.R.drawable.red_border);
+			} else {
+				cellView.setBackgroundResource(com.caldroid.R.drawable.cell_bg);
+			}			
 		}
 
 		tv1.setText("" + dateTime.getDayOfMonth());

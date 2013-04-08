@@ -35,13 +35,14 @@ public class CaldroidSampleActivity extends FragmentActivity {
 
 		// This is to show customized fragment
 		// **** If you want customized version, uncomment below line ****
-		// final CaldroidSampleCustomFragment caldroidFragment = new CaldroidSampleCustomFragment();
+//		final CaldroidSampleCustomFragment caldroidFragment = new CaldroidSampleCustomFragment();
 		
 		// Setup arguments
 		Bundle args = new Bundle();
 		Calendar cal = Calendar.getInstance();
 		args.putInt("month", cal.get(Calendar.MONTH) + 1);
 		args.putInt("year", cal.get(Calendar.YEAR));
+		args.putBoolean("enableSwipe", true);
 		caldroidFragment.setArguments(args);
 
 		FragmentTransaction t = getSupportFragmentManager().beginTransaction();
@@ -89,6 +90,7 @@ public class CaldroidSampleActivity extends FragmentActivity {
 					caldroidFragment.setMinDate(null);
 					caldroidFragment.setMaxDate(null);
 					caldroidFragment.setShowNavigationArrows(true);
+					caldroidFragment.setEnableSwipe(true);
 					caldroidFragment.refreshView();
 					undo = false;
 					return;
@@ -133,6 +135,7 @@ public class CaldroidSampleActivity extends FragmentActivity {
 				caldroidFragment.setDisableDates(disabledDates);
 				caldroidFragment.setSelectedDates(fromDate, toDate);
 				caldroidFragment.setShowNavigationArrows(false);
+				caldroidFragment.setEnableSwipe(false);
 				caldroidFragment.refreshView();
 
 				String text = "Today: " + formatter.format(new Date()) + "\n";
@@ -142,7 +145,7 @@ public class CaldroidSampleActivity extends FragmentActivity {
 						+ "\n";
 				text += "Select To Date: " + formatter.format(toDate) + "\n";
 				for (Date date : disabledDates) {
-					text += "Max Date: " + formatter.format(date) + "\n";
+					text += "Disabled Date: " + formatter.format(date) + "\n";
 				}
 
 				textView.setText(text);

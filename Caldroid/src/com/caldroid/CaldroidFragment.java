@@ -15,6 +15,8 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -27,6 +29,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
+
+import com.antonyt.infiniteviewpager.InfinitePagerAdapter;
+import com.antonyt.infiniteviewpager.InfiniteViewPager;
 
 /**
  * Caldroid is a fragment that display calendar with dates in a month. Caldroid
@@ -41,12 +46,18 @@ import android.widget.TextView;
  * 3) Weekday gridview: contains only 1 row and 7 columns. To display
  * "SUN, MON, TUE, WED, THU, FRI, SAT"
  * 
- * 4) Dates gridview: contains dates within a month, and any dates in previous/
- * next month. This dates gridview is main component of this library.
+ * 4) An infinite view pager that allow user to swipe left/right to change
+ * month. This library is taken from
+ * https://github.com/antonyt/InfiniteViewPager
+ * 
+ * This infinite view pager recycles 4 fragment, each fragment contains a grid
+ * view with 7 columns to display the dates in month. Whenever user swipes
+ * different screen, the date grid views are updated.
  * 
  * Caldroid fragment supports setting min/max date, selecting dates in a range,
  * setting disabled dates, highlighting today. It includes convenient methods to
- * work with date and string, enable or disable the navigation arrows.
+ * work with date and string, enable or disable the navigation arrows. User can
+ * also swipe left/right to change months.
  * 
  * Caldroid code is simple and clean partly because of powerful JODA DateTime
  * library!
@@ -57,11 +68,14 @@ import android.widget.TextView;
 
 @SuppressLint("DefaultLocale")
 public class CaldroidFragment extends DialogFragment {
+	private String TAG = "CaldroidFragment";
 	/**
 	 * To customize the selected background drawable and text color
 	 */
 	public static int selectedBackgroundDrawable = -1;
 	public static int selectedTextColor = Color.BLACK;
+
+	public final static int NUMBER_OF_PAGES = 4;
 
 	/**
 	 * To customize the disabled background drawable and text color
@@ -76,12 +90,8 @@ public class CaldroidFragment extends DialogFragment {
 	private Button rightArrowButton;
 	private TextView monthTitleTextView;
 	private GridView weekdayGridView;
-	private GridView datesGridView;
-
-	/**
-	 * Adapter to dates gridview
-	 */
-	private CaldroidGridAdapter datesGridAdapter;
+	private InfiniteViewPager dateViewPager;
+	private DatePageChangeListener pageChangeListener;
 
 	/**
 	 * Initial data
@@ -92,40 +102,37 @@ public class CaldroidFragment extends DialogFragment {
 	protected ArrayList<DateTime> selectedDates = new ArrayList<DateTime>();
 	protected DateTime minDateTime;
 	protected DateTime maxDateTime;
+	protected ArrayList<DateTime> dateInMonthsList;
+
+	/**
+	 * datePagerAdapters hold 4 adapters, meant to be reused
+	 */
+	protected ArrayList<CaldroidGridAdapter> datePagerAdapters = new ArrayList<CaldroidGridAdapter>();
+
+	/**
+	 * To control the navigation
+	 */
+	protected boolean enableSwipe = true;
 	protected boolean showNavigationArrows = true;
 
 	/**
-	 * For Listener
+	 * dateItemClickListener is fired when user click on the date cell
 	 */
 	private OnItemClickListener dateItemClickListener;
+
+	/**
+	 * caldroidListener inform library client of the event happens inside
+	 * Caldroid
+	 */
 	private CaldroidListener caldroidListener;
 
 	/**
-	 * Return the adapter of the dates gridview
-	 * 
-	 * @return
+	 * Meant to be subclassed. User who wants to provide custom view, need to
+	 * provide custom adapter here
 	 */
-	public CaldroidGridAdapter getDatesGridAdapter() {
-		return datesGridAdapter;
-	}
-	
-	/**
-	 * Meant to be subclassed. User who wants to provide custom view,
-	 * need to provide custom adapter here
-	 */
-	public CaldroidGridAdapter getNewDatesGridAdapter() {
+	public CaldroidGridAdapter getNewDatesGridAdapter(int month, int year) {
 		return new CaldroidGridAdapter(getActivity(), month, year,
 				disableDates, selectedDates, minDateTime, maxDateTime);
-	}
-	
-	
-	/**
-	 * For client to customize the date gridview
-	 * 
-	 * @return
-	 */
-	public GridView getDatesGridView() {
-		return datesGridView;
 	}
 
 	/**
@@ -145,31 +152,33 @@ public class CaldroidFragment extends DialogFragment {
 	 * @param date
 	 */
 	public void setMonthYearFromDate(Date date) {
-		DateTime dateTime = new DateTime(date);
+		setMonthYearFromDateTime(new DateTime(date));
+	}
+
+	public void setMonthYearFromDateTime(DateTime dateTime) {
 		month = dateTime.getMonthOfYear();
 		year = dateTime.getYear();
+
+		// Notify listener
+		if (caldroidListener != null) {
+			caldroidListener.onChangeMonth(month, year);
+		}
+
+		refreshView();
 	}
 
 	/**
 	 * Set calendar to previous month
 	 */
-	private void prevMonth() {
-		DateTime dateTime = new DateTime(year, month, 1, 0, 0);
-		dateTime = dateTime.minusMonths(1);
-		month = dateTime.getMonthOfYear();
-		year = dateTime.getYear();
-		refreshView();
+	public void prevMonth() {
+		dateViewPager.setCurrentItem(pageChangeListener.getCurrentPage() - 1);
 	}
 
 	/**
 	 * Set calendar to next month
 	 */
-	private void nextMonth() {
-		DateTime dateTime = new DateTime(year, month, 1, 0, 0);
-		dateTime = dateTime.plusMonths(1);
-		month = dateTime.getMonthOfYear();
-		year = dateTime.getYear();
-		refreshView();
+	public void nextMonth() {
+		dateViewPager.setCurrentItem(pageChangeListener.getCurrentPage() + 1);
 	}
 
 	/**
@@ -179,9 +188,10 @@ public class CaldroidFragment extends DialogFragment {
 	public void clearDisableDates() {
 		disableDates.clear();
 	}
-	
+
 	/**
 	 * Set disableDates from ArrayList of Date
+	 * 
 	 * @param disableDateList
 	 */
 	public void setDisableDates(ArrayList<Date> disableDateList) {
@@ -195,9 +205,6 @@ public class CaldroidFragment extends DialogFragment {
 			disableDates.add(dateTime);
 		}
 
-		if (datesGridAdapter != null) {
-			datesGridAdapter.notifyDataSetChanged();
-		}
 	}
 
 	/**
@@ -230,10 +237,6 @@ public class CaldroidFragment extends DialogFragment {
 			DateTime dateTime = CalendarHelper.getDateTimeFromString(
 					dateString, dateFormat);
 			disableDates.add(dateTime);
-		}
-
-		if (datesGridAdapter != null) {
-			datesGridAdapter.notifyDataSetChanged();
 		}
 	}
 
@@ -318,6 +321,20 @@ public class CaldroidFragment extends DialogFragment {
 	}
 
 	/**
+	 * Enable / Disable swipe to navigate different months
+	 * 
+	 * @return
+	 */
+	public boolean isEnableSwipe() {
+		return enableSwipe;
+	}
+
+	public void setEnableSwipe(boolean enableSwipe) {
+		this.enableSwipe = enableSwipe;
+		dateViewPager.setEnabled(enableSwipe);
+	}
+
+	/**
 	 * Set min date. This method does not refresh view
 	 * 
 	 * @param minDate
@@ -325,9 +342,9 @@ public class CaldroidFragment extends DialogFragment {
 	public void setMinDate(Date minDate) {
 		if (minDate == null) {
 			minDateTime = null;
-			return;
+		} else {
+			minDateTime = CalendarHelper.convertDateToDateTime(minDate);
 		}
-		this.minDateTime = CalendarHelper.convertDateToDateTime(minDate);
 	}
 
 	/**
@@ -339,11 +356,11 @@ public class CaldroidFragment extends DialogFragment {
 	 */
 	public void setMinDateFromString(String minDateString, String dateFormat) {
 		if (minDateString == null) {
-			minDateTime = null;
-			return;
+			setMinDate(null);
+		} else {
+			minDateTime = CalendarHelper.getDateTimeFromString(minDateString,
+					dateFormat);
 		}
-		this.minDateTime = CalendarHelper.getDateTimeFromString(minDateString,
-				dateFormat);
 	}
 
 	/**
@@ -354,9 +371,9 @@ public class CaldroidFragment extends DialogFragment {
 	public void setMaxDate(Date maxDate) {
 		if (maxDate == null) {
 			maxDateTime = null;
-			return;
+		} else {
+			maxDateTime = CalendarHelper.convertDateToDateTime(maxDate);
 		}
-		this.maxDateTime = CalendarHelper.convertDateToDateTime(maxDate);
 	}
 
 	/**
@@ -368,10 +385,11 @@ public class CaldroidFragment extends DialogFragment {
 	 */
 	public void setMaxDateFromString(String maxDateString, String dateFormat) {
 		if (maxDateString == null) {
-			maxDateTime = null;
+			setMaxDate(null);
+		} else {
+			maxDateTime = CalendarHelper.getDateTimeFromString(maxDateString,
+					dateFormat);
 		}
-		this.maxDateTime = CalendarHelper.getDateTimeFromString(maxDateString,
-				dateFormat);
 	}
 
 	/**
@@ -390,13 +408,12 @@ public class CaldroidFragment extends DialogFragment {
 	 * @return
 	 */
 	private OnItemClickListener getDateItemClickListener() {
-		final ArrayList<DateTime> dateTimes = CalendarHelper.getFullWeeks(
-				month, year);
 		dateItemClickListener = new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				DateTime dateTime = dateTimes.get(position);
+
+				DateTime dateTime = dateInMonthsList.get(position);
 
 				if (caldroidListener != null) {
 					if ((minDateTime != null && dateTime.isBefore(minDateTime))
@@ -410,8 +427,8 @@ public class CaldroidFragment extends DialogFragment {
 					caldroidListener.onSelectDate(dateTime.toDate(), view);
 				}
 			}
-
 		};
+
 		return dateItemClickListener;
 	}
 
@@ -420,13 +437,19 @@ public class CaldroidFragment extends DialogFragment {
 	 * parameters first, then call this method.
 	 */
 	public void refreshView() {
+		// Refresh title view
 		monthTitleTextView.setText(new DateTime(year, month, 1, 0, 0)
 				.monthOfYear().getAsText().toUpperCase()
 				+ " " + year);
-		datesGridAdapter = getNewDatesGridAdapter();
 
-		datesGridView.setAdapter(datesGridAdapter);
-		datesGridView.setOnItemClickListener(getDateItemClickListener());
+		// Refresh the date grid views
+		for (CaldroidGridAdapter adapter : datePagerAdapters) {
+			adapter.setMinDateTime(minDateTime);
+			adapter.setMaxDateTime(maxDateTime);
+			adapter.setDisableDates(disableDates);
+			adapter.setSelectedDates(selectedDates);
+			adapter.notifyDataSetChanged();
+		}
 	}
 
 	/**
@@ -449,6 +472,9 @@ public class CaldroidFragment extends DialogFragment {
 			// Should show arrow
 			showNavigationArrows = args
 					.getBoolean("showNavigationArrows", true);
+
+			// Should enable swipe to change month
+			enableSwipe = args.getBoolean("enableSwipe", true);
 
 			DateTimeFormatter formatter = DateTimeFormat
 					.forPattern("yyyy-MM-dd");
@@ -536,42 +562,125 @@ public class CaldroidFragment extends DialogFragment {
 		rightArrowButton = (Button) view
 				.findViewById(R.id.calendar_right_arrow);
 
+		// Navigate to previous month when user click
 		leftArrowButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				prevMonth();
-				if (caldroidListener != null) {
-					caldroidListener.onChangeMonth(month, year);
-				}
 			}
 		});
 
+		// Navigate to next month when user click
 		rightArrowButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				nextMonth();
-				if (caldroidListener != null) {
-					caldroidListener.onChangeMonth(month, year);
-				}
 			}
 		});
 
+		// Show navigation arrows depend on initial arguments
 		setShowNavigationArrows(showNavigationArrows);
 
-		// For the weekday gridview
+		// For the weekday gridview ("SUN, MON, TUE, WED, THU, FRI, SAT")
 		weekdayGridView = (GridView) view.findViewById(R.id.weekday_gridview);
 		WeekdayArrayAdapter weekdaysAdapter = new WeekdayArrayAdapter(
 				getActivity(), android.R.layout.simple_list_item_1,
 				getDaysOfWeek());
 		weekdayGridView.setAdapter(weekdaysAdapter);
 
-		// For the dates gridview
-		datesGridView = (GridView) view.findViewById(R.id.calendar_gridview);
+		// Setup all the pages of date grid views. These pages are recycled
+		setupDateGridPages(view);
+
+		// Refresh view
 		refreshView();
 
 		return view;
+	}
+
+	/**
+	 * Setup 4 pages contain date grid views. These pages are recycled to use
+	 * memory efficient
+	 * 
+	 * @param view
+	 */
+	private void setupDateGridPages(View view) {
+		// Get current date time
+		DateTime currentDateTime = new DateTime(year, month, 1, 0, 0, 0);
+		dateInMonthsList = CalendarHelper.getFullWeeks(month, year);
+
+		// Set to pageChangeListener
+		pageChangeListener = new DatePageChangeListener();
+		pageChangeListener.setCurrentDateTime(currentDateTime);
+
+		// Setup adapters for the grid views
+		// Current month
+		CaldroidGridAdapter adapter0 = getNewDatesGridAdapter(
+				currentDateTime.getMonthOfYear(), currentDateTime.getYear());
+
+		// Next month
+		DateTime nextDateTime = currentDateTime.plusMonths(1);
+		CaldroidGridAdapter adapter1 = getNewDatesGridAdapter(
+				nextDateTime.getMonthOfYear(), nextDateTime.getYear());
+
+		// Next 2 month
+		DateTime next2DateTime = nextDateTime.plusMonths(1);
+		CaldroidGridAdapter adapter2 = getNewDatesGridAdapter(
+				next2DateTime.getMonthOfYear(), next2DateTime.getYear());
+
+		// Previous month
+		DateTime prevDateTime = currentDateTime.minusMonths(1);
+		CaldroidGridAdapter adapter3 = getNewDatesGridAdapter(
+				prevDateTime.getMonthOfYear(), prevDateTime.getYear());
+
+		// Add to the array of adapters
+		datePagerAdapters.add(adapter0);
+		datePagerAdapters.add(adapter1);
+		datePagerAdapters.add(adapter2);
+		datePagerAdapters.add(adapter3);
+
+		// Set adapters to the pageChangeListener so it can refresh the adapter
+		// when page change
+		pageChangeListener.setCaldroidGridAdapters(datePagerAdapters);
+
+		// Setup InfiniteViewPager and InfinitePagerAdapter. The
+		// InfinitePagerAdapter is responsible
+		// for reuse the fragments
+		dateViewPager = (InfiniteViewPager) view
+				.findViewById(R.id.months_infinite_pager);
+
+		// Set enable swipe
+		dateViewPager.setEnabled(enableSwipe);
+
+		// Set current page
+		pageChangeListener.setCurrentPage(dateViewPager.getOffsetAmount());
+
+		// MonthPagerAdapter actually provides 4 real fragments. The
+		// InfinitePagerAdapter only recycles fragment provided by this
+		// MonthPagerAdapter
+		final MonthPagerAdapter pagerAdapter = new MonthPagerAdapter(
+				getChildFragmentManager());
+
+		// Provide initial data to the fragments, before they are attached to
+		// view.
+		ArrayList<DateGridFragment> fragments = pagerAdapter.getFragments();
+		for (int i = 0; i < NUMBER_OF_PAGES; i++) {
+			DateGridFragment dateGridFragment = fragments.get(i);
+			CaldroidGridAdapter adapter = datePagerAdapters.get(i);
+			dateGridFragment.setGridAdapter(adapter);
+			dateGridFragment.setOnItemClickListener(getDateItemClickListener());
+		}
+
+		// Setup InfinitePagerAdapter to wrap around MonthPagerAdapter
+		InfinitePagerAdapter infinitePagerAdapter = new InfinitePagerAdapter(
+				pagerAdapter);
+
+		// Use the infinitePagerAdapter to provide data for dateViewPager
+		dateViewPager.setAdapter(infinitePagerAdapter);
+
+		// Setup pageChangeListener
+		dateViewPager.setOnPageChangeListener(pageChangeListener);
 	}
 
 	/**
@@ -593,6 +702,144 @@ public class CaldroidFragment extends DialogFragment {
 			}
 		}
 		return list;
+	}
+
+	/**
+	 * DatePageChangeListener refresh the date grid views when user swipe the
+	 * calendar
+	 * 
+	 * @author thomasdao
+	 * 
+	 */
+	public class DatePageChangeListener implements OnPageChangeListener {
+		private int currentPage;
+		private DateTime currentDateTime;
+		private ArrayList<CaldroidGridAdapter> caldroidGridAdapters;
+
+		/**
+		 * Return currentPage of the dateViewPager
+		 * 
+		 * @return
+		 */
+		public int getCurrentPage() {
+			return currentPage;
+		}
+
+		public void setCurrentPage(int currentPage) {
+			this.currentPage = currentPage;
+		}
+
+		/**
+		 * Return currentDateTime of the selected page
+		 * 
+		 * @return
+		 */
+		public DateTime getCurrentDateTime() {
+			return currentDateTime;
+		}
+
+		public void setCurrentDateTime(DateTime currentDateTime) {
+			this.currentDateTime = currentDateTime;
+		}
+
+		/**
+		 * Return 4 adapters
+		 * 
+		 * @return
+		 */
+		public ArrayList<CaldroidGridAdapter> getCaldroidGridAdapters() {
+			return caldroidGridAdapters;
+		}
+
+		public void setCaldroidGridAdapters(
+				ArrayList<CaldroidGridAdapter> caldroidGridAdapters) {
+			this.caldroidGridAdapters = caldroidGridAdapters;
+		}
+
+		/**
+		 * Return virtual next position
+		 * 
+		 * @param position
+		 * @return
+		 */
+		private int getNext(int position) {
+			return (position + 1) % CaldroidFragment.NUMBER_OF_PAGES;
+		}
+
+		/**
+		 * Return virtual previous position
+		 * 
+		 * @param position
+		 * @return
+		 */
+		private int getPrevious(int position) {
+			return (position + 3) % CaldroidFragment.NUMBER_OF_PAGES;
+		}
+
+		@Override
+		public void onPageScrollStateChanged(int position) {
+		}
+
+		@Override
+		public void onPageScrolled(int arg0, float arg1, int arg2) {
+		}
+
+		/**
+		 * Refresh the fragments
+		 */
+		@Override
+		public void onPageSelected(int position) {
+
+			Log.d(TAG, TAG + "pageselected: " + position);
+			// Detect if swipe right or swipe left
+			// Swipe right
+			if (position > currentPage) {
+				// Refresh the next fragment since the previous fragment and
+				// current
+				// fragment display correct month
+				CaldroidGridAdapter nextAdapter = caldroidGridAdapters
+						.get(getNext(position));
+
+				// Update current date time to next month
+				currentDateTime = currentDateTime.plusMonths(1);
+
+				// Refresh the adapter of next gridview
+				nextAdapter.setMonthYearFromDateTime(currentDateTime
+						.plusMonths(1));
+				nextAdapter.notifyDataSetChanged();
+
+			} else { // Swipe left
+				// Refresh the previous fragment since the next fragment and
+				// current
+				// fragment display correct month
+				CaldroidGridAdapter prevAdapter = caldroidGridAdapters
+						.get(getPrevious(position));
+
+				// Update current date time to previous month
+				currentDateTime = currentDateTime.minusMonths(1);
+
+				// Refresh the adapter of previous gridview
+				prevAdapter.setMonthYearFromDateTime(currentDateTime
+						.minusMonths(1));
+				prevAdapter.notifyDataSetChanged();
+			}
+
+			// Update current date time of the selected page
+			setMonthYearFromDateTime(currentDateTime);
+
+			// Update all the dates inside current month
+			CaldroidGridAdapter currentAdapter = caldroidGridAdapters
+					.get(position % CaldroidFragment.NUMBER_OF_PAGES);
+			CaldroidFragment.this.dateInMonthsList = currentAdapter
+					.getDatetimeList();
+
+			// Refresh view
+			refreshView();
+
+			// Update current page
+			currentPage = position;
+		}
+
 	}
 
 	/**

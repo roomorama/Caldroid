@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/caldroid_white" >
+    android:background="@color/caldroid_white"
+    android:orientation="vertical" >
 
     <RelativeLayout
         android:id="@+id/calendar_title_view"
@@ -39,25 +40,15 @@
         android:id="@+id/weekday_gridview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/calendar_title_view"
         android:layout_marginTop="-15dp"
         android:numColumns="7"
         android:stretchMode="columnWidth" >
     </GridView>
 
-    <GridView
-        android:id="@+id/calendar_gridview"
+    <com.antonyt.infiniteviewpager.InfiniteViewPager
+        android:id="@+id/months_infinite_pager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/weekday_gridview"
-        android:layout_marginTop="-10dp"
-        android:adjustViewBounds="true"
-        android:background="@color/caldroid_lighter_gray"
-        android:gravity="center_horizontal"
-        android:horizontalSpacing="1dp"
-        android:numColumns="7"
-        android:padding="1dp"
-        android:stretchMode="columnWidth"
-        android:verticalSpacing="1dp" />
+        android:layout_marginTop="-10dp" />
 
-</RelativeLayout>
+</LinearLayout>

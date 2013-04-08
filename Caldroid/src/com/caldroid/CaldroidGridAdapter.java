@@ -28,6 +28,48 @@ public class CaldroidGridAdapter extends BaseAdapter {
 	protected ArrayList<DateTime> selectedDates;
 	protected DateTime minDateTime;
 	protected DateTime maxDateTime;
+	
+	public void setMonthYearFromDateTime(DateTime dateTime) {
+		this.month = dateTime.getMonthOfYear();
+		this.year = dateTime.getYear();
+		this.datetimeList = CalendarHelper.getFullWeeks(this.month, this.year);
+	}
+
+	public ArrayList<DateTime> getDatetimeList() {
+		return datetimeList;
+	}
+
+	public DateTime getMinDateTime() {
+		return minDateTime;
+	}
+
+	public void setMinDateTime(DateTime minDateTime) {
+		this.minDateTime = minDateTime;
+	}
+
+	public DateTime getMaxDateTime() {
+		return maxDateTime;
+	}
+
+	public void setMaxDateTime(DateTime maxDateTime) {
+		this.maxDateTime = maxDateTime;
+	}
+
+	public ArrayList<DateTime> getDisableDates() {
+		return disableDates;
+	}
+
+	public void setDisableDates(ArrayList<DateTime> disableDates) {
+		this.disableDates = disableDates;
+	}
+
+	public ArrayList<DateTime> getSelectedDates() {
+		return selectedDates;
+	}
+
+	public void setSelectedDates(ArrayList<DateTime> selectedDates) {
+		this.selectedDates = selectedDates;
+	}
 
 	protected DateTime today;
 
@@ -92,10 +134,10 @@ public class CaldroidGridAdapter extends BaseAdapter {
 					.getColor(R.color.caldroid_darker_gray));
 		}
 
-		// Customize for today
-		if (dateTime.equals(getToday())) {
-			cellView.setBackgroundResource(R.drawable.red_border);
-		}
+		
+		
+		boolean shouldResetDiabledView = false;
+		boolean shouldResetSelectedView = false;
 
 		// Customize for disabled dates and date outside min/max dates
 		if ((minDateTime != null && dateTime.isBefore(minDateTime))
@@ -112,7 +154,8 @@ public class CaldroidGridAdapter extends BaseAdapter {
 			if (dateTime.equals(getToday())) {
 				cellView.setBackgroundResource(R.drawable.red_border_gray_bg);
 			}
-
+		} else {
+			shouldResetDiabledView = true;
 		}
 
 		// Customize for selected dates
@@ -125,7 +168,17 @@ public class CaldroidGridAdapter extends BaseAdapter {
 			}
 
 			cellView.setTextColor(CaldroidFragment.selectedTextColor);
-
+		} else {
+			shouldResetSelectedView = true;
+		}
+		
+		if (shouldResetDiabledView && shouldResetSelectedView) {
+			// Customize for today
+			if (dateTime.equals(getToday())) {
+				cellView.setBackgroundResource(R.drawable.red_border);
+			} else {
+				cellView.setBackgroundResource(R.drawable.cell_bg);
+			}			
 		}
 
 		cellView.setText("" + dateTime.getDayOfMonth());
