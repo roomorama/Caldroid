@@ -1,5 +1,8 @@
 package com.antonyt.infiniteviewpager;
 
+import org.joda.time.field.OffsetDateTimeField;
+
+import android.R.integer;
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -13,7 +16,22 @@ import android.view.View;
  * 
  */
 public class InfiniteViewPager extends ViewPager {
+	public static final int OFFSET = 500;
+	
+	/**
+	 * Enable swipe
+	 */
 	private boolean enabled = true;
+
+	/**
+	 * A calendar height is not fixed, it may have 5 or 6 rows. Set fitAllMonths
+	 * to true so that the calendar will always have 6 rows
+	 */
+	private boolean fitAllMonths = true;
+	
+	/**
+	 * Use internally to decide height of the calendar
+	 */
 	private int maxHeight = 0;
 
 	public boolean isEnabled() {
@@ -22,6 +40,15 @@ public class InfiniteViewPager extends ViewPager {
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+
+	public boolean isFitAllMonths() {
+		return fitAllMonths;
+	}
+
+	public void setFitAllMonths(boolean fitAllMonths) {
+		this.fitAllMonths = fitAllMonths;
+		maxHeight = 0;
 	}
 
 	public InfiniteViewPager(Context context, AttributeSet attrs) {
@@ -36,20 +63,7 @@ public class InfiniteViewPager extends ViewPager {
 	public void setAdapter(PagerAdapter adapter) {
 		super.setAdapter(adapter);
 		// offset first element so that we can scroll to the left
-		setCurrentItem(getOffsetAmount());
-	}
-
-	public int getOffsetAmount() {
-		if (getAdapter() instanceof InfinitePagerAdapter) {
-			InfinitePagerAdapter infAdapter = (InfinitePagerAdapter) getAdapter();
-			// allow for 100 back cycles from the beginning
-			// should be enough to create an illusion of infinity
-			// warning: scrolling to very high values (1,000,000+) results in
-			// strange drawing behaviour
-			return infAdapter.getRealCount() * 100;
-		} else {
-			return 0;
-		}
+		setCurrentItem(OFFSET);
 	}
 
 	@Override
@@ -130,7 +144,9 @@ public class InfiniteViewPager extends ViewPager {
 
 				int height1 = secondChild.getMeasuredHeight();
 
-				if (height == height1) {
+				if (!fitAllMonths) {
+					maxHeight = height;
+				} else if (height == height1) {
 					maxHeight = 6 * height / 5;
 				} else {
 					maxHeight = Math.max(height, height1);

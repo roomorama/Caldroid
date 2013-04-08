@@ -105,6 +105,12 @@ public class CaldroidFragment extends DialogFragment {
 	protected ArrayList<DateTime> dateInMonthsList;
 
 	/**
+	 * A calendar height is not fixed, it may have 5 or 6 rows. Set fitAllMonths
+	 * to true so that the calendar will always have 6 rows
+	 */
+	private boolean fitAllMonths = true;
+
+	/**
 	 * datePagerAdapters hold 4 adapters, meant to be reused
 	 */
 	protected ArrayList<CaldroidGridAdapter> datePagerAdapters = new ArrayList<CaldroidGridAdapter>();
@@ -171,6 +177,7 @@ public class CaldroidFragment extends DialogFragment {
 	 * Set calendar to previous month
 	 */
 	public void prevMonth() {
+		Log.d("Calendar", "page: " + pageChangeListener.getCurrentPage());
 		dateViewPager.setCurrentItem(pageChangeListener.getCurrentPage() - 1);
 	}
 
@@ -178,6 +185,7 @@ public class CaldroidFragment extends DialogFragment {
 	 * Set calendar to next month
 	 */
 	public void nextMonth() {
+		Log.d("Calendar", "page: " + pageChangeListener.getCurrentPage());
 		dateViewPager.setCurrentItem(pageChangeListener.getCurrentPage() + 1);
 	}
 
@@ -347,6 +355,19 @@ public class CaldroidFragment extends DialogFragment {
 		}
 	}
 
+	public boolean isFitAllMonths() {
+		return fitAllMonths;
+	}
+
+	/**
+	 * A calendar height is not fixed, it may have 5 or 6 rows. Set fitAllMonths
+	 * to true so that the calendar will always have 6 rows
+	 */
+	public void setFitAllMonths(boolean fitAllMonths) {
+		this.fitAllMonths = fitAllMonths;
+		dateViewPager.setFitAllMonths(fitAllMonths);
+	}
+
 	/**
 	 * Convenient method to set min date from String. If dateFormat is null,
 	 * default format is yyyy-MM-dd
@@ -475,6 +496,9 @@ public class CaldroidFragment extends DialogFragment {
 
 			// Should enable swipe to change month
 			enableSwipe = args.getBoolean("enableSwipe", true);
+
+			// Get fitAllMonths
+			fitAllMonths = args.getBoolean("fitAllMonths", true);
 
 			DateTimeFormatter formatter = DateTimeFormat
 					.forPattern("yyyy-MM-dd");
@@ -653,8 +677,8 @@ public class CaldroidFragment extends DialogFragment {
 		// Set enable swipe
 		dateViewPager.setEnabled(enableSwipe);
 
-		// Set current page
-		pageChangeListener.setCurrentPage(dateViewPager.getOffsetAmount());
+		// Set if viewpager wrap around particular month or all months (6 rows)
+		dateViewPager.setFitAllMonths(fitAllMonths);
 
 		// MonthPagerAdapter actually provides 4 real fragments. The
 		// InfinitePagerAdapter only recycles fragment provided by this
@@ -712,7 +736,7 @@ public class CaldroidFragment extends DialogFragment {
 	 * 
 	 */
 	public class DatePageChangeListener implements OnPageChangeListener {
-		private int currentPage;
+		private int currentPage = InfiniteViewPager.OFFSET;
 		private DateTime currentDateTime;
 		private ArrayList<CaldroidGridAdapter> caldroidGridAdapters;
 
