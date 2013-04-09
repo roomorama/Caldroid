@@ -680,6 +680,10 @@ public class CaldroidFragment extends DialogFragment {
 		// Set if viewpager wrap around particular month or all months (6 rows)
 		dateViewPager.setFitAllMonths(fitAllMonths);
 
+		// Set the dateInMonthsList to dateViewPager so it can calculate the
+		// height correctly
+		dateViewPager.setDateInMonthsList(dateInMonthsList);
+
 		// MonthPagerAdapter actually provides 4 real fragments. The
 		// InfinitePagerAdapter only recycles fragment provided by this
 		// MonthPagerAdapter
@@ -854,8 +858,10 @@ public class CaldroidFragment extends DialogFragment {
 			// Update all the dates inside current month
 			CaldroidGridAdapter currentAdapter = caldroidGridAdapters
 					.get(position % CaldroidFragment.NUMBER_OF_PAGES);
-			CaldroidFragment.this.dateInMonthsList = currentAdapter
-					.getDatetimeList();
+
+			// Refresh dateInMonthsList
+			dateInMonthsList.clear();
+			dateInMonthsList.addAll(currentAdapter.getDatetimeList());
 
 			// Refresh view
 			refreshView();

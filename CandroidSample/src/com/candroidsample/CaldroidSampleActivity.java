@@ -43,6 +43,7 @@ public class CaldroidSampleActivity extends FragmentActivity {
 		args.putInt("month", cal.get(Calendar.MONTH) + 1);
 		args.putInt("year", cal.get(Calendar.YEAR));
 		args.putBoolean("enableSwipe", true);
+		args.putBoolean("fitAllMonths", false);
 		caldroidFragment.setArguments(args);
 
 		FragmentTransaction t = getSupportFragmentManager().beginTransaction();

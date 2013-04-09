@@ -1,12 +1,14 @@
 package com.antonyt.infiniteviewpager;
 
-import org.joda.time.field.OffsetDateTimeField;
+import java.util.ArrayList;
 
-import android.R.integer;
+import org.joda.time.DateTime;
+
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -16,24 +18,32 @@ import android.view.View;
  * 
  */
 public class InfiniteViewPager extends ViewPager {
+
+	// ******* Declaration *********
 	public static final int OFFSET = 500;
-	
+
+	/**
+	 * dateInMonthsList is required to calculate the height correctly
+	 */
+	private ArrayList<DateTime> dateInMonthsList;
+
 	/**
 	 * Enable swipe
 	 */
 	private boolean enabled = true;
 
 	/**
-	 * A calendar height is not fixed, it may have 5 or 6 rows. Set fitAllMonths
+	 * A calendar height is not fixed, it may have 4, 5 or 6 rows. Set fitAllMonths
 	 * to true so that the calendar will always have 6 rows
 	 */
 	private boolean fitAllMonths = true;
-	
+
 	/**
 	 * Use internally to decide height of the calendar
 	 */
-	private int maxHeight = 0;
+	private int rowHeight = 0;
 
+	// ******* Setter and getters *********
 	public boolean isEnabled() {
 		return enabled;
 	}
@@ -48,9 +58,18 @@ public class InfiniteViewPager extends ViewPager {
 
 	public void setFitAllMonths(boolean fitAllMonths) {
 		this.fitAllMonths = fitAllMonths;
-		maxHeight = 0;
+		rowHeight = 0;
 	}
 
+	public ArrayList<DateTime> getDateInMonthsList() {
+		return dateInMonthsList;
+	}
+
+	public void setDateInMonthsList(ArrayList<DateTime> dateInMonthsList) {
+		this.dateInMonthsList = dateInMonthsList;
+	}
+
+	// ************** Constructors ********************
 	public InfiniteViewPager(Context context, AttributeSet attrs) {
 		super(context, attrs);
 	}
@@ -94,21 +113,15 @@ public class InfiniteViewPager extends ViewPager {
 	 */
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+		Log.d("Caldroid", "onMeasure" + getCurrentItem());
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
-		// If maxHeight is already calculated, then use it
-		if (maxHeight > 0) {
-			heightMeasureSpec = MeasureSpec.makeMeasureSpec(maxHeight,
-					MeasureSpec.EXACTLY);
-
-			super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-			return;
-		}
-
-		// Calculate maxHeight
+		// Calculate row height
+		int rows = dateInMonthsList.size() / 7;
+		
 		boolean wrapHeight = MeasureSpec.getMode(heightMeasureSpec) == MeasureSpec.AT_MOST;
-
-		if (wrapHeight) {
+		
+		if (wrapHeight && rowHeight == 0) {
 			/**
 			 * The first super.onMeasure call made the pager take up all the
 			 * available height. Since we really wanted to wrap it, we need to
@@ -126,9 +139,8 @@ public class InfiniteViewPager extends ViewPager {
 			 * If the pager actually has any children, take the first child's
 			 * height and call that our own
 			 */
-			if (getChildCount() > 1) {
+			if (getChildCount() > 0) {
 				View firstChild = getChildAt(0);
-				View secondChild = getChildAt(1);
 
 				/*
 				 * The child was previously measured with exactly the full
@@ -138,26 +150,23 @@ public class InfiniteViewPager extends ViewPager {
 						.makeMeasureSpec(height, MeasureSpec.AT_MOST));
 
 				height = firstChild.getMeasuredHeight();
-
-				secondChild.measure(widthMeasureSpec, MeasureSpec
-						.makeMeasureSpec(height, MeasureSpec.AT_MOST));
-
-				int height1 = secondChild.getMeasuredHeight();
-
-				if (!fitAllMonths) {
-					maxHeight = height;
-				} else if (height == height1) {
-					maxHeight = 6 * height / 5;
-				} else {
-					maxHeight = Math.max(height, height1);
-				}
+				rowHeight = height / rows;
 			}
-
-			heightMeasureSpec = MeasureSpec.makeMeasureSpec(maxHeight,
-					MeasureSpec.EXACTLY);
-
-			super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 		}
+
+		// Calculate height of the calendar
+		int calHeight = 0;
+		// If fitAllMonths, we need 6 rows
+		if (fitAllMonths) {
+			calHeight = rowHeight * 6;
+		} else { // Otherwise we return correct number of rows
+			calHeight = rowHeight * rows;
+		}
+
+		heightMeasureSpec = MeasureSpec.makeMeasureSpec(calHeight,
+				MeasureSpec.EXACTLY);
+
+		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 	}
 
 }
