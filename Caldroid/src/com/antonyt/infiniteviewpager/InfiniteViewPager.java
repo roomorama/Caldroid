@@ -8,7 +8,6 @@ import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -20,7 +19,7 @@ import android.view.View;
 public class InfiniteViewPager extends ViewPager {
 
 	// ******* Declaration *********
-	public static final int OFFSET = 500;
+	public static final int OFFSET = 1000;
 
 	/**
 	 * dateInMonthsList is required to calculate the height correctly
@@ -113,7 +112,6 @@ public class InfiniteViewPager extends ViewPager {
 	 */
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-		Log.d("Caldroid", "onMeasure" + getCurrentItem());
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
 		// Calculate row height

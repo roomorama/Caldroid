@@ -16,7 +16,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -68,7 +67,7 @@ import com.antonyt.infiniteviewpager.InfiniteViewPager;
 
 @SuppressLint("DefaultLocale")
 public class CaldroidFragment extends DialogFragment {
-	private String TAG = "CaldroidFragment";
+	public String TAG = "CaldroidFragment";
 	/**
 	 * To customize the selected background drawable and text color
 	 */
@@ -178,9 +177,7 @@ public class CaldroidFragment extends DialogFragment {
 			// Get previous month of dateTime. When swipe left, month will
 			// decrease
 			DateTime firstDayNextMonth = dateTime.plusMonths(1);
-			Log.d("dateTime", dateTime.toString() + " firstDayNextMonth"
-					+ firstDayNextMonth.toString());
-
+			
 			// Refresh adapters
 			pageChangeListener.setCurrentDateTime(firstDayNextMonth);
 			int currentItem = dateViewPager.getCurrentItem();
@@ -234,7 +231,6 @@ public class CaldroidFragment extends DialogFragment {
 	 * Set calendar to previous month
 	 */
 	public void prevMonth() {
-		Log.d("Calendar", "page: " + pageChangeListener.getCurrentPage());
 		dateViewPager.setCurrentItem(pageChangeListener.getCurrentPage() - 1);
 	}
 
@@ -242,7 +238,6 @@ public class CaldroidFragment extends DialogFragment {
 	 * Set calendar to next month
 	 */
 	public void nextMonth() {
-		Log.d("Calendar", "page: " + pageChangeListener.getCurrentPage());
 		dateViewPager.setCurrentItem(pageChangeListener.getCurrentPage() + 1);
 	}
 
@@ -933,8 +928,6 @@ public class CaldroidFragment extends DialogFragment {
 		 */
 		@Override
 		public void onPageSelected(int position) {
-
-			Log.d(TAG, TAG + "pageselected: " + position);
 			refreshAdapters(position);
 
 			// Update current date time of the selected page
