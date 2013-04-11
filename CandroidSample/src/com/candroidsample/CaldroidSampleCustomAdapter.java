@@ -6,6 +6,7 @@ import org.joda.time.DateTime;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,8 @@ public class CaldroidSampleCustomAdapter extends CaldroidGridAdapter {
 
 		TextView tv1 = (TextView) cellView.findViewById(R.id.tv1);
 		TextView tv2 = (TextView) cellView.findViewById(R.id.tv2);
+		
+		tv1.setTextColor(Color.BLACK);
 
 		// Get dateTime of this cell
 		DateTime dateTime = this.datetimeList.get(position);
