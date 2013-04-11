@@ -109,6 +109,13 @@ To enable / disable swipe:
 setEnableSwipe(boolean enableSwipe)
 ```
 
+Client can programmatically move the calendar (with animation) to a specified date:
+
+```
+public void moveToDate(Date date);
+public void moveToDateTime(DateTime dateTime);
+```
+
 ##Allow user to select a date and inform listener
 
 Caldroid inform clients via CaldroidListener. 

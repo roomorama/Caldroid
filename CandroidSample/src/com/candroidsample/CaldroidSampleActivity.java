@@ -137,7 +137,13 @@ public class CaldroidSampleActivity extends FragmentActivity {
 				caldroidFragment.setSelectedDates(fromDate, toDate);
 				caldroidFragment.setShowNavigationArrows(false);
 				caldroidFragment.setEnableSwipe(false);
+				
 				caldroidFragment.refreshView();
+				
+				// Move to date
+//				cal = Calendar.getInstance();
+//				cal.add(Calendar.MONTH, -12);
+//				caldroidFragment.moveToDate(cal.getTime());
 
 				String text = "Today: " + formatter.format(new Date()) + "\n";
 				text += "Min Date: " + formatter.format(minDate) + "\n";

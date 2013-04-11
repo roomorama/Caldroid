@@ -122,7 +122,7 @@ public class InfiniteViewPager extends ViewPager {
 		boolean wrapHeight = MeasureSpec.getMode(heightMeasureSpec) == MeasureSpec.AT_MOST;
 		
 		if (wrapHeight && rowHeight == 0) {
-			/**
+			/*
 			 * The first super.onMeasure call made the pager take up all the
 			 * available height. Since we really wanted to wrap it, we need to
 			 * remeasure it. Luckily, after that call the first child is now

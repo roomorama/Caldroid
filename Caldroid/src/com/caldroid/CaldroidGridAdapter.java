@@ -29,7 +29,7 @@ public class CaldroidGridAdapter extends BaseAdapter {
 	protected DateTime minDateTime;
 	protected DateTime maxDateTime;
 	
-	public void setMonthYearFromDateTime(DateTime dateTime) {
+	public void setAdapterDateTime(DateTime dateTime) {
 		this.month = dateTime.getMonthOfYear();
 		this.year = dateTime.getYear();
 		this.datetimeList = CalendarHelper.getFullWeeks(this.month, this.year);

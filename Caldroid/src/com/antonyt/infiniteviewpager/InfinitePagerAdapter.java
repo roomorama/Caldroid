@@ -2,6 +2,7 @@ package com.antonyt.infiniteviewpager;
 
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -34,6 +35,7 @@ public class InfinitePagerAdapter extends PagerAdapter {
 	@Override
 	public Object instantiateItem(ViewGroup container, int position) {
 		int virtualPosition = position % getRealCount();
+		Log.d("instantiateItem", "virtual" + virtualPosition + " / " + position);
 		// only expose virtual position to the inner adapter
 		return adapter.instantiateItem(container, virtualPosition);
 	}
@@ -41,6 +43,7 @@ public class InfinitePagerAdapter extends PagerAdapter {
 	@Override
 	public void destroyItem(ViewGroup container, int position, Object object) {
 		int virtualPosition = (position) % getRealCount();
+		Log.d("destroyItem", "virtual" + virtualPosition + " / " + position);
 		// only expose virtual position to the inner adapter
 		adapter.destroyItem(container, virtualPosition, object);
 	}
