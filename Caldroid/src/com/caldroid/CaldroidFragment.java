@@ -174,10 +174,10 @@ public class CaldroidFragment extends DialogFragment {
 
 		// Calendar swipe left when dateTime is in the past
 		if (dateTime.isBefore(firstOfMonth)) {
-			// Get previous month of dateTime. When swipe left, month will
+			// Get next month of dateTime. When swipe left, month will
 			// decrease
 			DateTime firstDayNextMonth = dateTime.plusMonths(1);
-			
+
 			// Refresh adapters
 			pageChangeListener.setCurrentDateTime(firstDayNextMonth);
 			int currentItem = dateViewPager.getCurrentItem();
@@ -617,6 +617,28 @@ public class CaldroidFragment extends DialogFragment {
 		f.setArguments(args);
 
 		return f;
+	}
+
+	/**
+	 * Below code fixed the issue viewpager disappears in dialog mode on
+	 * orientation change
+	 * 
+	 * Code taken from Andy Dennie and Zsombor Erdody-Nagy
+	 * http://stackoverflow.com/questions/8235080/fragments-dialogfragment
+	 * -and-screen-rotation
+	 */
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		setRetainInstance(true);
+	}
+
+	@Override
+	public void onDestroyView() {
+		if (getDialog() != null && getRetainInstance())
+			getDialog().setDismissMessage(null);
+		super.onDestroyView();
 	}
 
 	/**

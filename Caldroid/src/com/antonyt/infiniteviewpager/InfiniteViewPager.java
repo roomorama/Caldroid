@@ -32,8 +32,8 @@ public class InfiniteViewPager extends ViewPager {
 	private boolean enabled = true;
 
 	/**
-	 * A calendar height is not fixed, it may have 4, 5 or 6 rows. Set fitAllMonths
-	 * to true so that the calendar will always have 6 rows
+	 * A calendar height is not fixed, it may have 4, 5 or 6 rows. Set
+	 * fitAllMonths to true so that the calendar will always have 6 rows
 	 */
 	private boolean fitAllMonths = true;
 
@@ -116,9 +116,10 @@ public class InfiniteViewPager extends ViewPager {
 
 		// Calculate row height
 		int rows = dateInMonthsList.size() / 7;
-		
+
 		boolean wrapHeight = MeasureSpec.getMode(heightMeasureSpec) == MeasureSpec.AT_MOST;
-		
+
+		int height = getMeasuredHeight();
 		if (wrapHeight && rowHeight == 0) {
 			/*
 			 * The first super.onMeasure call made the pager take up all the
@@ -127,7 +128,7 @@ public class InfiniteViewPager extends ViewPager {
 			 * available. So, we take the height from it.
 			 */
 
-			int width = getMeasuredWidth(), height = getMeasuredHeight();
+			int width = getMeasuredWidth();
 
 			// Use the previously measured width but simplify the calculations
 			widthMeasureSpec = MeasureSpec.makeMeasureSpec(width,
@@ -159,6 +160,12 @@ public class InfiniteViewPager extends ViewPager {
 			calHeight = rowHeight * 6;
 		} else { // Otherwise we return correct number of rows
 			calHeight = rowHeight * rows;
+		}
+
+		// If the calculated height is bigger than the parent height, set it to
+		// parent height so the gridview can be scrolled
+		if (calHeight > height) {
+			calHeight = height;
 		}
 
 		heightMeasureSpec = MeasureSpec.makeMeasureSpec(calHeight,
