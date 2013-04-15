@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeConstants;
@@ -993,7 +994,16 @@ public class CaldroidFragment extends DialogFragment {
 			// To customize text size and color
 			TextView textView = (TextView) super.getView(position, convertView,
 					parent);
-			textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
+			String item = getDaysOfWeek().get(position);
+
+			// Show smaller text if the size of the text is 4 or more in some
+			// locale
+			if (item.length() <= 3) {
+				textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
+			} else {
+				textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11);
+			}
+
 			textView.setTextColor(getResources()
 					.getColor(R.color.caldroid_gray));
 			textView.setGravity(Gravity.CENTER);
