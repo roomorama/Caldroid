@@ -3,6 +3,11 @@ Caldroid
 
 Caldroid is a fragment that display calendar with dates in a month. Caldroid can be used as embedded fragment, or as dialog fragment. User can also swipe left/right to navigate to different months.
 
+Caldroid is used in [official Roomorama application](https://play.google.com/store/apps/details?id=com.roomorama)
+
+If you are using Caldroid in your app and keen to list it here, please open a new issue on Github :)
+
+
 <img src="https://raw.github.com/thomasdao/Caldroid/master/screenshot/1.png" width="270">
 <img src="https://raw.github.com/thomasdao/Caldroid/master/screenshot/2.png" width="270">
 
