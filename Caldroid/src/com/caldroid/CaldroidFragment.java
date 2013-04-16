@@ -103,7 +103,7 @@ public class CaldroidFragment extends DialogFragment {
 	protected DateTime minDateTime;
 	protected DateTime maxDateTime;
 	protected ArrayList<DateTime> dateInMonthsList;
-	
+
 	/**
 	 * First column of calendar is Sunday
 	 */
@@ -143,7 +143,8 @@ public class CaldroidFragment extends DialogFragment {
 	 */
 	public CaldroidGridAdapter getNewDatesGridAdapter(int month, int year) {
 		return new CaldroidGridAdapter(getActivity(), month, year,
-				disableDates, selectedDates, minDateTime, maxDateTime, startDayOfWeek);
+				disableDates, selectedDates, minDateTime, maxDateTime,
+				startDayOfWeek);
 	}
 
 	/**
@@ -153,6 +154,16 @@ public class CaldroidFragment extends DialogFragment {
 	 */
 	public GridView getWeekdayGridView() {
 		return weekdayGridView;
+	}
+
+	/**
+	 * Get 4 adapters of the date grid views. Useful to set custom data and
+	 * refresh date grid view
+	 * 
+	 * @return
+	 */
+	public ArrayList<CaldroidGridAdapter> getDatePagerAdapters() {
+		return datePagerAdapters;
 	}
 
 	/**
@@ -546,9 +557,10 @@ public class CaldroidFragment extends DialogFragment {
 			if (dialogTitle != null) {
 				getDialog().setTitle(dialogTitle);
 			}
-			
+
 			// Get start day of Week. Default calendar first column is SUNDAY
-			startDayOfWeek = args.getInt("startDayOfWeek", DateTimeConstants.SUNDAY);
+			startDayOfWeek = args.getInt("startDayOfWeek",
+					DateTimeConstants.SUNDAY);
 			if (startDayOfWeek > 7) {
 				startDayOfWeek = startDayOfWeek % 7;
 			}
@@ -717,7 +729,8 @@ public class CaldroidFragment extends DialogFragment {
 	private void setupDateGridPages(View view) {
 		// Get current date time
 		DateTime currentDateTime = new DateTime(year, month, 1, 0, 0, 0);
-		dateInMonthsList = CalendarHelper.getFullWeeks(month, year, startDayOfWeek);
+		dateInMonthsList = CalendarHelper.getFullWeeks(month, year,
+				startDayOfWeek);
 
 		// Set to pageChangeListener
 		pageChangeListener = new DatePageChangeListener();
@@ -807,16 +820,16 @@ public class CaldroidFragment extends DialogFragment {
 		// 17 Feb 2013 is Sunday
 		DateTime sunday = new DateTime(2013, 2, 17, 0, 0);
 		DateTime nextDay = sunday;
-		
+
 		if (startDayOfWeek != DateTimeConstants.SUNDAY) {
 			nextDay = sunday.plusDays(startDayOfWeek);
 		}
-		
+
 		for (int i = 0; i < 7; i++) {
 			list.add(nextDay.dayOfWeek().getAsShortText().toUpperCase());
 			nextDay = nextDay.plusDays(1);
 		}
-		
+
 		return list;
 	}
 
