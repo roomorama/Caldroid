@@ -5,7 +5,7 @@ Caldroid is a fragment that display calendar with dates in a month. Caldroid can
 
 Caldroid is fully localized. Client can customize start day of the week for different countries. By default calendar start on Sunday.
 
-Caldroid is used in [official Roomorama application](https://play.google.com/store/apps/details?id=com.roomorama)
+Caldroid can be used with Android 2.2 and above. Caldroid is extracted from [official Roomorama application](https://play.google.com/store/apps/details?id=com.roomorama)
 
 If you are using Caldroid in your app and keen to list it here, please open a new issue on Github :)
 
