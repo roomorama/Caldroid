@@ -167,6 +167,14 @@ public class CaldroidFragment extends DialogFragment {
 	}
 
 	/**
+	 * Get current virtual position of the month being viewed
+	 */
+	public int getCurrentVirtualPosition() {
+		int currentPage = dateViewPager.getCurrentItem();
+		return pageChangeListener.getCurrent(currentPage);
+	}
+	
+	/**
 	 * Move calendar to the specified date
 	 * 
 	 * @param date
@@ -912,7 +920,7 @@ public class CaldroidFragment extends DialogFragment {
 		 * @param position
 		 * @return
 		 */
-		private int getCurrent(int position) {
+		public int getCurrent(int position) {
 			return position % CaldroidFragment.NUMBER_OF_PAGES;
 		}
 
