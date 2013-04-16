@@ -103,6 +103,11 @@ public class CaldroidFragment extends DialogFragment {
 	protected DateTime minDateTime;
 	protected DateTime maxDateTime;
 	protected ArrayList<DateTime> dateInMonthsList;
+	
+	/**
+	 * First column of calendar is Sunday
+	 */
+	protected int startDayOfWeek = DateTimeConstants.SUNDAY;
 
 	/**
 	 * A calendar height is not fixed, it may have 5 or 6 rows. Set fitAllMonths
@@ -138,7 +143,7 @@ public class CaldroidFragment extends DialogFragment {
 	 */
 	public CaldroidGridAdapter getNewDatesGridAdapter(int month, int year) {
 		return new CaldroidGridAdapter(getActivity(), month, year,
-				disableDates, selectedDates, minDateTime, maxDateTime);
+				disableDates, selectedDates, minDateTime, maxDateTime, startDayOfWeek);
 	}
 
 	/**
@@ -541,6 +546,12 @@ public class CaldroidFragment extends DialogFragment {
 			if (dialogTitle != null) {
 				getDialog().setTitle(dialogTitle);
 			}
+			
+			// Get start day of Week. Default calendar first column is SUNDAY
+			startDayOfWeek = args.getInt("startDayOfWeek", DateTimeConstants.SUNDAY);
+			if (startDayOfWeek > 7) {
+				startDayOfWeek = startDayOfWeek % 7;
+			}
 
 			// Should show arrow
 			showNavigationArrows = args
@@ -706,7 +717,7 @@ public class CaldroidFragment extends DialogFragment {
 	private void setupDateGridPages(View view) {
 		// Get current date time
 		DateTime currentDateTime = new DateTime(year, month, 1, 0, 0, 0);
-		dateInMonthsList = CalendarHelper.getFullWeeks(month, year);
+		dateInMonthsList = CalendarHelper.getFullWeeks(month, year, startDayOfWeek);
 
 		// Set to pageChangeListener
 		pageChangeListener = new DatePageChangeListener();
@@ -796,13 +807,16 @@ public class CaldroidFragment extends DialogFragment {
 		// 17 Feb 2013 is Sunday
 		DateTime sunday = new DateTime(2013, 2, 17, 0, 0);
 		DateTime nextDay = sunday;
-		while (true) {
+		
+		if (startDayOfWeek != DateTimeConstants.SUNDAY) {
+			nextDay = sunday.plusDays(startDayOfWeek);
+		}
+		
+		for (int i = 0; i < 7; i++) {
 			list.add(nextDay.dayOfWeek().getAsShortText().toUpperCase());
 			nextDay = nextDay.plusDays(1);
-			if (nextDay.getDayOfWeek() == DateTimeConstants.SUNDAY) {
-				break;
-			}
 		}
+		
 		return list;
 	}
 

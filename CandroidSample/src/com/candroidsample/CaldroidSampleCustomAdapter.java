@@ -20,9 +20,9 @@ public class CaldroidSampleCustomAdapter extends CaldroidGridAdapter {
 	public CaldroidSampleCustomAdapter(Context context, int month, int year,
 			ArrayList<DateTime> disableDates,
 			ArrayList<DateTime> selectedDates, DateTime minDateTime,
-			DateTime maxDateTime) {
+			DateTime maxDateTime, int startDayOfWeek) {
 		super(context, month, year, disableDates, selectedDates, minDateTime,
-				maxDateTime);
+				maxDateTime, startDayOfWeek);
 	}
 
 	@Override

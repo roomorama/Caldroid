@@ -44,6 +44,9 @@ public class CaldroidSampleActivity extends FragmentActivity {
 		args.putInt("year", cal.get(Calendar.YEAR));
 		args.putBoolean("enableSwipe", true);
 		args.putBoolean("fitAllMonths", false);
+		
+		// Comment this to customize startDayOfWeek
+//		args.putInt("startDayOfWeek", 6); // Saturday
 		caldroidFragment.setArguments(args);
 
 		FragmentTransaction t = getSupportFragmentManager().beginTransaction();

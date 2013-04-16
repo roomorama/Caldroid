@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.Locale;
 
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeConstants;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -22,8 +21,15 @@ public class CalendarHelper {
 	/**
 	 * Retrieve all the dates for a given calendar month Include previous month,
 	 * current month and next month.
+	 * 
+	 * @param month
+	 * @param year
+	 * @param startDayOfWeek
+	 *            : calendar can start from customized date instead of Sunday
+	 * @return
 	 */
-	public static ArrayList<DateTime> getFullWeeks(int month, int year) {
+	public static ArrayList<DateTime> getFullWeeks(int month, int year,
+			int startDayOfWeek) {
 		ArrayList<DateTime> datetimeList = new ArrayList<DateTime>();
 
 		DateTime firstDateOfMonth = new DateTime(year, month, 1, 0, 0);
@@ -31,8 +37,21 @@ public class CalendarHelper {
 
 		// Add dates of first week from previous month
 		int weekdayOfFirstDate = firstDateOfMonth.getDayOfWeek();
-		while (weekdayOfFirstDate > 0 && weekdayOfFirstDate < 7) {
-			DateTime dateTime = firstDateOfMonth.minusDays(weekdayOfFirstDate);
+
+		// If weekdayOfFirstDate smaller than startDayOfWeek
+		// For e.g: weekdayFirstDate is Monday, startDayOfWeek is Tuesday
+		// increase the weekday of FirstDate because it's in the future
+		if (weekdayOfFirstDate < startDayOfWeek) {
+			weekdayOfFirstDate += 7;
+		}
+
+		while (weekdayOfFirstDate > 0) {
+			DateTime dateTime = firstDateOfMonth.minusDays(weekdayOfFirstDate
+					- startDayOfWeek);
+			if (!dateTime.isBefore(firstDateOfMonth)) {
+				break;
+			}
+
 			datetimeList.add(dateTime);
 			weekdayOfFirstDate--;
 		}
@@ -43,13 +62,20 @@ public class CalendarHelper {
 		}
 
 		// Add dates of last week from next month
-		if (lastDateOfMonth.getDayOfWeek() != DateTimeConstants.SATURDAY) {
+		int endDayOfWeek = startDayOfWeek - 1;
+
+		// For startDayOfWeek is Monday (1), endDayOfWeek should be Sunday (7)
+		if (endDayOfWeek == 0) {
+			endDayOfWeek = 7;
+		}
+
+		if (lastDateOfMonth.getDayOfWeek() != endDayOfWeek) {
 			int i = 1;
 			while (true) {
 				DateTime nextDay = lastDateOfMonth.plusDays(i);
 				datetimeList.add(nextDay);
 				i++;
-				if (nextDay.getDayOfWeek() == DateTimeConstants.SATURDAY) {
+				if (nextDay.getDayOfWeek() == endDayOfWeek) {
 					break;
 				}
 			}

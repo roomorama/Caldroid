@@ -29,11 +29,12 @@ public class CaldroidGridAdapter extends BaseAdapter {
 	protected ArrayList<DateTime> selectedDates;
 	protected DateTime minDateTime;
 	protected DateTime maxDateTime;
+	protected int startDayOfWeek;
 	
 	public void setAdapterDateTime(DateTime dateTime) {
 		this.month = dateTime.getMonthOfYear();
 		this.year = dateTime.getYear();
-		this.datetimeList = CalendarHelper.getFullWeeks(this.month, this.year);
+		this.datetimeList = CalendarHelper.getFullWeeks(this.month, this.year, startDayOfWeek);
 	}
 
 	public ArrayList<DateTime> getDatetimeList() {
@@ -77,7 +78,7 @@ public class CaldroidGridAdapter extends BaseAdapter {
 	public CaldroidGridAdapter(Context context, int month, int year,
 			ArrayList<DateTime> disableDates,
 			ArrayList<DateTime> selectedDates, DateTime minDateTime,
-			DateTime maxDateTime) {
+			DateTime maxDateTime, int startDayOfWeek) {
 		super();
 		this.month = month;
 		this.year = year;
@@ -86,7 +87,8 @@ public class CaldroidGridAdapter extends BaseAdapter {
 		this.selectedDates = selectedDates;
 		this.minDateTime = minDateTime;
 		this.maxDateTime = maxDateTime;
-		this.datetimeList = CalendarHelper.getFullWeeks(this.month, this.year);
+		this.startDayOfWeek = startDayOfWeek;
+		this.datetimeList = CalendarHelper.getFullWeeks(this.month, this.year, startDayOfWeek);
 	}
 
 	protected DateTime getToday() {

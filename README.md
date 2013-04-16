@@ -3,6 +3,8 @@ Caldroid
 
 Caldroid is a fragment that display calendar with dates in a month. Caldroid can be used as embedded fragment, or as dialog fragment. User can also swipe left/right to navigate to different months.
 
+Caldroid is fully localized. Client can customize start day of the week for different countries. By default calendar start on Sunday.
+
 Caldroid is used in [official Roomorama application](https://play.google.com/store/apps/details?id=com.roomorama)
 
 If you are using Caldroid in your app and keen to list it here, please open a new issue on Github :)
@@ -49,6 +51,27 @@ ArrayList<String> selectedDates
 String minDate
 String maxDate with yyyy-MM-dd format
 boolean enableSwipe
+int startDayOfWeek
+```
+
+To customize the startDayOfWeek, just use 
+
+```
+Bundle args = new Bundle();
+args.putInt("startDayOfWeek", 6); // calendar starts on SATURDAY
+caldroidFragment.setArguments(args);
+```
+
+Caldroid follows the same convention as the JODA date time constants:
+
+```
+MONDAY: 1
+TUESDAY: 2
+WEDNESDAY: 3
+THURSDAY: 4
+FRIDAY: 5
+SATURDAY: 6
+SUNDAY: 7
 ```
 
 
@@ -164,7 +187,7 @@ public class CaldroidSampleCustomFragment extends CaldroidFragment {
 	@Override
 	public CaldroidGridAdapter getNewDatesGridAdapter(int month, int year) {
 		// TODO Auto-generated method stub
-		return new CaldroidSampleCustomAdapter(getActivity(), month, year, disableDates, selectedDates, minDateTime, maxDateTime);
+		return new CaldroidSampleCustomAdapter(getActivity(), month, year, disableDates, selectedDates, minDateTime, maxDateTime, startDayOfWeek);
 	}
 
 }
