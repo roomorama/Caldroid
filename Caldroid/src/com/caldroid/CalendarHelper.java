@@ -135,5 +135,14 @@ public class CalendarHelper {
 		}
 		return formatter.parseDateTime(dateString);
 	}
+	
+	public static ArrayList<String> convertToStringList(ArrayList<DateTime> dateTimes) {
+		ArrayList<String> list = new ArrayList<String>();
+		DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
+		for (DateTime dateTime : dateTimes) {
+			list.add(formatter.print(dateTime));
+		}
+		return list;
+	}
 
 }

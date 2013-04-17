@@ -209,6 +209,39 @@ public class CaldroidFragment extends DialogFragment {
 	}
 
 	/**
+	 * Get current saved sates of the Caldroid. Useful for handling rotation
+	 */
+	public Bundle getSavedStates() {
+		Bundle bundle = new Bundle();
+		bundle.putInt("month", month);
+		bundle.putInt("year", year);
+		if (selectedDates != null && selectedDates.size() > 0) {
+			bundle.putStringArrayList("selectedDates",
+					CalendarHelper.convertToStringList(selectedDates));
+		}
+
+		if (disableDates != null && disableDates.size() > 0) {
+			bundle.putStringArrayList("disableDates",
+					CalendarHelper.convertToStringList(disableDates));
+		}
+
+		if (minDateTime != null) {
+			bundle.putString("minDate", minDateTime.toString("yyyy-MM-dd"));
+		}
+		
+		if (maxDateTime != null) {
+			bundle.putString("maxDate", maxDateTime.toString("yyyy-MM-dd"));
+		}
+
+		bundle.putBoolean("showNavigationArrows", showNavigationArrows);
+		bundle.putBoolean("enableSwipe", enableSwipe);
+		bundle.putInt("startDayOfWeek", startDayOfWeek);
+		bundle.putBoolean("fitAllMonths", fitAllMonths);
+
+		return bundle;
+	}
+
+	/**
 	 * Get current virtual position of the month being viewed
 	 */
 	public int getCurrentVirtualPosition() {
@@ -717,7 +750,6 @@ public class CaldroidFragment extends DialogFragment {
 		super.onDestroyView();
 	}
 
-	
 	/**
 	 * Setup view
 	 */

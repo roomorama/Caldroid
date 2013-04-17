@@ -170,6 +170,75 @@ caldroidFragment.setCaldroidListener(listener);
 
 ```
 
+##Handle screen rotation
+
+To handle rotation properly, Caldroid provides method to get current states of the fragment:
+
+```
+public Bundle getSavedStates();
+```
+
+Using above method, you can save current state of Caldroid on ```onSaveInstanceState(Bundle outState)``` method.
+
+On your activity code:
+
+```
+/**
+ * Save current states of the Caldroid here
+ */
+@Override
+protected void onSaveInstanceState(Bundle outState) {
+	// TODO Auto-generated method stub
+	super.onSaveInstanceState(outState);
+
+	if (caldroidFragment != null) {
+		outState.putBundle("CALDROID_SAVED_STATE",
+				caldroidFragment.getSavedStates());
+	}
+
+	if (dialogCaldroidFragment != null) {
+		Bundle savedState = dialogCaldroidFragment.getSavedStates();
+		outState.putBundle("DIALOG_CALDROID_SAVED_STATE", savedState);
+	}
+}
+
+```
+
+Then you can use the bundle in ```onCreate(Bundle savedInstanceState)``` of your activity. The algorithm is like below:
+
+```
+if (savedInstanceState != null
+		&& savedInstanceState.containsKey("CALDROID_SAVED_STATE")) {
+	Bundle caldroidSavedState = savedInstanceState
+			.getBundle("CALDROID_SAVED_STATE");
+	caldroidFragment.setArguments(caldroidSavedState);
+}
+// If activity is created from fresh
+else {
+	Bundle args = new Bundle();
+	args.putBoolean("enableSwipe", true);
+	args.putBoolean("fitAllMonths", false);
+  // Other settings here
+  //
+	caldroidFragment.setArguments(args);
+}
+
+```
+
+If you use Caldroid as dialog, make sure you dismiss it before you show it again:
+
+```
+// Close existing dialog before opening new one
+final String dialogTag = "CALDROID_DIALOG_FRAGMENT";
+CaldroidFragment existingDialog = (CaldroidFragment) getSupportFragmentManager()
+				.findFragmentByTag(dialogTag);
+if (existingDialog != null) {
+	existingDialog.dismiss();
+	dialogCaldroidFragment.show(getSupportFragmentManager(), dialogTag);
+}
+```
+
+Refer to the CaldroidSampleActivity for more detail.
 
 ##Allow customized cell for the dates gridView
 

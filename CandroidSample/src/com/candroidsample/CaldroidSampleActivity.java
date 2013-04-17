@@ -21,6 +21,8 @@ import com.caldroid.CaldroidListener;
 @SuppressLint("SimpleDateFormat")
 public class CaldroidSampleActivity extends FragmentActivity {
 	private boolean undo = false;
+	private CaldroidFragment caldroidFragment;
+	private CaldroidFragment dialogCaldroidFragment;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,24 +33,36 @@ public class CaldroidSampleActivity extends FragmentActivity {
 
 		// Setup caldroid fragment
 		// **** If you want normal CaldroidFragment, use below line ****
-		final CaldroidFragment caldroidFragment = new CaldroidFragment();
+		caldroidFragment = new CaldroidFragment();
 
 		// This is to show customized fragment
 		// **** If you want customized version, uncomment below line ****
-//		final CaldroidSampleCustomFragment caldroidFragment = new CaldroidSampleCustomFragment();
-		
-		// Setup arguments
-		Bundle args = new Bundle();
-		Calendar cal = Calendar.getInstance();
-		args.putInt("month", cal.get(Calendar.MONTH) + 1);
-		args.putInt("year", cal.get(Calendar.YEAR));
-		args.putBoolean("enableSwipe", true);
-		args.putBoolean("fitAllMonths", false);
-		
-		// Comment this to customize startDayOfWeek
-//		args.putInt("startDayOfWeek", 6); // Saturday
-		caldroidFragment.setArguments(args);
+		// caldroidFragment = new CaldroidSampleCustomFragment();
 
+		// Setup arguments
+
+		// If Activity is created after rotation
+		if (savedInstanceState != null
+				&& savedInstanceState.containsKey("CALDROID_SAVED_STATE")) {
+			Bundle caldroidSavedState = savedInstanceState
+					.getBundle("CALDROID_SAVED_STATE");
+			caldroidFragment.setArguments(caldroidSavedState);
+		}
+		// If activity is created from fresh
+		else {
+			Bundle args = new Bundle();
+			Calendar cal = Calendar.getInstance();
+			args.putInt("month", cal.get(Calendar.MONTH) + 1);
+			args.putInt("year", cal.get(Calendar.YEAR));
+			args.putBoolean("enableSwipe", true);
+			args.putBoolean("fitAllMonths", false);
+
+			// Uncomment this to customize startDayOfWeek
+			// args.putInt("startDayOfWeek", 6); // Saturday
+			caldroidFragment.setArguments(args);
+		}
+
+		// Attach to the activity
 		FragmentTransaction t = getSupportFragmentManager().beginTransaction();
 		t.replace(R.id.calendar1, caldroidFragment);
 		t.commit();
@@ -59,15 +73,15 @@ public class CaldroidSampleActivity extends FragmentActivity {
 			@Override
 			public void onSelectDate(Date date, View view) {
 				Toast.makeText(getApplicationContext(), formatter.format(date),
-						Toast.LENGTH_LONG).show();
+						Toast.LENGTH_SHORT).show();
 
 			}
 
 			@Override
 			public void onChangeMonth(int month, int year) {
 				String text = "month: " + month + " year: " + year;
-				Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG)
-						.show();
+				Toast.makeText(getApplicationContext(), text,
+						Toast.LENGTH_SHORT).show();
 			}
 
 		};
@@ -140,13 +154,13 @@ public class CaldroidSampleActivity extends FragmentActivity {
 				caldroidFragment.setSelectedDates(fromDate, toDate);
 				caldroidFragment.setShowNavigationArrows(false);
 				caldroidFragment.setEnableSwipe(false);
-				
+
 				caldroidFragment.refreshView();
-				
+
 				// Move to date
-//				cal = Calendar.getInstance();
-//				cal.add(Calendar.MONTH, 12);
-//				caldroidFragment.moveToDate(cal.getTime());
+				// cal = Calendar.getInstance();
+				// cal.add(Calendar.MONTH, 12);
+				// caldroidFragment.moveToDate(cal.getTime());
 
 				String text = "Today: " + formatter.format(new Date()) + "\n";
 				text += "Min Date: " + formatter.format(minDate) + "\n";
@@ -163,18 +177,62 @@ public class CaldroidSampleActivity extends FragmentActivity {
 		});
 
 		Button showDialogButton = (Button) findViewById(R.id.show_dialog_button);
+
+		// Setup caldroid to use as dialog
+		dialogCaldroidFragment = new CaldroidFragment();
+		dialogCaldroidFragment.setCaldroidListener(listener);
+
+		// Setup arguments
+		Bundle bundle = new Bundle();
+
+		// If activity is recovered from rotation
+		if (savedInstanceState != null
+				&& savedInstanceState
+						.containsKey("DIALOG_CALDROID_SAVED_STATE")) {
+
+			bundle.putAll(savedInstanceState
+					.getBundle("DIALOG_CALDROID_SAVED_STATE"));
+		}
+
+		// Setup dialogTitle
+		bundle.putString("dialogTitle", "Select a date");
+		dialogCaldroidFragment.setArguments(bundle);
+
+		// Close existing dialog before opening new one
+		final String dialogTag = "CALDROID_DIALOG_FRAGMENT";
+		CaldroidFragment existingDialog = (CaldroidFragment) getSupportFragmentManager()
+				.findFragmentByTag(dialogTag);
+		if (existingDialog != null) {
+			existingDialog.dismiss();
+			dialogCaldroidFragment.show(getSupportFragmentManager(), dialogTag);
+		}
 		showDialogButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				CaldroidFragment dialogCaldroidFragment = CaldroidFragment
-						.newInstance("Select a date", 3, 2013);
 				dialogCaldroidFragment.show(getSupportFragmentManager(),
-						"CALDROID_DIALOG_FRAGMENT");
-
-				dialogCaldroidFragment.setCaldroidListener(listener);
+						dialogTag);
 			}
 		});
+	}
+
+	/**
+	 * Save current states of the Caldroid here
+	 */
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		// TODO Auto-generated method stub
+		super.onSaveInstanceState(outState);
+
+		if (caldroidFragment != null) {
+			outState.putBundle("CALDROID_SAVED_STATE",
+					caldroidFragment.getSavedStates());
+		}
+
+		if (dialogCaldroidFragment != null) {
+			Bundle savedState = dialogCaldroidFragment.getSavedStates();
+			outState.putBundle("DIALOG_CALDROID_SAVED_STATE", savedState);
+		}
 	}
 
 }
