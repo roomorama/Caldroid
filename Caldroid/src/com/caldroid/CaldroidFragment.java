@@ -16,6 +16,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -97,6 +98,7 @@ public class CaldroidFragment extends DialogFragment {
 	/**
 	 * Initial data
 	 */
+	protected String dialogTitle;
 	protected int month = -1;
 	protected int year = -1;
 	protected ArrayList<DateTime> disableDates = new ArrayList<DateTime>();
@@ -215,6 +217,11 @@ public class CaldroidFragment extends DialogFragment {
 		Bundle bundle = new Bundle();
 		bundle.putInt("month", month);
 		bundle.putInt("year", year);
+
+		if (dialogTitle != null) {
+			bundle.putString("dialogTitle", dialogTitle);
+		}
+
 		if (selectedDates != null && selectedDates.size() > 0) {
 			bundle.putStringArrayList("selectedDates",
 					CalendarHelper.convertToStringList(selectedDates));
@@ -228,7 +235,7 @@ public class CaldroidFragment extends DialogFragment {
 		if (minDateTime != null) {
 			bundle.putString("minDate", minDateTime.toString("yyyy-MM-dd"));
 		}
-		
+
 		if (maxDateTime != null) {
 			bundle.putString("maxDate", maxDateTime.toString("yyyy-MM-dd"));
 		}
@@ -239,6 +246,48 @@ public class CaldroidFragment extends DialogFragment {
 		bundle.putBoolean("fitAllMonths", fitAllMonths);
 
 		return bundle;
+	}
+
+	/**
+	 * Save current state to bundle outState
+	 * 
+	 * @param outState
+	 * @param key
+	 */
+	public void saveStatesToKey(Bundle outState, String key) {
+		outState.putBundle(key, getSavedStates());
+	}
+
+	/**
+	 * Restore current states from savedInstanceState
+	 * 
+	 * @param savedInstanceState
+	 * @param key
+	 */
+	public void restoreStatesFromKey(Bundle savedInstanceState, String key) {
+		if (savedInstanceState != null && savedInstanceState.containsKey(key)) {
+			Bundle caldroidSavedState = savedInstanceState.getBundle(key);
+			setArguments(caldroidSavedState);
+		}
+	}
+
+	/**
+	 * Restore state for dialog
+	 * 
+	 * @param savedInstanceState
+	 * @param key
+	 * @param dialogTag
+	 */
+	public void restoreDialogStatesFromKey(FragmentManager manager, Bundle savedInstanceState,
+			String key, String dialogTag) {
+		restoreStatesFromKey(savedInstanceState, key);
+
+		CaldroidFragment existingDialog = (CaldroidFragment) manager
+				.findFragmentByTag(dialogTag);
+		if (existingDialog != null) {
+			existingDialog.dismiss();
+			show(manager, dialogTag);
+		}
 	}
 
 	/**
@@ -639,7 +688,7 @@ public class CaldroidFragment extends DialogFragment {
 			// Get month, year
 			month = args.getInt("month", -1);
 			year = args.getInt("year", -1);
-			String dialogTitle = args.getString("dialogTitle");
+			dialogTitle = args.getString("dialogTitle");
 			if (dialogTitle != null) {
 				getDialog().setTitle(dialogTitle);
 			}

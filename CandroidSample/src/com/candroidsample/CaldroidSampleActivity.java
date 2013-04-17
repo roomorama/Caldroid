@@ -42,11 +42,9 @@ public class CaldroidSampleActivity extends FragmentActivity {
 		// Setup arguments
 
 		// If Activity is created after rotation
-		if (savedInstanceState != null
-				&& savedInstanceState.containsKey("CALDROID_SAVED_STATE")) {
-			Bundle caldroidSavedState = savedInstanceState
-					.getBundle("CALDROID_SAVED_STATE");
-			caldroidFragment.setArguments(caldroidSavedState);
+		if (savedInstanceState != null) {
+			caldroidFragment.restoreStatesFromKey(savedInstanceState,
+					"CALDROID_SAVED_STATE");
 		}
 		// If activity is created from fresh
 		else {
@@ -182,30 +180,22 @@ public class CaldroidSampleActivity extends FragmentActivity {
 		dialogCaldroidFragment = new CaldroidFragment();
 		dialogCaldroidFragment.setCaldroidListener(listener);
 
-		// Setup arguments
-		Bundle bundle = new Bundle();
-
 		// If activity is recovered from rotation
-		if (savedInstanceState != null
-				&& savedInstanceState
-						.containsKey("DIALOG_CALDROID_SAVED_STATE")) {
-
-			bundle.putAll(savedInstanceState
-					.getBundle("DIALOG_CALDROID_SAVED_STATE"));
-		}
-
-		// Setup dialogTitle
-		bundle.putString("dialogTitle", "Select a date");
-		dialogCaldroidFragment.setArguments(bundle);
-
-		// Close existing dialog before opening new one
 		final String dialogTag = "CALDROID_DIALOG_FRAGMENT";
-		CaldroidFragment existingDialog = (CaldroidFragment) getSupportFragmentManager()
-				.findFragmentByTag(dialogTag);
-		if (existingDialog != null) {
-			existingDialog.dismiss();
-			dialogCaldroidFragment.show(getSupportFragmentManager(), dialogTag);
+		if (savedInstanceState != null) {
+			dialogCaldroidFragment.restoreDialogStatesFromKey(getSupportFragmentManager(),
+					savedInstanceState, "DIALOG_CALDROID_SAVED_STATE",
+					dialogTag);
+			Bundle args = dialogCaldroidFragment.getArguments();
+			args.putString("dialogTitle", "Select a date");
+		} else {
+			// Setup arguments
+			Bundle bundle = new Bundle();
+			// Setup dialogTitle
+			bundle.putString("dialogTitle", "Select a date");
+			dialogCaldroidFragment.setArguments(bundle);
 		}
+
 		showDialogButton.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -225,13 +215,12 @@ public class CaldroidSampleActivity extends FragmentActivity {
 		super.onSaveInstanceState(outState);
 
 		if (caldroidFragment != null) {
-			outState.putBundle("CALDROID_SAVED_STATE",
-					caldroidFragment.getSavedStates());
+			caldroidFragment.saveStatesToKey(outState, "CALDROID_SAVED_STATE");
 		}
 
 		if (dialogCaldroidFragment != null) {
-			Bundle savedState = dialogCaldroidFragment.getSavedStates();
-			outState.putBundle("DIALOG_CALDROID_SAVED_STATE", savedState);
+			dialogCaldroidFragment.saveStatesToKey(outState,
+					"DIALOG_CALDROID_SAVED_STATE");
 		}
 	}
 
