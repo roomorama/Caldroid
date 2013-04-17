@@ -1,6 +1,6 @@
 package com.candroidsample;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.joda.time.DateTime;
 
@@ -17,12 +17,11 @@ import com.caldroid.CaldroidGridAdapter;
 
 public class CaldroidSampleCustomAdapter extends CaldroidGridAdapter {
 
+
 	public CaldroidSampleCustomAdapter(Context context, int month, int year,
-			ArrayList<DateTime> disableDates,
-			ArrayList<DateTime> selectedDates, DateTime minDateTime,
-			DateTime maxDateTime, int startDayOfWeek) {
-		super(context, month, year, disableDates, selectedDates, minDateTime,
-				maxDateTime, startDayOfWeek);
+			HashMap<String, Object> caldroidData,
+			HashMap<String, Object> extraData) {
+		super(context, month, year, caldroidData, extraData);
 	}
 
 	@Override

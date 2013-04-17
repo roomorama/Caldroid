@@ -3,6 +3,7 @@ package com.caldroid;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.joda.time.DateTime;
@@ -105,6 +106,15 @@ public class CaldroidFragment extends DialogFragment {
 	protected ArrayList<DateTime> dateInMonthsList;
 
 	/**
+	 * caldroidData belongs to Caldroid
+	 */
+	protected HashMap<String, Object> caldroidData = new HashMap<String, Object>();
+	/**
+	 * extraData belongs to client
+	 */
+	protected HashMap<String, Object> extraData = new HashMap<String, Object>();
+
+	/**
 	 * First column of calendar is Sunday
 	 */
 	protected int startDayOfWeek = DateTimeConstants.SUNDAY;
@@ -143,8 +153,7 @@ public class CaldroidFragment extends DialogFragment {
 	 */
 	public CaldroidGridAdapter getNewDatesGridAdapter(int month, int year) {
 		return new CaldroidGridAdapter(getActivity(), month, year,
-				disableDates, selectedDates, minDateTime, maxDateTime,
-				startDayOfWeek);
+				getCaldroidData(), extraData);
 	}
 
 	/**
@@ -167,13 +176,46 @@ public class CaldroidFragment extends DialogFragment {
 	}
 
 	/**
+	 * caldroidData return data belong to Caldroid
+	 * 
+	 * @return
+	 */
+	public HashMap<String, Object> getCaldroidData() {
+		caldroidData.clear();
+		caldroidData.put("disableDates", disableDates);
+		caldroidData.put("selectedDates", selectedDates);
+		caldroidData.put("minDateTime", minDateTime);
+		caldroidData.put("maxDateTime", maxDateTime);
+		caldroidData.put("startDayOfWeek", Integer.valueOf(startDayOfWeek));
+		return caldroidData;
+	}
+
+	/**
+	 * Extra data is data belong to Client
+	 * 
+	 * @return
+	 */
+	public HashMap<String, Object> getExtraData() {
+		return extraData;
+	}
+
+	/**
+	 * Client can set custom data in this HashMap
+	 * 
+	 * @param extraData
+	 */
+	public void setExtraData(HashMap<String, Object> extraData) {
+		this.extraData = extraData;
+	}
+
+	/**
 	 * Get current virtual position of the month being viewed
 	 */
 	public int getCurrentVirtualPosition() {
 		int currentPage = dateViewPager.getCurrentItem();
 		return pageChangeListener.getCurrent(currentPage);
 	}
-	
+
 	/**
 	 * Move calendar to the specified date
 	 * 
@@ -541,10 +583,13 @@ public class CaldroidFragment extends DialogFragment {
 
 		// Refresh the date grid views
 		for (CaldroidGridAdapter adapter : datePagerAdapters) {
-			adapter.setMinDateTime(minDateTime);
-			adapter.setMaxDateTime(maxDateTime);
-			adapter.setDisableDates(disableDates);
-			adapter.setSelectedDates(selectedDates);
+			// Reset caldroid data
+			adapter.setCaldroidData(getCaldroidData());
+
+			// Reset extra data
+			adapter.setExtraData(extraData);
+
+			// Refresh view
 			adapter.notifyDataSetChanged();
 		}
 	}

@@ -2,6 +2,7 @@ package com.caldroid;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 import org.joda.time.DateTime;
 
@@ -29,14 +30,27 @@ public class CaldroidGridAdapter extends BaseAdapter {
 	protected ArrayList<DateTime> selectedDates;
 	protected DateTime minDateTime;
 	protected DateTime maxDateTime;
+	protected DateTime today;
 	protected int startDayOfWeek;
+
+	/**
+	 * caldroidData belongs to Caldroid
+	 */
+	protected HashMap<String, Object> caldroidData = new HashMap<String, Object>();
+	/**
+	 * extraData belongs to client
+	 */
+	protected HashMap<String, Object> extraData = new HashMap<String, Object>();
+
 	
 	public void setAdapterDateTime(DateTime dateTime) {
 		this.month = dateTime.getMonthOfYear();
 		this.year = dateTime.getYear();
-		this.datetimeList = CalendarHelper.getFullWeeks(this.month, this.year, startDayOfWeek);
+		this.datetimeList = CalendarHelper.getFullWeeks(this.month, this.year,
+				startDayOfWeek);
 	}
 
+	// GETTERS AND SETTERS
 	public ArrayList<DateTime> getDatetimeList() {
 		return datetimeList;
 	}
@@ -73,22 +87,61 @@ public class CaldroidGridAdapter extends BaseAdapter {
 		this.selectedDates = selectedDates;
 	}
 
-	protected DateTime today;
+	public HashMap<String, Object> getCaldroidData() {
+		return caldroidData;
+	}
 
+	public void setCaldroidData(HashMap<String, Object> caldroidData) {
+		this.caldroidData = caldroidData;
+		
+		// Reset parameters
+		populateFromCaldroidData();
+	}
+
+	public HashMap<String, Object> getExtraData() {
+		return extraData;
+	}
+
+	public void setExtraData(HashMap<String, Object> extraData) {
+		this.extraData = extraData;
+	}
+
+
+	/**
+	 * Constructor
+	 * 
+	 * @param context
+	 * @param month
+	 * @param year
+	 * @param caldroidData
+	 * @param extraData
+	 */
 	public CaldroidGridAdapter(Context context, int month, int year,
-			ArrayList<DateTime> disableDates,
-			ArrayList<DateTime> selectedDates, DateTime minDateTime,
-			DateTime maxDateTime, int startDayOfWeek) {
+			HashMap<String, Object> caldroidData,
+			HashMap<String, Object> extraData) {
 		super();
 		this.month = month;
 		this.year = year;
 		this.context = context;
-		this.disableDates = disableDates;
-		this.selectedDates = selectedDates;
-		this.minDateTime = minDateTime;
-		this.maxDateTime = maxDateTime;
-		this.startDayOfWeek = startDayOfWeek;
-		this.datetimeList = CalendarHelper.getFullWeeks(this.month, this.year, startDayOfWeek);
+		this.caldroidData = caldroidData;
+		this.extraData = extraData;
+
+		// Get data from caldroidData
+		populateFromCaldroidData();
+	}
+	
+	/**
+	 * Retrieve internal parameters from caldroid data
+	 */
+	@SuppressWarnings("unchecked")
+	private void populateFromCaldroidData() {
+		disableDates = (ArrayList<DateTime>) caldroidData.get("disableDates");
+		selectedDates = (ArrayList<DateTime>) caldroidData.get("selectedDates");
+		minDateTime = (DateTime) caldroidData.get("minDateTime");
+		maxDateTime = (DateTime) caldroidData.get("maxDateTime");
+		startDayOfWeek = (Integer) caldroidData.get("startDayOfWeek");
+		this.datetimeList = CalendarHelper.getFullWeeks(this.month, this.year,
+				startDayOfWeek);
 	}
 
 	protected DateTime getToday() {
@@ -126,9 +179,9 @@ public class CaldroidGridAdapter extends BaseAdapter {
 		if (convertView == null) {
 			cellView = (TextView) inflater.inflate(R.layout.date_cell, null);
 		}
-		
+
 		cellView.setTextColor(Color.BLACK);
-		
+
 		// Get dateTime of this cell
 		DateTime dateTime = this.datetimeList.get(position);
 		Resources resources = context.getResources();
@@ -138,7 +191,7 @@ public class CaldroidGridAdapter extends BaseAdapter {
 			cellView.setTextColor(resources
 					.getColor(R.color.caldroid_darker_gray));
 		}
-		
+
 		boolean shouldResetDiabledView = false;
 		boolean shouldResetSelectedView = false;
 
@@ -174,14 +227,14 @@ public class CaldroidGridAdapter extends BaseAdapter {
 		} else {
 			shouldResetSelectedView = true;
 		}
-		
+
 		if (shouldResetDiabledView && shouldResetSelectedView) {
 			// Customize for today
 			if (dateTime.equals(getToday())) {
 				cellView.setBackgroundResource(R.drawable.red_border);
 			} else {
 				cellView.setBackgroundResource(R.drawable.cell_bg);
-			}			
+			}
 		}
 
 		cellView.setText("" + dateTime.getDayOfMonth());

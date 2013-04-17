@@ -10,7 +10,7 @@ Caldroid can be used with Android 2.2 and above. Caldroid is extracted from [off
 If you are using Caldroid in your app and keen to list it here, please open a new issue on Github :)
 
 
-<img src="https://raw.github.com/thomasdao/Caldroid/master/screenshot/1.png" width="270">
+<img src="https://raw.github.com/thomasdao/Caldroid/master/screenshot/1.png" width="270" style="margin-right:10px;">
 <img src="https://raw.github.com/thomasdao/Caldroid/master/screenshot/2.png" width="270">
 
 Setup
@@ -187,7 +187,7 @@ public class CaldroidSampleCustomFragment extends CaldroidFragment {
 	@Override
 	public CaldroidGridAdapter getNewDatesGridAdapter(int month, int year) {
 		// TODO Auto-generated method stub
-		return new CaldroidSampleCustomAdapter(getActivity(), month, year, disableDates, selectedDates, minDateTime, maxDateTime, startDayOfWeek);
+		return new CaldroidSampleCustomAdapter(getActivity(), month, year, getCaldroidData(), extraData);
 	}
 
 }
@@ -201,7 +201,33 @@ To see how it works, you can uncomment this line in CaldroidSampleActivity
 // final CaldroidSampleCustomFragment caldroidFragment = new CaldroidSampleCustomFragment();
 ```
 
+The ```extraData``` is a ```HashMap<String, Object>```, is designed to let client injects custom data to CaldroidGridAdapter, so that data can be used to customize the date grid view. Usage is simple:
 
+In your client code:
+
+```
+// To set the extraData:
+HashMap<String, Object> extraData = caldroidFragment.getExtraData();
+extraData.put("YOUR_CUSTOM_DATA_KEY1", yourCustomData1);
+extraData.put("YOUR_CUSTOM_DATA_KEY2", yourCustomData2);
+
+// Refresh view
+caldroidFragment.refreshView();
+
+```
+
+In the CaldroidSampleCustomAdapter:
+
+```
+@Override
+	public View getView(int position, View convertView, ViewGroup parent) {
+    // Get your data here
+    ArrayList yourCustomData1 = (ArrayList) extraData.get("YOUR_CUSTOM_DATA_KEY1");
+    String yourCustomData2 = (String) extraData.get("YOUR_CUSTOM_DATA_KEY2");
+    
+    // Continue to build your customized view
+  }
+```
 
 Basic Structure
 ===============

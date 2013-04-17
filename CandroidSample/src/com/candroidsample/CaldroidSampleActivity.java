@@ -31,11 +31,11 @@ public class CaldroidSampleActivity extends FragmentActivity {
 
 		// Setup caldroid fragment
 		// **** If you want normal CaldroidFragment, use below line ****
-		final CaldroidFragment caldroidFragment = new CaldroidFragment();
+//		final CaldroidFragment caldroidFragment = new CaldroidFragment();
 
 		// This is to show customized fragment
 		// **** If you want customized version, uncomment below line ****
-//		final CaldroidSampleCustomFragment caldroidFragment = new CaldroidSampleCustomFragment();
+		final CaldroidSampleCustomFragment caldroidFragment = new CaldroidSampleCustomFragment();
 		
 		// Setup arguments
 		Bundle args = new Bundle();
