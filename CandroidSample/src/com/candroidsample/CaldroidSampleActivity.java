@@ -145,7 +145,7 @@ public class CaldroidSampleActivity extends FragmentActivity {
 				
 				// Move to date
 //				cal = Calendar.getInstance();
-//				cal.add(Calendar.MONTH, -12);
+//				cal.add(Calendar.MONTH, 12);
 //				caldroidFragment.moveToDate(cal.getTime());
 
 				String text = "Today: " + formatter.format(new Date()) + "\n";

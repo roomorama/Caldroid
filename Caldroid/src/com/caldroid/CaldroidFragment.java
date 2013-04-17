@@ -35,30 +35,30 @@ import com.antonyt.infiniteviewpager.InfiniteViewPager;
 
 /**
  * Caldroid is a fragment that display calendar with dates in a month. Caldroid
- * can be used as embedded fragment, or as dialog fragment.
- * 
- * Caldroid fragment includes 4 main parts:
- * 
- * 1) Month title view: show the month and year (e.g MARCH, 2013)
- * 
- * 2) Navigation arrows: to navigate to next month or previous month
- * 
+ * can be used as embedded fragment, or as dialog fragment. <br/>
+ * <br/>
+ * Caldroid fragment includes 4 main parts:<br/>
+ * <br/>
+ * 1) Month title view: show the month and year (e.g MARCH, 2013) <br/>
+ * <br/>
+ * 2) Navigation arrows: to navigate to next month or previous month <br/>
+ * <br/>
  * 3) Weekday gridview: contains only 1 row and 7 columns. To display
- * "SUN, MON, TUE, WED, THU, FRI, SAT"
- * 
+ * "SUN, MON, TUE, WED, THU, FRI, SAT" <br/>
+ * <br/>
  * 4) An infinite view pager that allow user to swipe left/right to change
  * month. This library is taken from
- * https://github.com/antonyt/InfiniteViewPager
- * 
+ * https://github.com/antonyt/InfiniteViewPager <br/>
+ * <br/>
  * This infinite view pager recycles 4 fragment, each fragment contains a grid
  * view with 7 columns to display the dates in month. Whenever user swipes
- * different screen, the date grid views are updated.
- * 
+ * different screen, the date grid views are updated. <br/>
+ * <br/>
  * Caldroid fragment supports setting min/max date, selecting dates in a range,
  * setting disabled dates, highlighting today. It includes convenient methods to
  * work with date and string, enable or disable the navigation arrows. User can
- * also swipe left/right to change months.
- * 
+ * also swipe left/right to change months.<br/>
+ * <br/>
  * Caldroid code is simple and clean partly because of powerful JODA DateTime
  * library!
  * 
@@ -599,7 +599,7 @@ public class CaldroidFragment extends DialogFragment {
 	 * dialogTitle, showNavigationArrows,(String) disableDates, selectedDates,
 	 * minDate, maxDate
 	 */
-	private void retrieveInitialArgs() {
+	private void retrieveInitialArgs(Bundle savedInstanceState) {
 		// Get arguments
 		Bundle args = getArguments();
 		if (args != null) {
@@ -717,13 +717,14 @@ public class CaldroidFragment extends DialogFragment {
 		super.onDestroyView();
 	}
 
+	
 	/**
 	 * Setup view
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		retrieveInitialArgs();
+		retrieveInitialArgs(savedInstanceState);
 
 		View view = inflater.inflate(R.layout.calendar_view, container, false);
 
