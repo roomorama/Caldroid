@@ -176,30 +176,31 @@ public class CaldroidSampleActivity extends FragmentActivity {
 
 		Button showDialogButton = (Button) findViewById(R.id.show_dialog_button);
 
-		// Setup caldroid to use as dialog
-		dialogCaldroidFragment = new CaldroidFragment();
-		dialogCaldroidFragment.setCaldroidListener(listener);
-
-		// If activity is recovered from rotation
-		final String dialogTag = "CALDROID_DIALOG_FRAGMENT";
-		if (savedInstanceState != null) {
-			dialogCaldroidFragment.restoreDialogStatesFromKey(getSupportFragmentManager(),
-					savedInstanceState, "DIALOG_CALDROID_SAVED_STATE",
-					dialogTag);
-			Bundle args = dialogCaldroidFragment.getArguments();
-			args.putString("dialogTitle", "Select a date");
-		} else {
-			// Setup arguments
-			Bundle bundle = new Bundle();
-			// Setup dialogTitle
-			bundle.putString("dialogTitle", "Select a date");
-			dialogCaldroidFragment.setArguments(bundle);
-		}
-
+		final Bundle state = savedInstanceState;
 		showDialogButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
+				// Setup caldroid to use as dialog
+				dialogCaldroidFragment = new CaldroidFragment();
+				dialogCaldroidFragment.setCaldroidListener(listener);
+
+				// If activity is recovered from rotation
+				final String dialogTag = "CALDROID_DIALOG_FRAGMENT";
+				if (state != null) {
+					dialogCaldroidFragment.restoreDialogStatesFromKey(getSupportFragmentManager(),
+							state, "DIALOG_CALDROID_SAVED_STATE",
+							dialogTag);
+					Bundle args = dialogCaldroidFragment.getArguments();
+					args.putString("dialogTitle", "Select a date");
+				} else {
+					// Setup arguments
+					Bundle bundle = new Bundle();
+					// Setup dialogTitle
+					bundle.putString("dialogTitle", "Select a date");
+					dialogCaldroidFragment.setArguments(bundle);
+				}
+
 				dialogCaldroidFragment.show(getSupportFragmentManager(),
 						dialogTag);
 			}

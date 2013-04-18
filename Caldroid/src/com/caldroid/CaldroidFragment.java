@@ -12,6 +12,7 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -278,8 +280,8 @@ public class CaldroidFragment extends DialogFragment {
 	 * @param key
 	 * @param dialogTag
 	 */
-	public void restoreDialogStatesFromKey(FragmentManager manager, Bundle savedInstanceState,
-			String key, String dialogTag) {
+	public void restoreDialogStatesFromKey(FragmentManager manager,
+			Bundle savedInstanceState, String key, String dialogTag) {
 		restoreStatesFromKey(savedInstanceState, key);
 
 		CaldroidFragment existingDialog = (CaldroidFragment) manager
@@ -689,8 +691,15 @@ public class CaldroidFragment extends DialogFragment {
 			month = args.getInt("month", -1);
 			year = args.getInt("year", -1);
 			dialogTitle = args.getString("dialogTitle");
-			if (dialogTitle != null) {
-				getDialog().setTitle(dialogTitle);
+			Dialog dialog = getDialog();
+			if (dialog != null) {
+				if (dialogTitle != null) {
+					dialog.setTitle(dialogTitle);
+				} else {
+					// Don't display title bar if user did not supply
+					// dialogTitle
+					dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+				}
 			}
 
 			// Get start day of Week. Default calendar first column is SUNDAY
