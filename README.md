@@ -302,6 +302,28 @@ In the CaldroidSampleCustomAdapter:
   }
 ```
 
+## Client can customize look and feel of almost all views
+
+Client can set color of the weekday symbols (SUN, MON, ...) by:
+
+```
+WeekdayArrayAdapter.textColor = Color.BLUE;
+```
+
+For more customization, client can supply adapter to the weekdayGridView
+
+```
+caldroidFragment.getWeekdayGridView().setAdapter(YOUR_ADAPTER);
+```
+
+User can also customize the navigation arrows and month title textView
+
+```
+public Button getLeftArrowButton();
+public Button getRightArrowButton();
+public TextView getMonthTitleTextView();
+```
+
 Basic Structure
 ===============
 
