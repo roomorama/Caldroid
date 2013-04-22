@@ -4,7 +4,6 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeConstants;
@@ -13,14 +12,11 @@ import org.joda.time.format.DateTimeFormatter;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,7 +24,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
@@ -167,6 +162,36 @@ public class CaldroidFragment extends DialogFragment {
 	 */
 	public GridView getWeekdayGridView() {
 		return weekdayGridView;
+	}
+
+	/**
+	 * To let user customize the navigation buttons
+	 */
+	public Button getLeftArrowButton() {
+		return leftArrowButton;
+	}
+
+	public void setLeftArrowButton(Button leftArrowButton) {
+		this.leftArrowButton = leftArrowButton;
+	}
+
+	public Button getRightArrowButton() {
+		return rightArrowButton;
+	}
+
+	public void setRightArrowButton(Button rightArrowButton) {
+		this.rightArrowButton = rightArrowButton;
+	}
+
+	/**
+	 * To let client customize month title textview
+	 */
+	public TextView getMonthTitleTextView() {
+		return monthTitleTextView;
+	}
+
+	public void setMonthTitleTextView(TextView monthTitleTextView) {
+		this.monthTitleTextView = monthTitleTextView;
 	}
 
 	/**
@@ -796,7 +821,6 @@ public class CaldroidFragment extends DialogFragment {
 	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setRetainInstance(true);
 	}
@@ -1133,51 +1157,6 @@ public class CaldroidFragment extends DialogFragment {
 			// Refresh dateInMonthsList
 			dateInMonthsList.clear();
 			dateInMonthsList.addAll(currentAdapter.getDatetimeList());
-		}
-
-	}
-
-	/**
-	 * Customize the weekday gridview
-	 */
-	private class WeekdayArrayAdapter extends ArrayAdapter<String> {
-
-		public WeekdayArrayAdapter(Context context, int textViewResourceId,
-				List<String> objects) {
-			super(context, textViewResourceId, objects);
-		}
-
-		// To prevent cell highlighted when clicked
-		@Override
-		public boolean areAllItemsEnabled() {
-			return false;
-		}
-
-		@Override
-		public boolean isEnabled(int position) {
-			return false;
-		}
-
-		// Set color to gray and text size to 12sp
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			// To customize text size and color
-			TextView textView = (TextView) super.getView(position, convertView,
-					parent);
-			String item = getDaysOfWeek().get(position);
-
-			// Show smaller text if the size of the text is 4 or more in some
-			// locale
-			if (item.length() <= 3) {
-				textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
-			} else {
-				textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11);
-			}
-
-			textView.setTextColor(getResources()
-					.getColor(R.color.caldroid_gray));
-			textView.setGravity(Gravity.CENTER);
-			return textView;
 		}
 
 	}
