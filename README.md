@@ -42,16 +42,17 @@ t.commit();
 Caldroid accepts numerous arguments during start up: 
 
 ```
-int month
-int year
-String dialogTitle
-boolean showNavigationArrows
-ArrayList<String> disableDates
-ArrayList<String> selectedDates
-String minDate
-String maxDate with yyyy-MM-dd format
-boolean enableSwipe
-int startDayOfWeek
+public final static String DIALOG_TITLE = "dialogTitle";
+public final static String MONTH = "month";
+public final static String YEAR = "year";
+public final static String SHOW_NAVIGATION_ARROWS = "showNavigationArrows";
+public final static String DISABLE_DATES = "disableDates";
+public final static String SELECTED_DATES = "selectedDates";
+public final static String MIN_DATE = "minDate";
+public final static String MAX_DATE = "maxDate";
+public final static String ENABLE_SWIPE = "enableSwipe";
+public final static String START_DAY_OF_WEEK = "startDayOfWeek";
+public final static String FIT_ALL_MONTHS = "fitAllMonths";
 ```
 
 To customize the startDayOfWeek, just use 
@@ -214,10 +215,10 @@ Then you can restore the state in ```onCreate(Bundle savedInstanceState)``` of y
 		else {
 			Bundle args = new Bundle();
 			Calendar cal = Calendar.getInstance();
-			args.putInt("month", cal.get(Calendar.MONTH) + 1);
-			args.putInt("year", cal.get(Calendar.YEAR));
-			args.putBoolean("enableSwipe", true);
-			args.putBoolean("fitAllMonths", false);
+      args.putInt(CaldroidFragment.MONTH, cal.get(Calendar.MONTH) + 1);
+      args.putInt(CaldroidFragment.YEAR, cal.get(Calendar.YEAR));
+      args.putBoolean(CaldroidFragment.ENABLE_SWIPE, true);
+      args.putBoolean(CaldroidFragment.FIT_ALL_MONTHS, false);
 			caldroidFragment.setArguments(args);
 		}
 
@@ -237,7 +238,7 @@ If you use Caldroid as dialog, you can use ```restoreDialogStatesFromKey```
 			// Setup arguments
 			Bundle bundle = new Bundle();
 			// Setup dialogTitle
-			bundle.putString("dialogTitle", "Select a date");
+			bundle.putString(CaldroidFragment.DIALOG_TITLE, "Select a date");
 			dialogCaldroidFragment.setArguments(bundle);
 		}
 ```

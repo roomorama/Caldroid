@@ -93,6 +93,27 @@ public class CaldroidFragment extends DialogFragment {
 	private ArrayList<DateGridFragment> fragments;
 
 	/**
+	 * Initial params key
+	 */
+	public final static String DIALOG_TITLE = "dialogTitle";
+	public final static String MONTH = "month";
+	public final static String YEAR = "year";
+	public final static String SHOW_NAVIGATION_ARROWS = "showNavigationArrows";
+	public final static String DISABLE_DATES = "disableDates";
+	public final static String SELECTED_DATES = "selectedDates";
+	public final static String MIN_DATE = "minDate";
+	public final static String MAX_DATE = "maxDate";
+	public final static String ENABLE_SWIPE = "enableSwipe";
+	public final static String START_DAY_OF_WEEK = "startDayOfWeek";
+	public final static String FIT_ALL_MONTHS = "fitAllMonths";
+	
+	/**
+	 * For internal use
+	 */
+	public final static String MIN_DATE_TIME = "minDateTime";
+	public final static String MAX_DATE_TIME = "maxDateTime";
+	
+	/**
 	 * Initial data
 	 */
 	protected String dialogTitle;
@@ -211,11 +232,11 @@ public class CaldroidFragment extends DialogFragment {
 	 */
 	public HashMap<String, Object> getCaldroidData() {
 		caldroidData.clear();
-		caldroidData.put("disableDates", disableDates);
-		caldroidData.put("selectedDates", selectedDates);
-		caldroidData.put("minDateTime", minDateTime);
-		caldroidData.put("maxDateTime", maxDateTime);
-		caldroidData.put("startDayOfWeek", Integer.valueOf(startDayOfWeek));
+		caldroidData.put(DISABLE_DATES, disableDates);
+		caldroidData.put(SELECTED_DATES, selectedDates);
+		caldroidData.put(MIN_DATE_TIME, minDateTime);
+		caldroidData.put(MAX_DATE_TIME, maxDateTime);
+		caldroidData.put(START_DAY_OF_WEEK, Integer.valueOf(startDayOfWeek));
 		return caldroidData;
 	}
 
@@ -242,35 +263,35 @@ public class CaldroidFragment extends DialogFragment {
 	 */
 	public Bundle getSavedStates() {
 		Bundle bundle = new Bundle();
-		bundle.putInt("month", month);
-		bundle.putInt("year", year);
+		bundle.putInt(MONTH, month);
+		bundle.putInt(YEAR, year);
 
 		if (dialogTitle != null) {
-			bundle.putString("dialogTitle", dialogTitle);
+			bundle.putString(DIALOG_TITLE, dialogTitle);
 		}
 
 		if (selectedDates != null && selectedDates.size() > 0) {
-			bundle.putStringArrayList("selectedDates",
+			bundle.putStringArrayList(SELECTED_DATES,
 					CalendarHelper.convertToStringList(selectedDates));
 		}
 
 		if (disableDates != null && disableDates.size() > 0) {
-			bundle.putStringArrayList("disableDates",
+			bundle.putStringArrayList(DISABLE_DATES,
 					CalendarHelper.convertToStringList(disableDates));
 		}
 
 		if (minDateTime != null) {
-			bundle.putString("minDate", minDateTime.toString("yyyy-MM-dd"));
+			bundle.putString(MIN_DATE, minDateTime.toString("yyyy-MM-dd"));
 		}
 
 		if (maxDateTime != null) {
-			bundle.putString("maxDate", maxDateTime.toString("yyyy-MM-dd"));
+			bundle.putString(MAX_DATE, maxDateTime.toString("yyyy-MM-dd"));
 		}
 
-		bundle.putBoolean("showNavigationArrows", showNavigationArrows);
-		bundle.putBoolean("enableSwipe", enableSwipe);
-		bundle.putInt("startDayOfWeek", startDayOfWeek);
-		bundle.putBoolean("fitAllMonths", fitAllMonths);
+		bundle.putBoolean(SHOW_NAVIGATION_ARROWS, showNavigationArrows);
+		bundle.putBoolean(ENABLE_SWIPE, enableSwipe);
+		bundle.putInt(START_DAY_OF_WEEK, startDayOfWeek);
+		bundle.putBoolean(FIT_ALL_MONTHS, fitAllMonths);
 
 		return bundle;
 	}
@@ -713,9 +734,9 @@ public class CaldroidFragment extends DialogFragment {
 		Bundle args = getArguments();
 		if (args != null) {
 			// Get month, year
-			month = args.getInt("month", -1);
-			year = args.getInt("year", -1);
-			dialogTitle = args.getString("dialogTitle");
+			month = args.getInt(MONTH, -1);
+			year = args.getInt(YEAR, -1);
+			dialogTitle = args.getString(DIALOG_TITLE);
 			Dialog dialog = getDialog();
 			if (dialog != null) {
 				if (dialogTitle != null) {
@@ -728,7 +749,7 @@ public class CaldroidFragment extends DialogFragment {
 			}
 
 			// Get start day of Week. Default calendar first column is SUNDAY
-			startDayOfWeek = args.getInt("startDayOfWeek",
+			startDayOfWeek = args.getInt(START_DAY_OF_WEEK,
 					DateTimeConstants.SUNDAY);
 			if (startDayOfWeek > 7) {
 				startDayOfWeek = startDayOfWeek % 7;
@@ -736,20 +757,20 @@ public class CaldroidFragment extends DialogFragment {
 
 			// Should show arrow
 			showNavigationArrows = args
-					.getBoolean("showNavigationArrows", true);
+					.getBoolean(SHOW_NAVIGATION_ARROWS, true);
 
 			// Should enable swipe to change month
-			enableSwipe = args.getBoolean("enableSwipe", true);
+			enableSwipe = args.getBoolean(ENABLE_SWIPE, true);
 
 			// Get fitAllMonths
-			fitAllMonths = args.getBoolean("fitAllMonths", true);
+			fitAllMonths = args.getBoolean(FIT_ALL_MONTHS, true);
 
 			DateTimeFormatter formatter = DateTimeFormat
 					.forPattern("yyyy-MM-dd");
 
 			// Get disable dates
 			ArrayList<String> disableDateStrings = args
-					.getStringArrayList("disableDates");
+					.getStringArrayList(DISABLE_DATES);
 			if (disableDateStrings != null && disableDateStrings.size() > 0) {
 				for (String dateString : disableDateStrings) {
 					DateTime dt = formatter.parseDateTime(dateString);
@@ -759,7 +780,7 @@ public class CaldroidFragment extends DialogFragment {
 
 			// Get selected dates
 			ArrayList<String> selectedDateStrings = args
-					.getStringArrayList("selectedDates");
+					.getStringArrayList(SELECTED_DATES);
 			if (selectedDateStrings != null && selectedDateStrings.size() > 0) {
 				for (String dateString : selectedDateStrings) {
 					DateTime dt = formatter.parseDateTime(dateString);
@@ -768,13 +789,13 @@ public class CaldroidFragment extends DialogFragment {
 			}
 
 			// Get min date and max date
-			String minDateTimeString = args.getString("minDate");
+			String minDateTimeString = args.getString(MIN_DATE);
 			if (minDateTimeString != null) {
 				minDateTime = CalendarHelper.getDateTimeFromString(
 						minDateTimeString, null);
 			}
 
-			String maxDateTimeString = args.getString("maxDate");
+			String maxDateTimeString = args.getString(MAX_DATE);
 			if (maxDateTimeString != null) {
 				maxDateTime = CalendarHelper.getDateTimeFromString(
 						maxDateTimeString, null);
@@ -802,9 +823,9 @@ public class CaldroidFragment extends DialogFragment {
 
 		// Supply num input as an argument.
 		Bundle args = new Bundle();
-		args.putString("dialogTitle", dialogTitle);
-		args.putInt("month", month);
-		args.putInt("year", year);
+		args.putString(DIALOG_TITLE, dialogTitle);
+		args.putInt(MONTH, month);
+		args.putInt(YEAR, year);
 
 		f.setArguments(args);
 

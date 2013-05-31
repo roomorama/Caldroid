@@ -135,11 +135,11 @@ public class CaldroidGridAdapter extends BaseAdapter {
 	 */
 	@SuppressWarnings("unchecked")
 	private void populateFromCaldroidData() {
-		disableDates = (ArrayList<DateTime>) caldroidData.get("disableDates");
-		selectedDates = (ArrayList<DateTime>) caldroidData.get("selectedDates");
-		minDateTime = (DateTime) caldroidData.get("minDateTime");
-		maxDateTime = (DateTime) caldroidData.get("maxDateTime");
-		startDayOfWeek = (Integer) caldroidData.get("startDayOfWeek");
+		disableDates = (ArrayList<DateTime>) caldroidData.get(CaldroidFragment.DISABLE_DATES);
+		selectedDates = (ArrayList<DateTime>) caldroidData.get(CaldroidFragment.SELECTED_DATES);
+		minDateTime = (DateTime) caldroidData.get(CaldroidFragment.MIN_DATE_TIME);
+		maxDateTime = (DateTime) caldroidData.get(CaldroidFragment.MAX_DATE_TIME);
+		startDayOfWeek = (Integer) caldroidData.get(CaldroidFragment.START_DAY_OF_WEEK);
 		this.datetimeList = CalendarHelper.getFullWeeks(this.month, this.year,
 				startDayOfWeek);
 	}

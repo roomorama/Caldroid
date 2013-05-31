@@ -50,10 +50,10 @@ public class CaldroidSampleActivity extends FragmentActivity {
 		else {
 			Bundle args = new Bundle();
 			Calendar cal = Calendar.getInstance();
-			args.putInt("month", cal.get(Calendar.MONTH) + 1);
-			args.putInt("year", cal.get(Calendar.YEAR));
-			args.putBoolean("enableSwipe", true);
-			args.putBoolean("fitAllMonths", false);
+			args.putInt(CaldroidFragment.MONTH, cal.get(Calendar.MONTH) + 1);
+			args.putInt(CaldroidFragment.YEAR, cal.get(Calendar.YEAR));
+			args.putBoolean(CaldroidFragment.ENABLE_SWIPE, true);
+			args.putBoolean(CaldroidFragment.FIT_ALL_MONTHS, false);
 
 			// Uncomment this to customize startDayOfWeek
 			// args.putInt("startDayOfWeek", 6); // Saturday
@@ -192,12 +192,16 @@ public class CaldroidSampleActivity extends FragmentActivity {
 							state, "DIALOG_CALDROID_SAVED_STATE",
 							dialogTag);
 					Bundle args = dialogCaldroidFragment.getArguments();
-					args.putString("dialogTitle", "Select a date");
+					if (args == null) {
+						args = new Bundle();
+						dialogCaldroidFragment.setArguments(args);
+					}
+					args.putString(CaldroidFragment.DIALOG_TITLE, "Select a date");
 				} else {
 					// Setup arguments
 					Bundle bundle = new Bundle();
 					// Setup dialogTitle
-					bundle.putString("dialogTitle", "Select a date");
+					bundle.putString(CaldroidFragment.DIALOG_TITLE, "Select a date");
 					dialogCaldroidFragment.setArguments(bundle);
 				}
 
