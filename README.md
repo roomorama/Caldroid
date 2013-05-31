@@ -207,40 +207,41 @@ Then you can restore the state in ```onCreate(Bundle savedInstanceState)``` of y
 
 ```
 // If Activity is created after rotation
-		if (savedInstanceState != null) {
-			caldroidFragment.restoreStatesFromKey(savedInstanceState,
+if (savedInstanceState != null) {
+  caldroidFragment.restoreStatesFromKey(savedInstanceState,
 					"CALDROID_SAVED_STATE");
-		}
-		// If activity is created from fresh
-		else {
-			Bundle args = new Bundle();
-			Calendar cal = Calendar.getInstance();
-      args.putInt(CaldroidFragment.MONTH, cal.get(Calendar.MONTH) + 1);
-      args.putInt(CaldroidFragment.YEAR, cal.get(Calendar.YEAR));
-      args.putBoolean(CaldroidFragment.ENABLE_SWIPE, true);
-      args.putBoolean(CaldroidFragment.FIT_ALL_MONTHS, false);
-			caldroidFragment.setArguments(args);
-		}
+}
+
+// If activity is created from fresh
+else {
+  Bundle args = new Bundle();
+	Calendar cal = Calendar.getInstance();
+  args.putInt(CaldroidFragment.MONTH, cal.get(Calendar.MONTH) + 1);
+  args.putInt(CaldroidFragment.YEAR, cal.get(Calendar.YEAR));
+  args.putBoolean(CaldroidFragment.ENABLE_SWIPE, true);
+  args.putBoolean(CaldroidFragment.FIT_ALL_MONTHS, false);
+	caldroidFragment.setArguments(args);
+}
 
 ```
 
 If you use Caldroid as dialog, you can use ```restoreDialogStatesFromKey```
 
 ```
-    final String dialogTag = "CALDROID_DIALOG_FRAGMENT";
-    if (savedInstanceState != null) {
-      dialogCaldroidFragment.restoreDialogStatesFromKey(getSupportFragmentManager(),
+final String dialogTag = "CALDROID_DIALOG_FRAGMENT";
+if (savedInstanceState != null) {
+  dialogCaldroidFragment.restoreDialogStatesFromKey(getSupportFragmentManager(),
       					savedInstanceState, "DIALOG_CALDROID_SAVED_STATE",
       					dialogTag);
-			Bundle args = dialogCaldroidFragment.getArguments();
-			args.putString("dialogTitle", "Select a date");
-		} else {
-			// Setup arguments
-			Bundle bundle = new Bundle();
-			// Setup dialogTitle
-			bundle.putString(CaldroidFragment.DIALOG_TITLE, "Select a date");
-			dialogCaldroidFragment.setArguments(bundle);
-		}
+	Bundle args = dialogCaldroidFragment.getArguments();
+	args.putString("dialogTitle", "Select a date");
+} else {
+	// Setup arguments
+	Bundle bundle = new Bundle();
+	// Setup dialogTitle
+	bundle.putString(CaldroidFragment.DIALOG_TITLE, "Select a date");
+	dialogCaldroidFragment.setArguments(bundle);
+}
 ```
 
 Refer to the CaldroidSampleActivity for more detail.
@@ -294,13 +295,13 @@ In the CaldroidSampleCustomAdapter:
 
 ```
 @Override
-	public View getView(int position, View convertView, ViewGroup parent) {
-    // Get your data here
-    ArrayList yourCustomData1 = (ArrayList) extraData.get("YOUR_CUSTOM_DATA_KEY1");
-    String yourCustomData2 = (String) extraData.get("YOUR_CUSTOM_DATA_KEY2");
-    
-    // Continue to build your customized view
-  }
+public View getView(int position, View convertView, ViewGroup parent) {
+  // Get your data here
+  ArrayList yourCustomData1 = (ArrayList) extraData.get("YOUR_CUSTOM_DATA_KEY1");
+  String yourCustomData2 = (String) extraData.get("YOUR_CUSTOM_DATA_KEY2");
+  
+  // Continue to build your customized view
+}
 ```
 
 ## Client can customize look and feel of almost all views
