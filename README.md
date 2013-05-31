@@ -59,7 +59,7 @@ To customize the startDayOfWeek, just use
 
 ```
 Bundle args = new Bundle();
-args.putInt("startDayOfWeek", 6); // calendar starts on SATURDAY
+args.putInt(CaldroidFragment.START_DAY_OF_WEEK, 6); // calendar starts on SATURDAY
 caldroidFragment.setArguments(args);
 ```
 
