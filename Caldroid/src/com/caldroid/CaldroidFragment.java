@@ -24,6 +24,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
@@ -161,6 +162,11 @@ public class CaldroidFragment extends DialogFragment {
 	 */
 	private OnItemClickListener dateItemClickListener;
 
+	/**
+	 * dateItemLongClickListener is fired when user does a longclick on the date cell
+	 */
+	private OnItemLongClickListener dateItemLongClickListener;
+	
 	/**
 	 * caldroidListener inform library client of the event happens inside
 	 * Caldroid
@@ -700,6 +706,39 @@ public class CaldroidFragment extends DialogFragment {
 
 		return dateItemClickListener;
 	}
+	
+	/**
+	 * Callback to listener when date is valid (not disable, not outside of
+	 * min/max date)
+	 * 
+	 * @return consumed event
+	 */
+	private OnItemLongClickListener getDateItemLongClickListener() {
+		dateItemLongClickListener = new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+				DateTime dateTime = dateInMonthsList.get(position);
+
+				if (caldroidListener != null) {
+					if ((minDateTime != null && dateTime.isBefore(minDateTime))
+							|| (maxDateTime != null && dateTime
+									.isAfter(maxDateTime))
+							|| (disableDates != null && disableDates
+									.indexOf(dateTime) != -1)) {
+						return false;
+					}
+
+					caldroidListener.onLongClickDate(dateTime.toDate(), view);
+				}
+				
+				return true;
+			}
+			
+		};
+		
+		return dateItemLongClickListener;
+	}
 
 	/**
 	 * Refresh view when parameter changes. You should always change all
@@ -985,6 +1024,7 @@ public class CaldroidFragment extends DialogFragment {
 			CaldroidGridAdapter adapter = datePagerAdapters.get(i);
 			dateGridFragment.setGridAdapter(adapter);
 			dateGridFragment.setOnItemClickListener(getDateItemClickListener());
+			dateGridFragment.setOnItemLongClickListener(getDateItemLongClickListener());
 		}
 
 		// Setup InfinitePagerAdapter to wrap around MonthPagerAdapter

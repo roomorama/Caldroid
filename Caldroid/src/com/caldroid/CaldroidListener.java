@@ -16,6 +16,8 @@ import android.view.View;
  */
 public abstract class CaldroidListener {
 	public abstract void onSelectDate(Date date, View view);
+	
+	public abstract void onLongClickDate(Date date, View view);
 
 	public void onChangeMonth(int month, int year) {
 		// Do nothing
