@@ -10,8 +10,8 @@ Caldroid can be used with Android 2.2 and above. Caldroid is extracted from [off
 If you are using Caldroid in your app and keen to list it here, please open a new issue on Github :)
 
 
-<img src="https://raw.github.com/thomasdao/Caldroid/master/screenshot/1.png" width="270" style="margin-right:10px;">
-<img src="https://raw.github.com/thomasdao/Caldroid/master/screenshot/2.png" width="270">
+<img src="https://raw.github.com/roomorama/Caldroid/master/screenshot/1.png" width="270" style="margin-right:10px;">
+<img src="https://raw.github.com/roomorama/Caldroid/master/screenshot/2.png" width="270">
 
 Setup
 =====
