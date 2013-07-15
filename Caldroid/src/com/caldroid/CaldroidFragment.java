@@ -106,13 +106,15 @@ public class CaldroidFragment extends DialogFragment {
 	public final static String ENABLE_SWIPE = "enableSwipe";
 	public final static String START_DAY_OF_WEEK = "startDayOfWeek";
 	public final static String FIT_ALL_MONTHS = "fitAllMonths";
-	
+
 	/**
 	 * For internal use
 	 */
-	public final static String MIN_DATE_TIME = "minDateTime";
-	public final static String MAX_DATE_TIME = "maxDateTime";
-	
+	public final static String _MIN_DATE_TIME = "_minDateTime";
+	public final static String _MAX_DATE_TIME = "_maxDateTime";
+	public final static String _BACKGROUND_FOR_DATETIME_MAP = "_backgroundForDateTimeMap";
+	public final static String _TEXT_COLOR_FOR_DATETIME_MAP = "_textColorForDateTimeMap";
+
 	/**
 	 * Initial data
 	 */
@@ -129,10 +131,21 @@ public class CaldroidFragment extends DialogFragment {
 	 * caldroidData belongs to Caldroid
 	 */
 	protected HashMap<String, Object> caldroidData = new HashMap<String, Object>();
+
 	/**
 	 * extraData belongs to client
 	 */
 	protected HashMap<String, Object> extraData = new HashMap<String, Object>();
+
+	/**
+	 * backgroundForDateMap holds background resource for each date
+	 */
+	protected HashMap<DateTime, Integer> backgroundForDateTimeMap = new HashMap<DateTime, Integer>();
+
+	/**
+	 * textColorForDateMap holds color for text for each date
+	 */
+	protected HashMap<DateTime, Integer> textColorForDateTimeMap = new HashMap<DateTime, Integer>();;
 
 	/**
 	 * First column of calendar is Sunday
@@ -192,16 +205,8 @@ public class CaldroidFragment extends DialogFragment {
 		return leftArrowButton;
 	}
 
-	public void setLeftArrowButton(Button leftArrowButton) {
-		this.leftArrowButton = leftArrowButton;
-	}
-
 	public Button getRightArrowButton() {
 		return rightArrowButton;
-	}
-
-	public void setRightArrowButton(Button rightArrowButton) {
-		this.rightArrowButton = rightArrowButton;
 	}
 
 	/**
@@ -234,8 +239,8 @@ public class CaldroidFragment extends DialogFragment {
 		caldroidData.clear();
 		caldroidData.put(DISABLE_DATES, disableDates);
 		caldroidData.put(SELECTED_DATES, selectedDates);
-		caldroidData.put(MIN_DATE_TIME, minDateTime);
-		caldroidData.put(MAX_DATE_TIME, maxDateTime);
+		caldroidData.put(_MIN_DATE_TIME, minDateTime);
+		caldroidData.put(_MAX_DATE_TIME, maxDateTime);
 		caldroidData.put(START_DAY_OF_WEEK, Integer.valueOf(startDayOfWeek));
 		return caldroidData;
 	}
@@ -256,6 +261,74 @@ public class CaldroidFragment extends DialogFragment {
 	 */
 	public void setExtraData(HashMap<String, Object> extraData) {
 		this.extraData = extraData;
+	}
+
+	/**
+	 * Set backgroundForDateMap
+	 */
+	public void setBackgroundResourceForDates(
+			HashMap<Date, Integer> backgroundForDateMap) {
+		// Clear first
+		backgroundForDateTimeMap.clear();
+
+		if (backgroundForDateMap == null || backgroundForDateMap.size() == 0) {
+			return;
+		}
+
+		for (Date date : backgroundForDateMap.keySet()) {
+			Integer resource = backgroundForDateMap.get(date);
+			DateTime dateTime = CalendarHelper.convertDateToDateTime(date);
+			backgroundForDateTimeMap.put(dateTime, resource);
+		}
+	}
+
+	public void setBackgroundResourceForDateTimes(
+			HashMap<DateTime, Integer> backgroundForDateTimeMap) {
+		this.backgroundForDateTimeMap.putAll(backgroundForDateTimeMap);
+	}
+
+	public void setBackgroundResourceForDate(int backgroundRes, Date date) {
+		DateTime dateTime = CalendarHelper.convertDateToDateTime(date);
+		backgroundForDateTimeMap.put(dateTime, Integer.valueOf(backgroundRes));
+	}
+
+	public void setBackgroundResourceForDateTime(int backgroundRes,
+			DateTime dateTime) {
+		backgroundForDateTimeMap.put(dateTime, Integer.valueOf(backgroundRes));
+	}
+
+	/**
+	 * Set textColorForDateMap
+	 * 
+	 * @return
+	 */
+	public void setTextColorForDates(HashMap<Date, Integer> textColorForDateMap) {
+		// Clear first
+		textColorForDateTimeMap.clear();
+
+		if (textColorForDateMap == null || textColorForDateMap.size() == 0) {
+			return;
+		}
+
+		for (Date date : textColorForDateMap.keySet()) {
+			Integer resource = textColorForDateMap.get(date);
+			DateTime dateTime = CalendarHelper.convertDateToDateTime(date);
+			textColorForDateTimeMap.put(dateTime, resource);
+		}
+	}
+
+	public void setTextColorForDateTimes(
+			HashMap<DateTime, Integer> textColorForDateTimeMap) {
+		this.textColorForDateTimeMap.putAll(textColorForDateTimeMap);
+	}
+
+	public void setTextColorForDate(int textColorRes, Date date) {
+		DateTime dateTime = CalendarHelper.convertDateToDateTime(date);
+		textColorForDateTimeMap.put(dateTime, Integer.valueOf(textColorRes));
+	}
+
+	public void setTextColorForDateTime(int textColorRes, DateTime dateTime) {
+		textColorForDateTimeMap.put(dateTime, Integer.valueOf(textColorRes));
 	}
 
 	/**
@@ -860,6 +933,8 @@ public class CaldroidFragment extends DialogFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		retrieveInitialArgs(savedInstanceState);
+		extraData.put(_BACKGROUND_FOR_DATETIME_MAP, backgroundForDateTimeMap);
+		extraData.put(_TEXT_COLOR_FOR_DATETIME_MAP, textColorForDateTimeMap);
 
 		View view = inflater.inflate(R.layout.calendar_view, container, false);
 

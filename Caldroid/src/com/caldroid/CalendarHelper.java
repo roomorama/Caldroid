@@ -32,7 +32,7 @@ public class CalendarHelper {
 			int startDayOfWeek) {
 		ArrayList<DateTime> datetimeList = new ArrayList<DateTime>();
 
-		DateTime firstDateOfMonth = new DateTime(year, month, 1, 0, 0);
+		DateTime firstDateOfMonth = new DateTime(year, month, 1, 0, 0, 0, 0);
 		DateTime lastDateOfMonth = firstDateOfMonth.plusMonths(1).minusDays(1);
 
 		// Add dates of first week from previous month
@@ -93,7 +93,7 @@ public class CalendarHelper {
 	public static DateTime convertDateToDateTime(Date date) {
 		DateTime dateTime = new DateTime(date);
 		dateTime = new DateTime(dateTime.getYear(), dateTime.getMonthOfYear(),
-				dateTime.getDayOfMonth(), 0, 0);
+				dateTime.getDayOfMonth(), 0, 0, 0, 0);
 		return dateTime;
 	}
 

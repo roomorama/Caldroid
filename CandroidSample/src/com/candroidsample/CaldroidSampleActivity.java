@@ -24,6 +24,26 @@ public class CaldroidSampleActivity extends FragmentActivity {
 	private CaldroidFragment caldroidFragment;
 	private CaldroidFragment dialogCaldroidFragment;
 
+	private void setCustomResourceForDates() {
+		Calendar cal = Calendar.getInstance();
+
+		// Min date is last 7 days
+		cal.add(Calendar.DATE, -3);
+		Date blueDate = cal.getTime();
+
+		// Max date is next 7 days
+		cal = Calendar.getInstance();
+		cal.add(Calendar.DATE, 4);
+		Date greenDate = cal.getTime();
+		
+		if (caldroidFragment != null) {
+			caldroidFragment.setBackgroundResourceForDate(R.color.blue, blueDate);
+			caldroidFragment.setBackgroundResourceForDate(R.color.green, greenDate);
+			caldroidFragment.setTextColorForDate(R.color.white, blueDate);
+			caldroidFragment.setTextColorForDate(R.color.white, greenDate);
+		}
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -35,8 +55,9 @@ public class CaldroidSampleActivity extends FragmentActivity {
 		// **** If you want normal CaldroidFragment, use below line ****
 		caldroidFragment = new CaldroidFragment();
 
-		// This is to show customized fragment
-		// **** If you want customized version, uncomment below line ****
+		////////////////////////////////////////////////////////////////////////
+		// **** This is to show customized fragment. If you want customized
+		// version, uncomment below line ****
 		// caldroidFragment = new CaldroidSampleCustomFragment();
 
 		// Setup arguments
@@ -59,6 +80,8 @@ public class CaldroidSampleActivity extends FragmentActivity {
 			// args.putInt("startDayOfWeek", 6); // Saturday
 			caldroidFragment.setArguments(args);
 		}
+		
+		setCustomResourceForDates();
 
 		// Attach to the activity
 		FragmentTransaction t = getSupportFragmentManager().beginTransaction();
@@ -188,20 +211,22 @@ public class CaldroidSampleActivity extends FragmentActivity {
 				// If activity is recovered from rotation
 				final String dialogTag = "CALDROID_DIALOG_FRAGMENT";
 				if (state != null) {
-					dialogCaldroidFragment.restoreDialogStatesFromKey(getSupportFragmentManager(),
-							state, "DIALOG_CALDROID_SAVED_STATE",
-							dialogTag);
+					dialogCaldroidFragment.restoreDialogStatesFromKey(
+							getSupportFragmentManager(), state,
+							"DIALOG_CALDROID_SAVED_STATE", dialogTag);
 					Bundle args = dialogCaldroidFragment.getArguments();
 					if (args == null) {
 						args = new Bundle();
 						dialogCaldroidFragment.setArguments(args);
 					}
-					args.putString(CaldroidFragment.DIALOG_TITLE, "Select a date");
+					args.putString(CaldroidFragment.DIALOG_TITLE,
+							"Select a date");
 				} else {
 					// Setup arguments
 					Bundle bundle = new Bundle();
 					// Setup dialogTitle
-					bundle.putString(CaldroidFragment.DIALOG_TITLE, "Select a date");
+					bundle.putString(CaldroidFragment.DIALOG_TITLE,
+							"Select a date");
 					dialogCaldroidFragment.setArguments(bundle);
 				}
 
