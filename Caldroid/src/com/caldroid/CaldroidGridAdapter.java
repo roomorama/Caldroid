@@ -42,7 +42,6 @@ public class CaldroidGridAdapter extends BaseAdapter {
 	 */
 	protected HashMap<String, Object> extraData = new HashMap<String, Object>();
 
-	
 	public void setAdapterDateTime(DateTime dateTime) {
 		this.month = dateTime.getMonthOfYear();
 		this.year = dateTime.getYear();
@@ -93,7 +92,7 @@ public class CaldroidGridAdapter extends BaseAdapter {
 
 	public void setCaldroidData(HashMap<String, Object> caldroidData) {
 		this.caldroidData = caldroidData;
-		
+
 		// Reset parameters
 		populateFromCaldroidData();
 	}
@@ -105,7 +104,6 @@ public class CaldroidGridAdapter extends BaseAdapter {
 	public void setExtraData(HashMap<String, Object> extraData) {
 		this.extraData = extraData;
 	}
-
 
 	/**
 	 * Constructor
@@ -129,17 +127,22 @@ public class CaldroidGridAdapter extends BaseAdapter {
 		// Get data from caldroidData
 		populateFromCaldroidData();
 	}
-	
+
 	/**
 	 * Retrieve internal parameters from caldroid data
 	 */
 	@SuppressWarnings("unchecked")
 	private void populateFromCaldroidData() {
-		disableDates = (ArrayList<DateTime>) caldroidData.get(CaldroidFragment.DISABLE_DATES);
-		selectedDates = (ArrayList<DateTime>) caldroidData.get(CaldroidFragment.SELECTED_DATES);
-		minDateTime = (DateTime) caldroidData.get(CaldroidFragment.MIN_DATE_TIME);
-		maxDateTime = (DateTime) caldroidData.get(CaldroidFragment.MAX_DATE_TIME);
-		startDayOfWeek = (Integer) caldroidData.get(CaldroidFragment.START_DAY_OF_WEEK);
+		disableDates = (ArrayList<DateTime>) caldroidData
+				.get(CaldroidFragment.DISABLE_DATES);
+		selectedDates = (ArrayList<DateTime>) caldroidData
+				.get(CaldroidFragment.SELECTED_DATES);
+		minDateTime = (DateTime) caldroidData
+				.get(CaldroidFragment._MIN_DATE_TIME);
+		maxDateTime = (DateTime) caldroidData
+				.get(CaldroidFragment._MAX_DATE_TIME);
+		startDayOfWeek = (Integer) caldroidData
+				.get(CaldroidFragment.START_DAY_OF_WEEK);
 		this.datetimeList = CalendarHelper.getFullWeeks(this.month, this.year,
 				startDayOfWeek);
 	}
@@ -149,6 +152,36 @@ public class CaldroidGridAdapter extends BaseAdapter {
 			today = CalendarHelper.convertDateToDateTime(new Date());
 		}
 		return today;
+	}
+
+	@SuppressWarnings("unchecked")
+	protected void setCustomResources(DateTime dateTime, TextView textView) {
+		// Set custom background resource
+		HashMap<DateTime, Integer> backgroundForDateTimeMap = (HashMap<DateTime, Integer>) extraData
+				.get(CaldroidFragment._BACKGROUND_FOR_DATETIME_MAP);
+		if (backgroundForDateTimeMap != null) {
+			// Get background resource for the dateTime
+			Integer backgroundResource = backgroundForDateTimeMap.get(dateTime);
+
+			// Set it
+			if (backgroundResource != null) {
+				textView.setBackgroundResource(backgroundResource.intValue());
+			}
+		}
+
+		// Set custom text color
+		HashMap<DateTime, Integer> textColorForDateTimeMap = (HashMap<DateTime, Integer>) extraData
+				.get(CaldroidFragment._TEXT_COLOR_FOR_DATETIME_MAP);
+		if (textColorForDateTimeMap != null) {
+			// Get textColor for the dateTime
+			Integer textColorResource = textColorForDateTimeMap.get(dateTime);
+
+			// Set it
+			if (textColorResource != null) {
+				textView.setTextColor(context.getResources().getColor(
+						textColorResource.intValue()));
+			}
+		}
 	}
 
 	@Override
@@ -238,6 +271,9 @@ public class CaldroidGridAdapter extends BaseAdapter {
 		}
 
 		cellView.setText("" + dateTime.getDayOfMonth());
+
+		// Set custom color if required
+		setCustomResources(dateTime, cellView);
 
 		return cellView;
 	}

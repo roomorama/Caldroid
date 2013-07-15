@@ -17,7 +17,7 @@ Setup
 =====
 Just clone the repo and check out the CaldroidSample to see how the library works.
 
-To use in your project, just reference the child Caldroid project as a project library. If you see JAR mismatched error, just replace your android-support-v4.jar to the jar inside Caldroid. Make sure you compile the project against Android 4.2 and above. This is to allow nested fragment. See more at http://developer.android.com/about/versions/android-4.2.html#NestedFragments
+To use in your project, reference the child Caldroid project as a library. If you see JAR mismatched error, replace your android-support-v4.jar to the jar inside Caldroid. Make sure you compile the project against Android 4.2 and above to allow nested fragment. See more at http://developer.android.com/about/versions/android-4.2.html#NestedFragments
 
 
 Features
@@ -81,6 +81,33 @@ To show the caldroid fragment as a dialog, you might want to set the dialog titl
 ```
 CaldroidFragment dialogCaldroidFragment = CaldroidFragment.newInstance("Select a date", 3, 2013);
 dialogCaldroidFragment.show(getSupportFragmentManager(),"TAG");
+```
+
+##Custom backgrounds and text colors for different dates
+
+It is very easy to supply different backgrounds and text colors for different dates:
+
+```
+// You can use any of below methods to set background colors
+public void setBackgroundResourceForDates(HashMap<Date, Integer> backgroundForDateMap);
+public void setBackgroundResourceForDateTimes(HashMap<DateTime, Integer> backgroundForDateTimeMap);
+public void setBackgroundResourceForDate(int backgroundRes, Date date);
+public void setBackgroundResourceForDateTime(int backgroundRes, DateTime dateTime);
+
+// Below methods is to set text color
+public void setTextColorForDates(HashMap<Date, Integer> textColorForDateMap);
+public void setTextColorForDateTimes(HashMap<DateTime, Integer> textColorForDateTimeMap);
+public void setTextColorForDate(int textColorRes, Date date);
+public void setTextColorForDateTime(int textColorRes, DateTime dateTime);
+```
+
+To use these methods, you should define your colors in ```color.xml``` and background in ```drawable``` folder:
+
+```
+caldroidFragment.setBackgroundResourceForDate(R.color.blue, blueDate);
+caldroidFragment.setBackgroundResourceForDate(R.color.green, greenDate);
+caldroidFragment.setTextColorForDate(R.color.white, blueDate);
+caldroidFragment.setTextColorForDate(R.color.white, greenDate);
 ```
 
 ## Set min / max date
@@ -245,6 +272,9 @@ if (savedInstanceState != null) {
 ```
 
 Refer to the CaldroidSampleActivity for more detail.
+
+
+
 
 ##Allow customized cell for the dates gridView
 
