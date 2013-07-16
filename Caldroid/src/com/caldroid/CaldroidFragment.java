@@ -242,6 +242,11 @@ public class CaldroidFragment extends DialogFragment {
 		caldroidData.put(_MIN_DATE_TIME, minDateTime);
 		caldroidData.put(_MAX_DATE_TIME, maxDateTime);
 		caldroidData.put(START_DAY_OF_WEEK, Integer.valueOf(startDayOfWeek));
+		
+		// For internal use
+		caldroidData.put(_BACKGROUND_FOR_DATETIME_MAP, backgroundForDateTimeMap);
+		caldroidData.put(_TEXT_COLOR_FOR_DATETIME_MAP, textColorForDateTimeMap);
+		
 		return caldroidData;
 	}
 
@@ -933,8 +938,6 @@ public class CaldroidFragment extends DialogFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		retrieveInitialArgs(savedInstanceState);
-		extraData.put(_BACKGROUND_FOR_DATETIME_MAP, backgroundForDateTimeMap);
-		extraData.put(_TEXT_COLOR_FOR_DATETIME_MAP, textColorForDateTimeMap);
 
 		View view = inflater.inflate(R.layout.calendar_view, container, false);
 
