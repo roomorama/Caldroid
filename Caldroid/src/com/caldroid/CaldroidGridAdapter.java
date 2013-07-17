@@ -28,19 +28,26 @@ public class CaldroidGridAdapter extends BaseAdapter {
 	protected Context context;
 	protected ArrayList<DateTime> disableDates;
 	protected ArrayList<DateTime> selectedDates;
+
+	// Use internally, to make the search for date faster instead of using
+	// indexOf methods on ArrayList
+	protected HashMap<DateTime, Integer> disableDatesMap = new HashMap<DateTime, Integer>();
+	protected HashMap<DateTime, Integer> selectedDatesMap = new HashMap<DateTime, Integer>();
+
 	protected DateTime minDateTime;
 	protected DateTime maxDateTime;
 	protected DateTime today;
 	protected int startDayOfWeek;
+	protected Resources resources;
 
 	/**
 	 * caldroidData belongs to Caldroid
 	 */
-	protected HashMap<String, Object> caldroidData = new HashMap<String, Object>();
+	protected HashMap<String, Object> caldroidData;
 	/**
 	 * extraData belongs to client
 	 */
-	protected HashMap<String, Object> extraData = new HashMap<String, Object>();
+	protected HashMap<String, Object> extraData;
 
 	public void setAdapterDateTime(DateTime dateTime) {
 		this.month = dateTime.getMonthOfYear();
@@ -123,6 +130,7 @@ public class CaldroidGridAdapter extends BaseAdapter {
 		this.context = context;
 		this.caldroidData = caldroidData;
 		this.extraData = extraData;
+		this.resources = context.getResources();
 
 		// Get data from caldroidData
 		populateFromCaldroidData();
@@ -135,14 +143,29 @@ public class CaldroidGridAdapter extends BaseAdapter {
 	private void populateFromCaldroidData() {
 		disableDates = (ArrayList<DateTime>) caldroidData
 				.get(CaldroidFragment.DISABLE_DATES);
+		if (disableDates != null) {
+			disableDatesMap.clear();
+			for (DateTime dateTime : disableDates) {
+				disableDatesMap.put(dateTime, 1);
+			}
+		}
+
 		selectedDates = (ArrayList<DateTime>) caldroidData
 				.get(CaldroidFragment.SELECTED_DATES);
+		if (selectedDates != null) {
+			selectedDatesMap.clear();
+			for (DateTime dateTime : selectedDates) {
+				selectedDatesMap.put(dateTime, 1);
+			}
+		}
+
 		minDateTime = (DateTime) caldroidData
 				.get(CaldroidFragment._MIN_DATE_TIME);
 		maxDateTime = (DateTime) caldroidData
 				.get(CaldroidFragment._MAX_DATE_TIME);
 		startDayOfWeek = (Integer) caldroidData
 				.get(CaldroidFragment.START_DAY_OF_WEEK);
+		
 		this.datetimeList = CalendarHelper.getFullWeeks(this.month, this.year,
 				startDayOfWeek);
 	}
@@ -178,8 +201,8 @@ public class CaldroidGridAdapter extends BaseAdapter {
 
 			// Set it
 			if (textColorResource != null) {
-				textView.setTextColor(context.getResources().getColor(
-						textColorResource.intValue()));
+				textView.setTextColor(resources.getColor(textColorResource
+						.intValue()));
 			}
 		}
 	}
@@ -217,7 +240,6 @@ public class CaldroidGridAdapter extends BaseAdapter {
 
 		// Get dateTime of this cell
 		DateTime dateTime = this.datetimeList.get(position);
-		Resources resources = context.getResources();
 
 		// Set color of the dates in previous / next month
 		if (dateTime.getMonthOfYear() != month) {
@@ -231,7 +253,8 @@ public class CaldroidGridAdapter extends BaseAdapter {
 		// Customize for disabled dates and date outside min/max dates
 		if ((minDateTime != null && dateTime.isBefore(minDateTime))
 				|| (maxDateTime != null && dateTime.isAfter(maxDateTime))
-				|| (disableDates != null && disableDates.indexOf(dateTime) != -1)) {
+				|| (disableDates != null && disableDatesMap
+						.containsKey(dateTime))) {
 
 			cellView.setTextColor(CaldroidFragment.disabledTextColor);
 			if (CaldroidFragment.disabledBackgroundDrawable == -1) {
@@ -248,7 +271,7 @@ public class CaldroidGridAdapter extends BaseAdapter {
 		}
 
 		// Customize for selected dates
-		if (selectedDates != null && selectedDates.indexOf(dateTime) != -1) {
+		if (selectedDates != null && selectedDatesMap.containsKey(dateTime)) {
 			if (CaldroidFragment.selectedBackgroundDrawable != -1) {
 				cellView.setBackgroundResource(CaldroidFragment.selectedBackgroundDrawable);
 			} else {

@@ -122,7 +122,7 @@ public class CaldroidFragment extends DialogFragment {
 	protected int month = -1;
 	protected int year = -1;
 	protected ArrayList<DateTime> disableDates = new ArrayList<DateTime>();
-	protected ArrayList<DateTime> selectedDates = new ArrayList<DateTime>();
+	protected ArrayList<DateTime> selectedDates = new ArrayList<DateTime>();	
 	protected DateTime minDateTime;
 	protected DateTime maxDateTime;
 	protected ArrayList<DateTime> dateInMonthsList;
@@ -785,7 +785,7 @@ public class CaldroidFragment extends DialogFragment {
 	 */
 	public void refreshView() {
 		// Refresh title view
-		monthTitleTextView.setText(new DateTime(year, month, 1, 0, 0)
+		monthTitleTextView.setText(new DateTime(year, month, 1, 0, 0, 0, 0)
 				.monthOfYear().getAsText().toUpperCase()
 				+ " " + year);
 
