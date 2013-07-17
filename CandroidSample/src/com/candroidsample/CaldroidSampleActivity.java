@@ -105,6 +105,12 @@ public class CaldroidSampleActivity extends FragmentActivity {
 						Toast.LENGTH_SHORT).show();
 			}
 
+			@Override
+			public void onLongClickDate(Date date, View view) {
+				// TODO Auto-generated method stub
+				
+			}
+
 		};
 
 		// Setup Caldroid

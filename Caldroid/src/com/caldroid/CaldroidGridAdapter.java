@@ -157,7 +157,7 @@ public class CaldroidGridAdapter extends BaseAdapter {
 	@SuppressWarnings("unchecked")
 	protected void setCustomResources(DateTime dateTime, TextView textView) {
 		// Set custom background resource
-		HashMap<DateTime, Integer> backgroundForDateTimeMap = (HashMap<DateTime, Integer>) extraData
+		HashMap<DateTime, Integer> backgroundForDateTimeMap = (HashMap<DateTime, Integer>) caldroidData
 				.get(CaldroidFragment._BACKGROUND_FOR_DATETIME_MAP);
 		if (backgroundForDateTimeMap != null) {
 			// Get background resource for the dateTime
@@ -170,7 +170,7 @@ public class CaldroidGridAdapter extends BaseAdapter {
 		}
 
 		// Set custom text color
-		HashMap<DateTime, Integer> textColorForDateTimeMap = (HashMap<DateTime, Integer>) extraData
+		HashMap<DateTime, Integer> textColorForDateTimeMap = (HashMap<DateTime, Integer>) caldroidData
 				.get(CaldroidFragment._TEXT_COLOR_FOR_DATETIME_MAP);
 		if (textColorForDateTimeMap != null) {
 			// Get textColor for the dateTime

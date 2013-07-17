@@ -1,5 +1,6 @@
 package com.antonyt.infiniteviewpager;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 import org.joda.time.DateTime;
@@ -10,10 +11,11 @@ import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
+import android.widget.Scroller;
 
 /**
- * A {@link ViewPager} that allows pseudo-infinite paging with a wrap-around
- * effect. Should be used with an {@link InfinitePagerAdapter}.
+ * A {@link ViewPager} that allows pseudo-infinite paging with a wrap-around effect. Should be used with an {@link InfinitePagerAdapter}.
  * 
  */
 public class InfiniteViewPager extends ViewPager {
@@ -32,8 +34,7 @@ public class InfiniteViewPager extends ViewPager {
 	private boolean enabled = true;
 
 	/**
-	 * A calendar height is not fixed, it may have 4, 5 or 6 rows. Set
-	 * fitAllMonths to true so that the calendar will always have 6 rows
+	 * A calendar height is not fixed, it may have 4, 5 or 6 rows. Set fitAllMonths to true so that the calendar will always have 6 rows
 	 */
 	private boolean fitAllMonths = true;
 
@@ -71,10 +72,12 @@ public class InfiniteViewPager extends ViewPager {
 	// ************** Constructors ********************
 	public InfiniteViewPager(Context context, AttributeSet attrs) {
 		super(context, attrs);
+		setAnimatedScroller();
 	}
 
 	public InfiniteViewPager(Context context) {
 		super(context);
+		setAnimatedScroller();
 	}
 
 	@Override
@@ -100,13 +103,21 @@ public class InfiniteViewPager extends ViewPager {
 		return false;
 	}
 
+	private void setAnimatedScroller() {
+		try {
+			Class<?> viewpager = ViewPager.class;
+			Field scroller = viewpager.getDeclaredField("mScroller");
+			scroller.setAccessible(true);
+			scroller.set(this, new AnimatedScroller(getContext()));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	/**
-	 * ViewPager does not respect "wrap_content". The code below tries to
-	 * measure the height of the child and set the height of viewpager based on
-	 * child height
+	 * ViewPager does not respect "wrap_content". The code below tries to measure the height of the child and set the height of viewpager based on child height
 	 * 
-	 * It was customized from
-	 * http://stackoverflow.com/questions/9313554/measuring-a-viewpager
+	 * It was customized from http://stackoverflow.com/questions/9313554/measuring-a-viewpager
 	 * 
 	 * Thanks Delyan for his brilliant code
 	 */
@@ -131,8 +142,7 @@ public class InfiniteViewPager extends ViewPager {
 			int width = getMeasuredWidth();
 
 			// Use the previously measured width but simplify the calculations
-			widthMeasureSpec = MeasureSpec.makeMeasureSpec(width,
-					MeasureSpec.EXACTLY);
+			widthMeasureSpec = MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY);
 
 			/*
 			 * If the pager actually has any children, take the first child's
@@ -145,8 +155,7 @@ public class InfiniteViewPager extends ViewPager {
 				 * The child was previously measured with exactly the full
 				 * height. Allow it to wrap this time around.
 				 */
-				firstChild.measure(widthMeasureSpec, MeasureSpec
-						.makeMeasureSpec(height, MeasureSpec.AT_MOST));
+				firstChild.measure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(height, MeasureSpec.AT_MOST));
 
 				height = firstChild.getMeasuredHeight();
 				rowHeight = height / rows;
@@ -168,10 +177,20 @@ public class InfiniteViewPager extends ViewPager {
 			calHeight = height;
 		}
 
-		heightMeasureSpec = MeasureSpec.makeMeasureSpec(calHeight,
-				MeasureSpec.EXACTLY);
+		heightMeasureSpec = MeasureSpec.makeMeasureSpec(calHeight, MeasureSpec.EXACTLY);
 
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+	}
+
+	public class AnimatedScroller extends Scroller {
+		public AnimatedScroller(Context context) {
+			super(context, new DecelerateInterpolator());
+		}
+
+		@Override
+		public void startScroll(int startX, int startY, int dx, int dy, int duration) {
+			super.startScroll(startX, startY, dx, dy, 1000 /*1 secs*/);
+		}
 	}
 
 }
