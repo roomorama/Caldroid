@@ -53,6 +53,7 @@ public class WeekdayArrayAdapter extends ArrayAdapter<String> {
 
 		textView.setTextColor(textColor);
 		textView.setGravity(Gravity.CENTER);
+		textView.setClickable(false);
 		return textView;
 	}
 
