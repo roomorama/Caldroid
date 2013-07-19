@@ -786,41 +786,35 @@ public class CaldroidFragment extends DialogFragment {
 	}
 	
 	/**
-	 * Callback to listener when date is valid (not disable, not outside of
-	 * min/max date)
+	 * Callback to listener when date is valid (not disable, not outside of min/max date)
 	 * 
-	 * @return consumed event
+	 * @return
 	 */
 	private OnItemLongClickListener getDateItemLongClickListener() {
 		dateItemLongClickListener = new OnItemLongClickListener() {
-
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
 				DateTime dateTime = dateInMonthsList.get(position);
 
 				if (caldroidListener != null) {
-					if ((minDateTime != null && dateTime.isBefore(minDateTime))
-							|| (maxDateTime != null && dateTime
-									.isAfter(maxDateTime))
-							|| (disableDates != null && disableDates
-									.indexOf(dateTime) != -1)) {
+					if ((minDateTime != null && dateTime.isBefore(minDateTime)) || (maxDateTime != null && dateTime.isAfter(maxDateTime))
+							|| (disableDates != null && disableDates.indexOf(dateTime) != -1)) {
 						return false;
 					}
 
 					caldroidListener.onLongClickDate(dateTime.toDate(), view);
 				}
-				
+
 				return true;
 			}
-			
 		};
-		
+
 		return dateItemLongClickListener;
 	}
 
 	/**
-	 * Refresh view when parameter changes. You should always change all
-	 * parameters first, then call this method.
+	 * Refresh view when parameter changes. You should always change all parameters first, then call this method.
 	 */
 	public void refreshView() {
 		// Refresh title view
@@ -981,8 +975,7 @@ public class CaldroidFragment extends DialogFragment {
 		View view = inflater.inflate(R.layout.calendar_view, container, false);
 
 		// For the monthTitleTextView
-		monthTitleTextView = (TextView) view
-				.findViewById(R.id.calendar_month_year_textview);
+		monthTitleTextView = (TextView) view.findViewById(R.id.calendar_month_year_textview);
 
 		// For the left arrow button
 		leftArrowButton = (Button) view.findViewById(R.id.calendar_left_arrow);

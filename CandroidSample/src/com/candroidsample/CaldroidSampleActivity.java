@@ -35,15 +35,17 @@ public class CaldroidSampleActivity extends FragmentActivity {
 		cal = Calendar.getInstance();
 		cal.add(Calendar.DATE, 4);
 		Date greenDate = cal.getTime();
-		
+
 		if (caldroidFragment != null) {
-			caldroidFragment.setBackgroundResourceForDate(R.color.blue, blueDate);
-			caldroidFragment.setBackgroundResourceForDate(R.color.green, greenDate);
+			caldroidFragment.setBackgroundResourceForDate(R.color.blue,
+					blueDate);
+			caldroidFragment.setBackgroundResourceForDate(R.color.green,
+					greenDate);
 			caldroidFragment.setTextColorForDate(R.color.white, blueDate);
 			caldroidFragment.setTextColorForDate(R.color.white, greenDate);
 		}
 	}
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -55,7 +57,7 @@ public class CaldroidSampleActivity extends FragmentActivity {
 		// **** If you want normal CaldroidFragment, use below line ****
 		caldroidFragment = new CaldroidFragment();
 
-		////////////////////////////////////////////////////////////////////////
+		// //////////////////////////////////////////////////////////////////////
 		// **** This is to show customized fragment. If you want customized
 		// version, uncomment below line ****
 		// caldroidFragment = new CaldroidSampleCustomFragment();
@@ -80,7 +82,7 @@ public class CaldroidSampleActivity extends FragmentActivity {
 			// args.putInt("startDayOfWeek", 6); // Saturday
 			caldroidFragment.setArguments(args);
 		}
-		
+
 		setCustomResourceForDates();
 
 		// Attach to the activity
@@ -102,6 +104,13 @@ public class CaldroidSampleActivity extends FragmentActivity {
 			public void onChangeMonth(int month, int year) {
 				String text = "month: " + month + " year: " + year;
 				Toast.makeText(getApplicationContext(), text,
+						Toast.LENGTH_SHORT).show();
+			}
+
+			@Override
+			public void onLongClickDate(Date date, View view) {
+				Toast.makeText(getApplicationContext(),
+						"Long click " + formatter.format(date),
 						Toast.LENGTH_SHORT).show();
 			}
 
