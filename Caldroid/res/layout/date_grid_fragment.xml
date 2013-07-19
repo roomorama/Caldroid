@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:adjustViewBounds="true"
-    android:background="#dddddd"
+    android:background="@color/caldroid_lighter_gray"
     android:gravity="center_horizontal"
     android:horizontalSpacing="1px"
     android:numColumns="7"

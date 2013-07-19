@@ -756,6 +756,34 @@ public class CaldroidFragment extends DialogFragment {
 	}
 
 	/**
+	 * Callback to listener when date is valid (not disable, not outside of min/max date)
+	 * 
+	 * @return
+	 */
+	private OnItemLongClickListener getDateItemLongClickListener() {
+		dateItemLongClickListener = new OnItemLongClickListener() {
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+				DateTime dateTime = dateInMonthsList.get(position);
+
+				if (caldroidListener != null) {
+					if ((minDateTime != null && dateTime.isBefore(minDateTime)) || (maxDateTime != null && dateTime.isAfter(maxDateTime))
+							|| (disableDates != null && disableDates.indexOf(dateTime) != -1)) {
+						return false;
+					}
+
+					caldroidListener.onSelectDate(dateTime.toDate(), view);
+				}
+
+				return true;
+			}
+		};
+
+		return dateItemLongClickListener;
+	}
+
+	/**
 	 * Refresh view when parameter changes. You should always change all parameters first, then call this method.
 	 */
 	public void refreshView() {
@@ -902,9 +930,8 @@ public class CaldroidFragment extends DialogFragment {
 
 		// For the monthTitleTextView
 		monthTitleTextView = (TextView) view.findViewById(R.id.calendar_month_year_textview);
-
 		// Set monthTitleTextViewOnClickListener if not null
-		if(monthTitleTextViewOnClickListener != null) {
+		if (monthTitleTextViewOnClickListener != null) {
 			monthTitleTextView.setOnClickListener(monthTitleTextViewOnClickListener);
 		}
 
@@ -1015,6 +1042,7 @@ public class CaldroidFragment extends DialogFragment {
 			CaldroidGridAdapter adapter = datePagerAdapters.get(i);
 			dateGridFragment.setGridAdapter(adapter);
 			dateGridFragment.setOnItemClickListener(getDateItemClickListener());
+			dateGridFragment.setOnItemLongClickListener(getDateItemLongClickListener());
 		}
 
 		// Setup InfinitePagerAdapter to wrap around MonthPagerAdapter
