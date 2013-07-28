@@ -921,7 +921,9 @@ public class CaldroidFragment extends DialogFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setRetainInstance(true);
+		if(getParentFragment() == null) {
+			setRetainInstance(true);
+		}
 	}
 
 	@Override
