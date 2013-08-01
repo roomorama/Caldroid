@@ -1,0 +1,2 @@
+include ':Caldroid'
+include ':CaldroidSample'

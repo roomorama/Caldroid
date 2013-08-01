@@ -1,4 +1,4 @@
-package com.candroidsample;
+package com.caldroid.sample;
 
 import com.caldroid.CaldroidFragment;
 import com.caldroid.CaldroidGridAdapter;
