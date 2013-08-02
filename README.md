@@ -24,20 +24,22 @@ Features
 ========
 
 ##Flexible setup: can be embedded or shown as dialog
-To embed the caldroid fragment, use below code:
+To embed the caldroid fragment in your activity, use below code:
 
 ```
 CaldroidFragment caldroidFragment = new CaldroidFragment();
 Bundle args = new Bundle();
 Calendar cal = Calendar.getInstance();
-args.putInt("month", cal.get(Calendar.MONTH) + 1);
-args.putInt("year", cal.get(Calendar.YEAR));
+args.putInt(CaldroidFragment.MONTH, cal.get(Calendar.MONTH) + 1);
+args.putInt(CaldroidFragment.YEAR, cal.get(Calendar.YEAR));
 caldroidFragment.setArguments(args);
 
 FragmentTransaction t = getSupportFragmentManager().beginTransaction();
-t.add(R.id.calendar1, caldroidFragment);
+t.replace(R.id.calendar1, caldroidFragment);
 t.commit();
 ```
+
+You can also embed caldroid fragment as a child in your fragment, but for now you must use ```getActivity().getSupportFragmentManager()``` instead of ```getChildFragmentManager()`.
 
 Caldroid accepts numerous arguments during start up: 
 
