@@ -39,7 +39,7 @@ t.replace(R.id.calendar1, caldroidFragment);
 t.commit();
 ```
 
-You can also embed caldroid fragment as a child in your fragment, but for now you must use ```getActivity().getSupportFragmentManager()``` instead of ```getChildFragmentManager()`.
+You can also embed caldroid fragment as a child in your fragment.
 
 Caldroid accepts numerous arguments during start up: 
 

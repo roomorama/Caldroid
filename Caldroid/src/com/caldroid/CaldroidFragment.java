@@ -919,12 +919,6 @@ public class CaldroidFragment extends DialogFragment {
 	 * -and-screen-rotation
 	 */
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setRetainInstance(true);
-	}
-
-	@Override
 	public void onDestroyView() {
 		if (getDialog() != null && getRetainInstance())
 			getDialog().setDismissMessage(null);
@@ -938,7 +932,13 @@ public class CaldroidFragment extends DialogFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		retrieveInitialArgs(savedInstanceState);
-
+		
+		// To support keeping instance for dialog
+		if (getDialog() != null) {
+			setRetainInstance(true);
+		}
+		
+		// Inflate layout
 		View view = inflater.inflate(R.layout.calendar_view, container, false);
 
 		// For the monthTitleTextView
