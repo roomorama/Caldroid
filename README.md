@@ -385,3 +385,7 @@ License
 =======
 See LICENSE.md
 
+
+App uses Caldroid
+=================
+Work Mate(http://play.google.com/store/apps/details?id=com.michaelmcneildev.workmate)
