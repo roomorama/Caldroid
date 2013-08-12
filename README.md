@@ -130,27 +130,27 @@ To refresh the calendar, just call ```refreshView()```
 
 Client can either provide ArrayList<Date> or ArrayList<String> to Caldroid.
 ``` java
-setDisableDates(ArrayList<Date> disableDateList)
-setDisableDatesFromString(ArrayList<String> disableDateStrings)
-setDisableDatesFromString(ArrayList<String> disableDateStrings, String dateFormat)
+public void setDisableDates(ArrayList<Date> disableDateList);
+public void setDisableDatesFromString(ArrayList<String> disableDateStrings);
+public void setDisableDatesFromString(ArrayList<String> disableDateStrings, String dateFormat);
 ```
 
 To clear the disabled dates:
 ``` java
-clearDisableDates()
+public void clearDisableDates();
 ```
 
 ##Select dates within a range
 To select dates within a range:
 
 ``` java
-setSelectedDates(Date fromDate, Date toDate)
-setSelectedDateStrings(String fromDateString, String toDateString, String dateFormat)
+public void setSelectedDates(Date fromDate, Date toDate);
+public void setSelectedDateStrings(String fromDateString, String toDateString, String dateFormat);
 ```
 
 To clear the selected dates:
 ``` java
-clearSelectedDates()
+public void clearSelectedDates();
 ```
 
 
@@ -158,13 +158,13 @@ clearSelectedDates()
 To show/hide the navigation arrows:
 
 ``` java
-setShowNavigationArrows(boolean showNavigationArrows)
+public void setShowNavigationArrows(boolean showNavigationArrows);
 ```
 
 To enable / disable swipe:
 
 ``` java
-setEnableSwipe(boolean enableSwipe)
+public void setEnableSwipe(boolean enableSwipe);
 ```
 
 Client can programmatically move the calendar (with animation) to a specified date:
