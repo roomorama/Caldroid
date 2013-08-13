@@ -117,11 +117,11 @@ caldroidFragment.setTextColorForDate(R.color.white, greenDate);
 Client can use below methods: 
 
 ``` java
-setMinDate(Date minDate)
-setMinDateFromString(String minDateString, String dateFormat)
+public void setMinDate(Date minDate);
+public void setMinDateFromString(String minDateString, String dateFormat);
 
-setMaxDate(Date minDate)
-setMaxDateFromString(String maxDateString, String dateFormat)
+public void setMaxDate(Date minDate);
+public void setMaxDateFromString(String maxDateString, String dateFormat);
 ```
 
 To refresh the calendar, just call ```refreshView()```
