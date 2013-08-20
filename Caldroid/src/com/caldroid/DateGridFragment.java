@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.GridView;
 
 /**
@@ -22,6 +23,7 @@ public class DateGridFragment extends Fragment {
 	private GridView gridView;
 	private CaldroidGridAdapter gridAdapter;
 	private OnItemClickListener onItemClickListener;
+	private OnItemLongClickListener onItemLongClickListener;
 
 	public OnItemClickListener getOnItemClickListener() {
 		return onItemClickListener;
@@ -29,6 +31,14 @@ public class DateGridFragment extends Fragment {
 
 	public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
 		this.onItemClickListener = onItemClickListener;
+	}
+	
+	public OnItemLongClickListener getOnItemLongClickListener() {
+		return onItemLongClickListener;
+	}
+	
+	public void setOnItemLongClickListener(OnItemLongClickListener onItemLongClickListener) {
+		this.onItemLongClickListener = onItemLongClickListener;
 	}
 
 	public CaldroidGridAdapter getGridAdapter() {
@@ -57,6 +67,9 @@ public class DateGridFragment extends Fragment {
 
 		if (onItemClickListener != null) {
 			gridView.setOnItemClickListener(onItemClickListener);
+		}
+		if(onItemLongClickListener != null) {
+			gridView.setOnItemLongClickListener(onItemLongClickListener);
 		}
 		return gridView;
 	}

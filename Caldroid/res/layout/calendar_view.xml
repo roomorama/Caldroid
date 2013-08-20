@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/caldroid_white"
+    android:background="@drawable/white_shadow_backround"
     android:orientation="vertical" >
 
     <RelativeLayout
@@ -10,30 +10,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
-        <Button
+        <ImageButton
             android:id="@+id/calendar_left_arrow"
             android:layout_width="50dp"
             android:layout_height="44dp"
             android:layout_alignParentLeft="true"
-            android:background="@drawable/left_arrow" />
+            android:background="@drawable/button_bg"
+            android:src="@drawable/left_arrow" />
 
         <TextView
             android:id="@+id/calendar_month_year_textview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
+            android:layout_height="44dp"
             android:layout_toLeftOf="@+id/calendar_right_arrow"
             android:layout_toRightOf="@+id/calendar_left_arrow"
-            android:gravity="center_horizontal"
+            android:background="@drawable/button_bg"
+            android:gravity="center"
             android:textIsSelectable="true"
             android:textSize="24sp" />
 
-        <Button
+        <ImageButton
             android:id="@+id/calendar_right_arrow"
             android:layout_width="50dp"
             android:layout_height="44dp"
             android:layout_alignParentRight="true"
-            android:background="@drawable/right_arrow" />
+            android:background="@drawable/button_bg"
+            android:src="@drawable/right_arrow" />
     </RelativeLayout>
 
     <GridView
