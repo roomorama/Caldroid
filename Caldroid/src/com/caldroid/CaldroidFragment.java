@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -365,11 +366,11 @@ public class CaldroidFragment extends DialogFragment {
 		}
 
 		if (minDateTime != null) {
-			bundle.putString(MIN_DATE, minDateTime.format("yyyy-MM-dd"));
+			bundle.putString(MIN_DATE, minDateTime.format("YYYY-MM-DD"));
 		}
 
 		if (maxDateTime != null) {
-			bundle.putString(MAX_DATE, maxDateTime.format("yyyy-MM-dd"));
+			bundle.putString(MAX_DATE, maxDateTime.format("YYYY-MM-DD"));
 		}
 
 		bundle.putBoolean(SHOW_NAVIGATION_ARROWS, showNavigationArrows);
@@ -918,7 +919,7 @@ public class CaldroidFragment extends DialogFragment {
 
 		}
 		if (month == -1 || year == -1) {
-			DateTime dateTime = DateTime.today(null);
+			DateTime dateTime = DateTime.today(TimeZone.getDefault());
 			month = dateTime.getMonth();
 			year = dateTime.getYear();
 		}
