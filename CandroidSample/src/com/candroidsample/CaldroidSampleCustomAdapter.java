@@ -1,8 +1,9 @@
 package com.candroidsample;
 
+import hirondelle.date4j.DateTime;
+
 import java.util.HashMap;
 
-import org.joda.time.DateTime;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -50,7 +51,7 @@ public class CaldroidSampleCustomAdapter extends CaldroidGridAdapter {
 		Resources resources = context.getResources();
 
 		// Set color of the dates in previous / next month
-		if (dateTime.getMonthOfYear() != month) {
+		if (dateTime.getMonth() != month) {
 			tv1.setTextColor(resources
 					.getColor(com.caldroid.R.color.caldroid_darker_gray));
 		}
@@ -59,8 +60,8 @@ public class CaldroidSampleCustomAdapter extends CaldroidGridAdapter {
 		boolean shouldResetSelectedView = false;
 
 		// Customize for disabled dates and date outside min/max dates
-		if ((minDateTime != null && dateTime.isBefore(minDateTime))
-				|| (maxDateTime != null && dateTime.isAfter(maxDateTime))
+		if ((minDateTime != null && dateTime.lt(minDateTime))
+				|| (maxDateTime != null && dateTime.gt(maxDateTime))
 				|| (disableDates != null && disableDates.indexOf(dateTime) != -1)) {
 
 			tv1.setTextColor(CaldroidFragment.disabledTextColor);
@@ -102,7 +103,7 @@ public class CaldroidSampleCustomAdapter extends CaldroidGridAdapter {
 			}			
 		}
 
-		tv1.setText("" + dateTime.getDayOfMonth());
+		tv1.setText("" + dateTime.getDay());
 		tv2.setText("Hi");
 
 		// Somehow after setBackgroundResource, the padding collapse.

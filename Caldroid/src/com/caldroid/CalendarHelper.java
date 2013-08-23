@@ -1,14 +1,12 @@
 package com.caldroid;
 
+import hirondelle.date4j.DateTime;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
-
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
 /**
  * Convenient helper to work with date, JODA DateTime and String
@@ -28,15 +26,18 @@ public class CalendarHelper {
 	 *            : calendar can start from customized date instead of Sunday
 	 * @return
 	 */
+	public static SimpleDateFormat yyyyMMddFormat = new SimpleDateFormat(
+			"yyyy-MM-dd", Locale.ENGLISH);;
+
 	public static ArrayList<DateTime> getFullWeeks(int month, int year,
 			int startDayOfWeek) {
 		ArrayList<DateTime> datetimeList = new ArrayList<DateTime>();
 
 		DateTime firstDateOfMonth = new DateTime(year, month, 1, 0, 0, 0, 0);
-		DateTime lastDateOfMonth = firstDateOfMonth.plusMonths(1).minusDays(1);
+		DateTime lastDateOfMonth = firstDateOfMonth.getEndOfMonth();
 
 		// Add dates of first week from previous month
-		int weekdayOfFirstDate = firstDateOfMonth.getDayOfWeek();
+		int weekdayOfFirstDate = firstDateOfMonth.getWeekDay();
 
 		// If weekdayOfFirstDate smaller than startDayOfWeek
 		// For e.g: weekdayFirstDate is Monday, startDayOfWeek is Tuesday
@@ -48,7 +49,7 @@ public class CalendarHelper {
 		while (weekdayOfFirstDate > 0) {
 			DateTime dateTime = firstDateOfMonth.minusDays(weekdayOfFirstDate
 					- startDayOfWeek);
-			if (!dateTime.isBefore(firstDateOfMonth)) {
+			if (!dateTime.lt(firstDateOfMonth)) {
 				break;
 			}
 
@@ -57,25 +58,24 @@ public class CalendarHelper {
 		}
 
 		// Add dates of current month
-		for (int i = 0; i < lastDateOfMonth.getDayOfMonth(); i++) {
+		for (int i = 0; i < lastDateOfMonth.getDay(); i++) {
 			datetimeList.add(firstDateOfMonth.plusDays(i));
 		}
 
 		// Add dates of last week from next month
 		int endDayOfWeek = startDayOfWeek - 1;
 
-		// For startDayOfWeek is Monday (1), endDayOfWeek should be Sunday (7)
 		if (endDayOfWeek == 0) {
 			endDayOfWeek = 7;
 		}
 
-		if (lastDateOfMonth.getDayOfWeek() != endDayOfWeek) {
+		if (lastDateOfMonth.getWeekDay() != endDayOfWeek) {
 			int i = 1;
 			while (true) {
 				DateTime nextDay = lastDateOfMonth.plusDays(i);
 				datetimeList.add(nextDay);
 				i++;
-				if (nextDay.getDayOfWeek() == endDayOfWeek) {
+				if (nextDay.getWeekDay() == endDayOfWeek) {
 					break;
 				}
 			}
@@ -91,10 +91,21 @@ public class CalendarHelper {
 	 * @return
 	 */
 	public static DateTime convertDateToDateTime(Date date) {
-		DateTime dateTime = new DateTime(date);
-		dateTime = new DateTime(dateTime.getYear(), dateTime.getMonthOfYear(),
-				dateTime.getDayOfMonth(), 0, 0, 0, 0);
+		DateTime dateTime = new DateTime(yyyyMMddFormat.format(date));
+		dateTime = new DateTime(dateTime.getYear(), dateTime.getMonth(),
+				dateTime.getDay(), 0, 0, 0, 0);
 		return dateTime;
+	}
+
+	public static Date convertDateTimeToDate(DateTime dateTime) {
+		String dateString = dateTime.format("YYYY-MM-DD");
+		try {
+			return getDateFromString(dateString, null);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	/**
@@ -109,7 +120,7 @@ public class CalendarHelper {
 			throws ParseException {
 		SimpleDateFormat formatter;
 		if (dateFormat == null) {
-			formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+			formatter = yyyyMMddFormat;
 		} else {
 			formatter = new SimpleDateFormat(dateFormat, Locale.ENGLISH);
 		}
@@ -127,20 +138,22 @@ public class CalendarHelper {
 	 */
 	public static DateTime getDateTimeFromString(String dateString,
 			String dateFormat) {
-		DateTimeFormatter formatter;
-		if (dateFormat == null) {
-			formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
-		} else {
-			formatter = DateTimeFormat.forPattern(dateFormat);
+		Date date;
+		try {
+			date = getDateFromString(dateString, dateFormat);
+			return convertDateToDateTime(date);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		return formatter.parseDateTime(dateString);
+		return null;
 	}
-	
-	public static ArrayList<String> convertToStringList(ArrayList<DateTime> dateTimes) {
+
+	public static ArrayList<String> convertToStringList(
+			ArrayList<DateTime> dateTimes) {
 		ArrayList<String> list = new ArrayList<String>();
-		DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
 		for (DateTime dateTime : dateTimes) {
-			list.add(formatter.print(dateTime));
+			list.add(dateTime.format("YYYY-MM-DD"));
 		}
 		return list;
 	}
