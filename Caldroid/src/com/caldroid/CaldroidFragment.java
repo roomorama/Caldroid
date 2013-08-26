@@ -67,6 +67,18 @@ import com.antonyt.infiniteviewpager.InfiniteViewPager;
 @SuppressLint("DefaultLocale")
 public class CaldroidFragment extends DialogFragment {
 	public String TAG = "CaldroidFragment";
+
+	/**
+	 * Weekday conventions
+	 */
+	public static int SUNDAY = 1;
+	public static int MONDAY = 2;
+	public static int TUESDAY = 3;
+	public static int WEDNESDAY = 4;
+	public static int THURSDAY = 5;
+	public static int FRIDAY = 6;
+	public static int SATURDAY = 7;
+
 	/**
 	 * To customize the selected background drawable and text color
 	 */
@@ -150,7 +162,7 @@ public class CaldroidFragment extends DialogFragment {
 	/**
 	 * First column of calendar is Sunday
 	 */
-	protected int startDayOfWeek = 1;
+	protected int startDayOfWeek = SUNDAY;
 
 	/**
 	 * A calendar height is not fixed, it may have 5 or 6 rows. Set fitAllMonths
@@ -495,7 +507,7 @@ public class CaldroidFragment extends DialogFragment {
 	 * @param date
 	 */
 	public void setCalendarDate(Date date) {
-		setCalendarDateTime(new DateTime(date.toString()));
+		setCalendarDateTime(CalendarHelper.convertDateToDateTime(date));
 	}
 
 	public void setCalendarDateTime(DateTime dateTime) {
@@ -826,8 +838,10 @@ public class CaldroidFragment extends DialogFragment {
 	 */
 	public void refreshView() {
 		// Refresh title view
-		monthTitleTextView.setText(new DateTime(year, month, 1, 0, 0, 0, 0)
-				.format("MMMM", Locale.getDefault()).toUpperCase() + " " + year);
+		monthTitleTextView
+				.setText(new DateTime(year, month, 1, 0, 0, 0, 0).format(
+						"MMMM", Locale.getDefault()).toUpperCase()
+						+ " " + year);
 
 		// Refresh the date grid views
 		for (CaldroidGridAdapter adapter : datePagerAdapters) {
@@ -867,8 +881,7 @@ public class CaldroidFragment extends DialogFragment {
 			}
 
 			// Get start day of Week. Default calendar first column is SUNDAY
-			startDayOfWeek = args.getInt(START_DAY_OF_WEEK,
-					1);
+			startDayOfWeek = args.getInt(START_DAY_OF_WEEK, 1);
 			if (startDayOfWeek > 7) {
 				startDayOfWeek = startDayOfWeek % 7;
 			}
@@ -883,13 +896,13 @@ public class CaldroidFragment extends DialogFragment {
 			// Get fitAllMonths
 			fitAllMonths = args.getBoolean(FIT_ALL_MONTHS, true);
 
-
 			// Get disable dates
 			ArrayList<String> disableDateStrings = args
 					.getStringArrayList(DISABLE_DATES);
 			if (disableDateStrings != null && disableDateStrings.size() > 0) {
 				for (String dateString : disableDateStrings) {
-					DateTime dt = CalendarHelper.getDateTimeFromString(dateString, "yyyy-MM-dd");
+					DateTime dt = CalendarHelper.getDateTimeFromString(
+							dateString, "yyyy-MM-dd");
 					disableDates.add(dt);
 				}
 			}
@@ -899,7 +912,8 @@ public class CaldroidFragment extends DialogFragment {
 					.getStringArrayList(SELECTED_DATES);
 			if (selectedDateStrings != null && selectedDateStrings.size() > 0) {
 				for (String dateString : selectedDateStrings) {
-					DateTime dt = CalendarHelper.getDateTimeFromString(dateString, "yyyy-MM-dd");
+					DateTime dt = CalendarHelper.getDateTimeFromString(
+							dateString, "yyyy-MM-dd");
 					selectedDates.add(dt);
 				}
 			}
@@ -1047,17 +1061,20 @@ public class CaldroidFragment extends DialogFragment {
 				currentDateTime.getMonth(), currentDateTime.getYear());
 
 		// Next month
-		DateTime nextDateTime = currentDateTime.plus(0, 1, 0, 0, 0, 0, 0, DateTime.DayOverflow.LastDay);
+		DateTime nextDateTime = currentDateTime.plus(0, 1, 0, 0, 0, 0, 0,
+				DateTime.DayOverflow.LastDay);
 		CaldroidGridAdapter adapter1 = getNewDatesGridAdapter(
 				nextDateTime.getMonth(), nextDateTime.getYear());
 
 		// Next 2 month
-		DateTime next2DateTime = nextDateTime.plus(0, 1, 0, 0, 0, 0, 0, DateTime.DayOverflow.LastDay);
+		DateTime next2DateTime = nextDateTime.plus(0, 1, 0, 0, 0, 0, 0,
+				DateTime.DayOverflow.LastDay);
 		CaldroidGridAdapter adapter2 = getNewDatesGridAdapter(
 				next2DateTime.getMonth(), next2DateTime.getYear());
 
 		// Previous month
-		DateTime prevDateTime = currentDateTime.minus(0, 1, 0, 0, 0, 0, 0, DateTime.DayOverflow.LastDay);
+		DateTime prevDateTime = currentDateTime.minus(0, 1, 0, 0, 0, 0, 0,
+				DateTime.DayOverflow.LastDay);
 		CaldroidGridAdapter adapter3 = getNewDatesGridAdapter(
 				prevDateTime.getMonth(), prevDateTime.getYear());
 
@@ -1126,8 +1143,7 @@ public class CaldroidFragment extends DialogFragment {
 
 		// 17 Feb 2013 is Sunday
 		DateTime sunday = new DateTime(2013, 2, 17, 0, 0, 0, 0);
-		DateTime nextDay = sunday.plusDays(startDayOfWeek-1);
-
+		DateTime nextDay = sunday.plusDays(startDayOfWeek - SUNDAY);
 
 		for (int i = 0; i < 7; i++) {
 			list.add(nextDay.format("WWW", Locale.getDefault()).toUpperCase());
@@ -1244,31 +1260,37 @@ public class CaldroidFragment extends DialogFragment {
 				currentAdapter.notifyDataSetChanged();
 
 				// Refresh previous adapter
-				prevAdapter.setAdapterDateTime(currentDateTime.minus(0, 1, 0, 0, 0, 0, 0, DateTime.DayOverflow.LastDay));
+				prevAdapter.setAdapterDateTime(currentDateTime.minus(0, 1, 0,
+						0, 0, 0, 0, DateTime.DayOverflow.LastDay));
 				prevAdapter.notifyDataSetChanged();
 
 				// Refresh next adapter
-				nextAdapter.setAdapterDateTime(currentDateTime.plus(0, 1, 0, 0, 0, 0, 0, DateTime.DayOverflow.LastDay));
+				nextAdapter.setAdapterDateTime(currentDateTime.plus(0, 1, 0, 0,
+						0, 0, 0, DateTime.DayOverflow.LastDay));
 				nextAdapter.notifyDataSetChanged();
 			}
 			// Detect if swipe right or swipe left
 			// Swipe right
 			else if (position > currentPage) {
 				// Update current date time to next month
-				currentDateTime = currentDateTime.plus(0, 1, 0, 0, 0, 0, 0, DateTime.DayOverflow.LastDay);
+				currentDateTime = currentDateTime.plus(0, 1, 0, 0, 0, 0, 0,
+						DateTime.DayOverflow.LastDay);
 
 				// Refresh the adapter of next gridview
-				nextAdapter.setAdapterDateTime(currentDateTime.plus(0, 1, 0, 0, 0, 0, 0, DateTime.DayOverflow.LastDay));
+				nextAdapter.setAdapterDateTime(currentDateTime.plus(0, 1, 0, 0,
+						0, 0, 0, DateTime.DayOverflow.LastDay));
 				nextAdapter.notifyDataSetChanged();
 
 			}
 			// Swipe left
 			else {
 				// Update current date time to previous month
-				currentDateTime = currentDateTime.minus(0, 1, 0, 0, 0, 0, 0, DateTime.DayOverflow.LastDay);
+				currentDateTime = currentDateTime.minus(0, 1, 0, 0, 0, 0, 0,
+						DateTime.DayOverflow.LastDay);
 
 				// Refresh the adapter of previous gridview
-				prevAdapter.setAdapterDateTime(currentDateTime.minus(0, 1, 0, 0, 0, 0, 0, DateTime.DayOverflow.LastDay));
+				prevAdapter.setAdapterDateTime(currentDateTime.minus(0, 1, 0,
+						0, 0, 0, 0, DateTime.DayOverflow.LastDay));
 				prevAdapter.notifyDataSetChanged();
 			}
 

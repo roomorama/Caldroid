@@ -79,7 +79,7 @@ public class CaldroidSampleActivity extends FragmentActivity {
 			args.putBoolean(CaldroidFragment.FIT_ALL_MONTHS, false);
 
 			// Uncomment this to customize startDayOfWeek
-//			args.putInt("startDayOfWeek", 3); // Tuesday
+//			args.putInt(CaldroidFragment.START_DAY_OF_WEEK, CaldroidFragment.TUESDAY); // Tuesday
 			caldroidFragment.setArguments(args);
 		}
 

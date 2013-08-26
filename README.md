@@ -61,20 +61,8 @@ To customize the startDayOfWeek, just use
 
 ``` java
 Bundle args = new Bundle();
-args.putInt(CaldroidFragment.START_DAY_OF_WEEK, 6); // calendar starts on SATURDAY
+args.putInt(CaldroidFragment.START_DAY_OF_WEEK, CaldroidFragment.TUESDAY); // Tuesday
 caldroidFragment.setArguments(args);
-```
-
-Caldroid follows the same convention as the JODA date time constants:
-
-```
-MONDAY: 1
-TUESDAY: 2
-WEDNESDAY: 3
-THURSDAY: 4
-FRIDAY: 5
-SATURDAY: 6
-SUNDAY: 7
 ```
 
 
