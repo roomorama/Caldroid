@@ -4,12 +4,12 @@
 
 	<parent>
 		<groupId>com.roomorama</groupId>
-		<artifactId>android-caldroid-parent</artifactId>
+		<artifactId>caldroid-parent</artifactId>
 		<relativePath>../pom.xml</relativePath>
-		<version>1.0.0</version>
+		<version>1.1.0</version>
 	</parent>
 
-	<artifactId>android-caldroid-demo</artifactId>
+	<artifactId>caldroid-demo</artifactId>
 	<packaging>apk</packaging>
 
 	<name>CalDroid Demo</name>
@@ -20,20 +20,21 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>com.google.android</groupId>
-			<artifactId>android</artifactId>
-			<scope>provided</scope>
-		</dependency>
+            <groupId>android</groupId>
+            <artifactId>android</artifactId>
+            <scope>provided</scope>
+        </dependency>
 
 		<dependency>
-			<groupId>com.google.android</groupId>
-			<artifactId>support-v4</artifactId>
-		</dependency>
+            <groupId>android.support</groupId>
+            <artifactId>compatibility-v4</artifactId>
+            <version>18</version>
+        </dependency>
 
 		<dependency>
 			<groupId>com.roomorama</groupId>
-			<artifactId>android-caldroid</artifactId>
-			<version>1.0.0</version>
+			<artifactId>caldroid</artifactId>
+			<version>1.1.0</version>
 			<type>apklib</type>
 		</dependency>
 	</dependencies>

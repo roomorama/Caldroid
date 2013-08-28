@@ -1,4 +1,4 @@
-package com.caldroid;
+package com.roomorama.caldroid;
 
 import hirondelle.date4j.DateTime;
 
@@ -30,6 +30,7 @@ import android.widget.TextView;
 
 import com.antonyt.infiniteviewpager.InfinitePagerAdapter;
 import com.antonyt.infiniteviewpager.InfiniteViewPager;
+import com.caldroid.R;
 
 /**
  * Caldroid is a fragment that display calendar with dates in a month. Caldroid

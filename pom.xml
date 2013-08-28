@@ -26,9 +26,9 @@
 	</parent>
 
 	<groupId>com.roomorama</groupId>
-	<artifactId>android-caldroid-parent</artifactId>
+	<artifactId>caldroid-parent</artifactId>
 	<packaging>pom</packaging>
-	<version>1.0.0</version>
+	<version>1.1.0</version>
 
 	<name>Caldroid Parent</name>
 	<description>Caldroid is a fragment that display calendar with dates in a month. Caldroid can be used as embedded fragment, or as dialog fragment. User can also swipe left/right to navigate to different months.</description>
@@ -37,7 +37,7 @@
 
 	<organization>
 		<name>Roomorama</name>
-		<url>http://www.roomorama.com</url>
+		<url>https://www.roomorama.com</url>
 	</organization>
 
 	<licenses>
@@ -77,16 +77,16 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-				<groupId>com.google.android</groupId>
-				<artifactId>android</artifactId>
-				<version>${android.version}</version>
-				<scope>provided</scope>
-			</dependency>
+                <groupId>android</groupId>
+                <artifactId>android</artifactId>
+                <version>4.3_r1</version>
+                <scope>provided</scope>
+            </dependency>
 			<dependency>
-				<groupId>com.google.android</groupId>
-				<artifactId>support-v4</artifactId>
-				<version>${android.support.version}</version>
-			</dependency>
+                <groupId>android.support</groupId>
+                <artifactId>compatibility-v4</artifactId>
+                <version>18</version>
+            </dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -110,7 +110,7 @@
 				<plugin>
 					<groupId>com.jayway.maven.plugins.android.generation2</groupId>
 					<artifactId>android-maven-plugin</artifactId>
-					<version>3.6.0</version>
+					<version>3.6.1</version>
 					<configuration>
 						<nativeLibrariesDirectory>ignored</nativeLibrariesDirectory>
 						<sdk>

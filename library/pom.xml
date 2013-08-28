@@ -4,35 +4,38 @@
 
 	<parent>
 		<groupId>com.roomorama</groupId>
-		<artifactId>android-caldroid-parent</artifactId>
+		<artifactId>caldroid-parent</artifactId>
 		<relativePath>../pom.xml</relativePath>
-		<version>1.0.0</version>
+		<version>1.1.0</version>
 	</parent>
 
 	<name>Caldroid Library</name>
 
-	<artifactId>android-caldroid</artifactId>
+	<artifactId>caldroid</artifactId>
 	<packaging>apklib</packaging>
 
 	<dependencies>
 
 		<dependency>
-			<groupId>com.google.android</groupId>
-			<artifactId>android</artifactId>
-			<scope>provided</scope>
-		</dependency>
+            <groupId>android</groupId>
+            <artifactId>android</artifactId>
+            <scope>provided</scope>
+        </dependency>
 
         <dependency>
-			<groupId>com.google.android</groupId>
-			<artifactId>support-v4</artifactId>
-		</dependency>
+            <groupId>android.support</groupId>
+            <artifactId>compatibility-v4</artifactId>
+            <version>18</version>
+        </dependency>
 
 		<dependency>
   			<groupId>hirondelle</groupId>
   			<artifactId>date4j</artifactId>
   			<version>1.5.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/libs/date4j.jar</systemPath>
 		</dependency>
-
+        
 	</dependencies>
 
 	<build>

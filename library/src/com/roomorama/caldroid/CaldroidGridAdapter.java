@@ -1,10 +1,12 @@
-package com.caldroid;
+package com.roomorama.caldroid;
 
 import hirondelle.date4j.DateTime;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+
+import com.caldroid.R;
 
 import android.content.Context;
 import android.content.res.Resources;

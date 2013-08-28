@@ -1,4 +1,4 @@
-package com.caldroid;
+package com.roomorama.caldroid;
 
 import hirondelle.date4j.DateTime;
 
