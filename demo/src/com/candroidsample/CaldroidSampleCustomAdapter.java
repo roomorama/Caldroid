@@ -1,8 +1,11 @@
 package com.candroidsample;
 
+import hirondelle.date4j.DateTime;
+
 import java.util.HashMap;
 
-import org.joda.time.DateTime;
+import com.roomorama.caldroid.CaldroidFragment;
+import com.roomorama.caldroid.CaldroidGridAdapter;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -12,11 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.caldroid.CaldroidFragment;
-import com.caldroid.CaldroidGridAdapter;
-
 public class CaldroidSampleCustomAdapter extends CaldroidGridAdapter {
-
 
 	public CaldroidSampleCustomAdapter(Context context, int month, int year,
 			HashMap<String, Object> caldroidData,
@@ -42,7 +41,7 @@ public class CaldroidSampleCustomAdapter extends CaldroidGridAdapter {
 
 		TextView tv1 = (TextView) cellView.findViewById(R.id.tv1);
 		TextView tv2 = (TextView) cellView.findViewById(R.id.tv2);
-		
+
 		tv1.setTextColor(Color.BLACK);
 
 		// Get dateTime of this cell
@@ -50,7 +49,7 @@ public class CaldroidSampleCustomAdapter extends CaldroidGridAdapter {
 		Resources resources = context.getResources();
 
 		// Set color of the dates in previous / next month
-		if (dateTime.getMonthOfYear() != month) {
+		if (dateTime.getMonth() != month) {
 			tv1.setTextColor(resources
 					.getColor(com.caldroid.R.color.caldroid_darker_gray));
 		}
@@ -59,8 +58,8 @@ public class CaldroidSampleCustomAdapter extends CaldroidGridAdapter {
 		boolean shouldResetSelectedView = false;
 
 		// Customize for disabled dates and date outside min/max dates
-		if ((minDateTime != null && dateTime.isBefore(minDateTime))
-				|| (maxDateTime != null && dateTime.isAfter(maxDateTime))
+		if ((minDateTime != null && dateTime.lt(minDateTime))
+				|| (maxDateTime != null && dateTime.gt(maxDateTime))
 				|| (disableDates != null && disableDates.indexOf(dateTime) != -1)) {
 
 			tv1.setTextColor(CaldroidFragment.disabledTextColor);
@@ -99,10 +98,10 @@ public class CaldroidSampleCustomAdapter extends CaldroidGridAdapter {
 				cellView.setBackgroundResource(com.caldroid.R.drawable.red_border);
 			} else {
 				cellView.setBackgroundResource(com.caldroid.R.drawable.cell_bg);
-			}			
+			}
 		}
 
-		tv1.setText("" + dateTime.getDayOfMonth());
+		tv1.setText("" + dateTime.getDay());
 		tv2.setText("Hi");
 
 		// Somehow after setBackgroundResource, the padding collapse.

@@ -1,10 +1,12 @@
-package com.caldroid;
+package com.roomorama.caldroid;
+
+import hirondelle.date4j.DateTime;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
-import org.joda.time.DateTime;
+import com.caldroid.R;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -50,7 +52,7 @@ public class CaldroidGridAdapter extends BaseAdapter {
 	protected HashMap<String, Object> extraData;
 
 	public void setAdapterDateTime(DateTime dateTime) {
-		this.month = dateTime.getMonthOfYear();
+		this.month = dateTime.getMonth();
 		this.year = dateTime.getYear();
 		this.datetimeList = CalendarHelper.getFullWeeks(this.month, this.year,
 				startDayOfWeek);
@@ -165,7 +167,7 @@ public class CaldroidGridAdapter extends BaseAdapter {
 				.get(CaldroidFragment._MAX_DATE_TIME);
 		startDayOfWeek = (Integer) caldroidData
 				.get(CaldroidFragment.START_DAY_OF_WEEK);
-		
+
 		this.datetimeList = CalendarHelper.getFullWeeks(this.month, this.year,
 				startDayOfWeek);
 	}
@@ -242,7 +244,7 @@ public class CaldroidGridAdapter extends BaseAdapter {
 		DateTime dateTime = this.datetimeList.get(position);
 
 		// Set color of the dates in previous / next month
-		if (dateTime.getMonthOfYear() != month) {
+		if (dateTime.getMonth() != month) {
 			cellView.setTextColor(resources
 					.getColor(R.color.caldroid_darker_gray));
 		}
@@ -251,8 +253,8 @@ public class CaldroidGridAdapter extends BaseAdapter {
 		boolean shouldResetSelectedView = false;
 
 		// Customize for disabled dates and date outside min/max dates
-		if ((minDateTime != null && dateTime.isBefore(minDateTime))
-				|| (maxDateTime != null && dateTime.isAfter(maxDateTime))
+		if ((minDateTime != null && dateTime.lt(minDateTime))
+				|| (maxDateTime != null && dateTime.gt(maxDateTime))
 				|| (disableDates != null && disableDatesMap
 						.containsKey(dateTime))) {
 
@@ -293,7 +295,7 @@ public class CaldroidGridAdapter extends BaseAdapter {
 			}
 		}
 
-		cellView.setText("" + dateTime.getDayOfMonth());
+		cellView.setText("" + dateTime.getDay());
 
 		// Set custom color if required
 		setCustomResources(dateTime, cellView);
