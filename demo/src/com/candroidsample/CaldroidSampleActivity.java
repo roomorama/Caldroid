@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import com.roomorama.caldroid.CaldroidFragment;
+import com.roomorama.caldroid.CaldroidListener;
+
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -15,8 +18,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.caldroid.CaldroidFragment;
-import com.caldroid.CaldroidListener;
 
 @SuppressLint("SimpleDateFormat")
 public class CaldroidSampleActivity extends FragmentActivity {
@@ -79,7 +80,7 @@ public class CaldroidSampleActivity extends FragmentActivity {
 			args.putBoolean(CaldroidFragment.FIT_ALL_MONTHS, false);
 
 			// Uncomment this to customize startDayOfWeek
-			// args.putInt("startDayOfWeek", 6); // Saturday
+//			args.putInt(CaldroidFragment.START_DAY_OF_WEEK, CaldroidFragment.TUESDAY); // Tuesday
 			caldroidFragment.setArguments(args);
 		}
 
@@ -188,9 +189,9 @@ public class CaldroidSampleActivity extends FragmentActivity {
 				caldroidFragment.refreshView();
 
 				// Move to date
-				// cal = Calendar.getInstance();
-				// cal.add(Calendar.MONTH, 12);
-				// caldroidFragment.moveToDate(cal.getTime());
+//				cal = Calendar.getInstance();
+//				cal.add(Calendar.MONTH, 12);
+//				caldroidFragment.moveToDate(cal.getTime());
 
 				String text = "Today: " + formatter.format(new Date()) + "\n";
 				text += "Min Date: " + formatter.format(minDate) + "\n";

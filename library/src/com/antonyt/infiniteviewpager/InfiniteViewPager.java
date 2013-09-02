@@ -1,8 +1,9 @@
 package com.antonyt.infiniteviewpager;
 
+import hirondelle.date4j.DateTime;
+
 import java.util.ArrayList;
 
-import org.joda.time.DateTime;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;

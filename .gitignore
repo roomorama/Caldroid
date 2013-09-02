@@ -1,6 +1,7 @@
 # built application files
 *.apk
 *.ap_
+target
 
 # files for the dex VM
 *.dex
@@ -14,6 +15,7 @@ gen/
 
 # Local configuration file (sdk path, etc)
 local.properties
+.DS_Store
 
 # Eclipse project files
 .classpath
