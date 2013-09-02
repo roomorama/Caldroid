@@ -17,7 +17,7 @@ Setup
 =====
 Just clone the repo and check out the CaldroidSample to see how the library works.
 
-To use in your project, reference the child Caldroid project as a library. If you see JAR mismatched error, replace your android-support-v4.jar to the jar inside Caldroid. Make sure you compile the project against Android 4.2 and above to allow nested fragment. See more at http://developer.android.com/about/versions/android-4.2.html#NestedFragments
+To use in your project, reference the child library project as a library. If you see JAR mismatched error, replace your android-support-v4.jar to the jar inside Caldroid. Make sure you compile the project against Android 4.2 and above to allow nested fragment. See more at http://developer.android.com/about/versions/android-4.2.html#NestedFragments
 
 
 Features
@@ -361,12 +361,23 @@ Caldroid fragment includes 4 main parts:
 4) An infinite view pager that allow user to swipe left/right to change month. This library is taken from https://github.com/antonyt/InfiniteViewPager
 
 This infinite view pager recycles 4 fragment, each fragment contains a gridview with 7 columns to display the dates in month. Whenever user swipes different screen, the date grid views are updated.
-  
+
 
 Others
 ======
   
-Caldroid code is simple and clean partly because of powerful JODA DateTime library!
+Caldroid code is simple and clean partly because of powerful [date4j](http://www.date4j.net/) library!
+
+
+Upgrade Note
+============
+1) Caldroid used date4j to work with date instead of Joda. This change is to make Caldroid light weight: date4j is only 35kb, but Joda is about 500kb. 
+
+As most of Caldroid public API use Date instead of internal DateTime, you might not have to change much of your program. You can still use your favorite DateTime lib in your program without depend on Caldroid lib.
+
+2) Projects are restructured to support Maven. 
+
+3) The package is renamed from ```com.caldroid``` to ```com.roomorama.caldroid```.
 
 
 License
