@@ -115,6 +115,14 @@ public class CaldroidSampleActivity extends FragmentActivity {
 						Toast.LENGTH_SHORT).show();
 			}
 
+			@Override
+			public void onCaldroidViewCreated() {
+				// TODO Auto-generated method stub
+				Toast.makeText(getApplicationContext(),
+						"Caldroid view is created",
+						Toast.LENGTH_SHORT).show();
+			}
+
 		};
 
 		// Setup Caldroid

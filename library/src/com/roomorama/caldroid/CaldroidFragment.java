@@ -1037,6 +1037,12 @@ public class CaldroidFragment extends DialogFragment {
 		// Refresh view
 		refreshView();
 
+		// Inform client that all views are created and not null
+		// Client should perform customization for buttons and textviews here
+		if (caldroidListener != null) {
+			caldroidListener.onCaldroidViewCreated();
+		}
+
 		return view;
 	}
 
