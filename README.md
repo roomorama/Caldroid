@@ -167,26 +167,81 @@ public void moveToDateTime(DateTime dateTime);
 Caldroid inform clients via CaldroidListener. 
 
 ``` java
-CaldroidListener listener = new CaldroidListener() {
+final CaldroidListener listener = new CaldroidListener() {
 
 	@Override
 	public void onSelectDate(Date date, View view) {
 		Toast.makeText(getApplicationContext(), formatter.format(date),
-				Toast.LENGTH_LONG).show();
+				Toast.LENGTH_SHORT).show();
 	}
 
 	@Override
 	public void onChangeMonth(int month, int year) {
 		String text = "month: " + month + " year: " + year;
-		Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG)
-				.show();
+		Toast.makeText(getApplicationContext(), text,
+				Toast.LENGTH_SHORT).show();
+	}
+
+	@Override
+	public void onLongClickDate(Date date, View view) {
+		Toast.makeText(getApplicationContext(),
+				"Long click " + formatter.format(date),
+				Toast.LENGTH_SHORT).show();
+	}
+
+	@Override
+	public void onCaldroidViewCreated() {
+		Toast.makeText(getApplicationContext(),
+				"Caldroid view is created",
+				Toast.LENGTH_SHORT).show();
 	}
 
 };
-    
+
 caldroidFragment.setCaldroidListener(listener);
 
 ```
+
+
+## Client can customize look and feel of almost all views
+
+Client can set color of the weekday symbols (SUN, MON, ...) by:
+
+``` java
+WeekdayArrayAdapter.textColor = Color.BLUE;
+```
+
+For more customization, client can supply adapter to the weekdayGridView
+
+``` java
+caldroidFragment.getWeekdayGridView().setAdapter(YOUR_ADAPTER);
+```
+
+User can also customize the navigation arrows and month title textView: font, size, onClickListener, onLongClickListener, etc. Make sure you only access these methods after Caldroid has been successfully attached to view, otherwise it is null.
+
+``` java
+final CaldroidListener listener = new CaldroidListener() {
+
+	@Override
+	public void onSelectDate(Date date, View view) {
+		// Do something
+	}
+
+	@Override
+	public void onCaldroidViewCreated() {
+		Button leftButton = caldroidFragment.getLeftArrowButton;
+		Button rightButton = caldroidFragment.getLeftArrowButton();
+		TextView textView = caldroidFragment.getMonthTitleTextView();
+
+		// Do customization here
+	}
+
+};
+
+caldroidFragment.setCaldroidListener(listener);
+
+```
+
 
 ##Handle screen rotation
 
@@ -324,27 +379,6 @@ public View getView(int position, View convertView, ViewGroup parent) {
 }
 ```
 
-## Client can customize look and feel of almost all views
-
-Client can set color of the weekday symbols (SUN, MON, ...) by:
-
-``` java
-WeekdayArrayAdapter.textColor = Color.BLUE;
-```
-
-For more customization, client can supply adapter to the weekdayGridView
-
-``` java
-caldroidFragment.getWeekdayGridView().setAdapter(YOUR_ADAPTER);
-```
-
-User can also customize the navigation arrows and month title textView. Make sure you only access these methods after Caldroid has been successfully attached to view, otherwise it is null.
-
-``` java
-public Button getLeftArrowButton();
-public Button getRightArrowButton();
-public TextView getMonthTitleTextView();
-```
 
 Basic Structure
 ===============

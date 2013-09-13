@@ -117,7 +117,6 @@ public class CaldroidSampleActivity extends FragmentActivity {
 
 			@Override
 			public void onCaldroidViewCreated() {
-				// TODO Auto-generated method stub
 				Toast.makeText(getApplicationContext(),
 						"Caldroid view is created",
 						Toast.LENGTH_SHORT).show();
