@@ -18,7 +18,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 @SuppressLint("SimpleDateFormat")
 public class CaldroidSampleActivity extends FragmentActivity {
 	private boolean undo = false;
@@ -80,7 +79,8 @@ public class CaldroidSampleActivity extends FragmentActivity {
 			args.putBoolean(CaldroidFragment.FIT_ALL_MONTHS, false);
 
 			// Uncomment this to customize startDayOfWeek
-//			args.putInt(CaldroidFragment.START_DAY_OF_WEEK, CaldroidFragment.TUESDAY); // Tuesday
+			// args.putInt(CaldroidFragment.START_DAY_OF_WEEK,
+			// CaldroidFragment.TUESDAY); // Tuesday
 			caldroidFragment.setArguments(args);
 		}
 
@@ -117,9 +117,11 @@ public class CaldroidSampleActivity extends FragmentActivity {
 
 			@Override
 			public void onCaldroidViewCreated() {
-				Toast.makeText(getApplicationContext(),
-						"Caldroid view is created",
-						Toast.LENGTH_SHORT).show();
+				if (caldroidFragment.getLeftArrowButton() != null) {
+					Toast.makeText(getApplicationContext(),
+							"Caldroid view is created", Toast.LENGTH_SHORT)
+							.show();
+				}
 			}
 
 		};
@@ -196,9 +198,9 @@ public class CaldroidSampleActivity extends FragmentActivity {
 				caldroidFragment.refreshView();
 
 				// Move to date
-//				cal = Calendar.getInstance();
-//				cal.add(Calendar.MONTH, 12);
-//				caldroidFragment.moveToDate(cal.getTime());
+				// cal = Calendar.getInstance();
+				// cal.add(Calendar.MONTH, 12);
+				// caldroidFragment.moveToDate(cal.getTime());
 
 				String text = "Today: " + formatter.format(new Date()) + "\n";
 				text += "Min Date: " + formatter.format(minDate) + "\n";
