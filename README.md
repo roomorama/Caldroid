@@ -211,13 +211,7 @@ Client can set color of the weekday symbols (SUN, MON, ...) by:
 WeekdayArrayAdapter.textColor = Color.BLUE;
 ```
 
-For more customization, client can supply adapter to the weekdayGridView
-
-``` java
-caldroidFragment.getWeekdayGridView().setAdapter(YOUR_ADAPTER);
-```
-
-User can also customize the navigation arrows and month title textView: font, size, onClickListener, onLongClickListener, etc. Make sure you only access these methods after Caldroid has been successfully attached to view, otherwise it is null.
+User can also customize the navigation arrows and month title textView: font, size, onClickListener, onLongClickListener, etc. Client can supply different adapter to the weekdayGridView. Make sure you only access these methods after Caldroid has been successfully attached to view, otherwise you will see NullPointerException.
 
 ``` java
 final CaldroidListener listener = new CaldroidListener() {
@@ -229,6 +223,9 @@ final CaldroidListener listener = new CaldroidListener() {
 
 	@Override
 	public void onCaldroidViewCreated() {
+		// Supply your own adapter to weekdayGridView (SUN, MON, etc)
+		caldroidFragment.getWeekdayGridView().setAdapter(YOUR_ADAPTER);
+
 		Button leftButton = caldroidFragment.getLeftArrowButton;
 		Button rightButton = caldroidFragment.getLeftArrowButton();
 		TextView textView = caldroidFragment.getMonthTitleTextView();
