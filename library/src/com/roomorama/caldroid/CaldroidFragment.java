@@ -118,7 +118,7 @@ public class CaldroidFragment extends DialogFragment {
 	public final static String MAX_DATE = "maxDate";
 	public final static String ENABLE_SWIPE = "enableSwipe";
 	public final static String START_DAY_OF_WEEK = "startDayOfWeek";
-	public final static String FIT_ALL_MONTHS = "fitAllMonths";
+	public final static String SIX_WEEKS_IN_CALENDAR = "sixWeeksInCalendar";
 
 	/**
 	 * For internal use
@@ -169,7 +169,7 @@ public class CaldroidFragment extends DialogFragment {
 	 * A calendar height is not fixed, it may have 5 or 6 rows. Set fitAllMonths
 	 * to true so that the calendar will always have 6 rows
 	 */
-	private boolean fitAllMonths = true;
+	private boolean sixWeeksInCalendar = true;
 
 	/**
 	 * datePagerAdapters hold 4 adapters, meant to be reused
@@ -261,6 +261,7 @@ public class CaldroidFragment extends DialogFragment {
 		caldroidData.put(_MIN_DATE_TIME, minDateTime);
 		caldroidData.put(_MAX_DATE_TIME, maxDateTime);
 		caldroidData.put(START_DAY_OF_WEEK, Integer.valueOf(startDayOfWeek));
+		caldroidData.put(SIX_WEEKS_IN_CALENDAR, Boolean.valueOf(sixWeeksInCalendar));
 
 		// For internal use
 		caldroidData
@@ -389,7 +390,7 @@ public class CaldroidFragment extends DialogFragment {
 		bundle.putBoolean(SHOW_NAVIGATION_ARROWS, showNavigationArrows);
 		bundle.putBoolean(ENABLE_SWIPE, enableSwipe);
 		bundle.putInt(START_DAY_OF_WEEK, startDayOfWeek);
-		bundle.putBoolean(FIT_ALL_MONTHS, fitAllMonths);
+		bundle.putBoolean(SIX_WEEKS_IN_CALENDAR, sixWeeksInCalendar);
 
 		return bundle;
 	}
@@ -703,17 +704,14 @@ public class CaldroidFragment extends DialogFragment {
 		}
 	}
 
-	public boolean isFitAllMonths() {
-		return fitAllMonths;
+	
+	public boolean isSixWeeksInCalendar() {
+		return sixWeeksInCalendar;
 	}
 
-	/**
-	 * A calendar height is not fixed, it may have 5 or 6 rows. Set fitAllMonths
-	 * to true so that the calendar will always have 6 rows
-	 */
-	public void setFitAllMonths(boolean fitAllMonths) {
-		this.fitAllMonths = fitAllMonths;
-		dateViewPager.setFitAllMonths(fitAllMonths);
+	public void setSixWeeksInCalendar(boolean sixWeeksInCalendar) {
+		this.sixWeeksInCalendar = sixWeeksInCalendar;
+		dateViewPager.setSixWeeksInCalendar(sixWeeksInCalendar);
 	}
 
 	/**
@@ -895,7 +893,7 @@ public class CaldroidFragment extends DialogFragment {
 			enableSwipe = args.getBoolean(ENABLE_SWIPE, true);
 
 			// Get fitAllMonths
-			fitAllMonths = args.getBoolean(FIT_ALL_MONTHS, true);
+			sixWeeksInCalendar = args.getBoolean(SIX_WEEKS_IN_CALENDAR, true);
 
 			// Get disable dates
 			ArrayList<String> disableDateStrings = args
@@ -1056,7 +1054,7 @@ public class CaldroidFragment extends DialogFragment {
 		// Get current date time
 		DateTime currentDateTime = new DateTime(year, month, 1, 0, 0, 0, 0);
 		dateInMonthsList = CalendarHelper.getFullWeeks(month, year,
-				startDayOfWeek);
+				startDayOfWeek, sixWeeksInCalendar);
 
 		// Set to pageChangeListener
 		pageChangeListener = new DatePageChangeListener();
@@ -1105,7 +1103,7 @@ public class CaldroidFragment extends DialogFragment {
 		dateViewPager.setEnabled(enableSwipe);
 
 		// Set if viewpager wrap around particular month or all months (6 rows)
-		dateViewPager.setFitAllMonths(fitAllMonths);
+		dateViewPager.setSixWeeksInCalendar(sixWeeksInCalendar);
 
 		// Set the dateInMonthsList to dateViewPager so it can calculate the
 		// height correctly

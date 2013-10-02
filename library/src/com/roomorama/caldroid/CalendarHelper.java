@@ -30,7 +30,7 @@ public class CalendarHelper {
 			"yyyy-MM-dd", Locale.ENGLISH);;
 
 	public static ArrayList<DateTime> getFullWeeks(int month, int year,
-			int startDayOfWeek) {
+			int startDayOfWeek, boolean sixWeeksInCalendar) {
 		ArrayList<DateTime> datetimeList = new ArrayList<DateTime>();
 
 		DateTime firstDateOfMonth = new DateTime(year, month, 1, 0, 0, 0, 0);
@@ -78,6 +78,18 @@ public class CalendarHelper {
 				if (nextDay.getWeekDay() == endDayOfWeek) {
 					break;
 				}
+			}
+		}
+		
+		// Add more weeks to fill remaining rows
+		if (sixWeeksInCalendar) {
+			int size = datetimeList.size();
+			int row = size/7;
+			int numOfDays = (6-row)*7;
+			DateTime lastDateTime = datetimeList.get(size - 1);
+			for (int i = 1; i <= numOfDays; i++) {
+				DateTime nextDateTime = lastDateTime.plusDays(i);
+				datetimeList.add(nextDateTime);
 			}
 		}
 

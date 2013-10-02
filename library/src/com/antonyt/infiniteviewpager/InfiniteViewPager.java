@@ -36,7 +36,7 @@ public class InfiniteViewPager extends ViewPager {
 	 * A calendar height is not fixed, it may have 4, 5 or 6 rows. Set
 	 * fitAllMonths to true so that the calendar will always have 6 rows
 	 */
-	private boolean fitAllMonths = true;
+	private boolean sixWeeksInCalendar = true;
 
 	/**
 	 * Use internally to decide height of the calendar
@@ -51,16 +51,16 @@ public class InfiniteViewPager extends ViewPager {
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
-
-	public boolean isFitAllMonths() {
-		return fitAllMonths;
+	
+	public boolean isSixWeeksInCalendar() {
+		return sixWeeksInCalendar;
 	}
 
-	public void setFitAllMonths(boolean fitAllMonths) {
-		this.fitAllMonths = fitAllMonths;
+	public void setSixWeeksInCalendar(boolean sixWeeksInCalendar) {
+		this.sixWeeksInCalendar = sixWeeksInCalendar;
 		rowHeight = 0;
 	}
-
+	
 	public ArrayList<DateTime> getDateInMonthsList() {
 		return dateInMonthsList;
 	}
@@ -157,7 +157,7 @@ public class InfiniteViewPager extends ViewPager {
 		// Calculate height of the calendar
 		int calHeight = 0;
 		// If fitAllMonths, we need 6 rows
-		if (fitAllMonths) {
+		if (sixWeeksInCalendar) {
 			calHeight = rowHeight * 6;
 		} else { // Otherwise we return correct number of rows
 			calHeight = rowHeight * rows;

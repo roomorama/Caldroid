@@ -54,7 +54,7 @@ public final static String MIN_DATE = "minDate";
 public final static String MAX_DATE = "maxDate";
 public final static String ENABLE_SWIPE = "enableSwipe";
 public final static String START_DAY_OF_WEEK = "startDayOfWeek";
-public final static String FIT_ALL_MONTHS = "fitAllMonths";
+public final static String SIX_WEEKS_IN_CALENDAR = "sixWeeksInCalendar";
 ```
 
 To customize the startDayOfWeek, just use 
@@ -288,8 +288,8 @@ else {
   args.putInt(CaldroidFragment.MONTH, cal.get(Calendar.MONTH) + 1);
   args.putInt(CaldroidFragment.YEAR, cal.get(Calendar.YEAR));
   args.putBoolean(CaldroidFragment.ENABLE_SWIPE, true);
-  args.putBoolean(CaldroidFragment.FIT_ALL_MONTHS, false);
-	caldroidFragment.setArguments(args);
+  args.putBoolean(CaldroidFragment.SIX_WEEKS_IN_CALENDAR, false);
+  caldroidFragment.setArguments(args);
 }
 
 ```
@@ -410,6 +410,7 @@ As most of Caldroid public API use Date instead of internal DateTime, you might 
 
 3) The package is renamed from ```com.caldroid``` to ```com.roomorama.caldroid```.
 
+4) The ```FIT_ALL_MONTH``` key has been renamed to ```SIX_WEEKS_IN_CALENDAR```. The display of calendar also depends on this parameter: if it is true, calendar always display 6 weeks in a calendar. Else, calendar will resize dynamically to the dates gridview.
 
 License
 =======

@@ -40,6 +40,7 @@ public class CaldroidGridAdapter extends BaseAdapter {
 	protected DateTime maxDateTime;
 	protected DateTime today;
 	protected int startDayOfWeek;
+	protected boolean sixWeeksInCalendar;
 	protected Resources resources;
 
 	/**
@@ -55,7 +56,7 @@ public class CaldroidGridAdapter extends BaseAdapter {
 		this.month = dateTime.getMonth();
 		this.year = dateTime.getYear();
 		this.datetimeList = CalendarHelper.getFullWeeks(this.month, this.year,
-				startDayOfWeek);
+				startDayOfWeek, sixWeeksInCalendar);
 	}
 
 	// GETTERS AND SETTERS
@@ -167,9 +168,11 @@ public class CaldroidGridAdapter extends BaseAdapter {
 				.get(CaldroidFragment._MAX_DATE_TIME);
 		startDayOfWeek = (Integer) caldroidData
 				.get(CaldroidFragment.START_DAY_OF_WEEK);
+		sixWeeksInCalendar = (Boolean) caldroidData
+				.get(CaldroidFragment.SIX_WEEKS_IN_CALENDAR);
 
 		this.datetimeList = CalendarHelper.getFullWeeks(this.month, this.year,
-				startDayOfWeek);
+				startDayOfWeek, sixWeeksInCalendar);
 	}
 
 	protected DateTime getToday() {

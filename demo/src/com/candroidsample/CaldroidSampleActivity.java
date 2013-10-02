@@ -76,7 +76,7 @@ public class CaldroidSampleActivity extends FragmentActivity {
 			args.putInt(CaldroidFragment.MONTH, cal.get(Calendar.MONTH) + 1);
 			args.putInt(CaldroidFragment.YEAR, cal.get(Calendar.YEAR));
 			args.putBoolean(CaldroidFragment.ENABLE_SWIPE, true);
-			args.putBoolean(CaldroidFragment.FIT_ALL_MONTHS, false);
+			args.putBoolean(CaldroidFragment.SIX_WEEKS_IN_CALENDAR, true);
 
 			// Uncomment this to customize startDayOfWeek
 			// args.putInt(CaldroidFragment.START_DAY_OF_WEEK,
