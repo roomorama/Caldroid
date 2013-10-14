@@ -261,7 +261,8 @@ public class CaldroidFragment extends DialogFragment {
 		caldroidData.put(_MIN_DATE_TIME, minDateTime);
 		caldroidData.put(_MAX_DATE_TIME, maxDateTime);
 		caldroidData.put(START_DAY_OF_WEEK, Integer.valueOf(startDayOfWeek));
-		caldroidData.put(SIX_WEEKS_IN_CALENDAR, Boolean.valueOf(sixWeeksInCalendar));
+		caldroidData.put(SIX_WEEKS_IN_CALENDAR,
+				Boolean.valueOf(sixWeeksInCalendar));
 
 		// For internal use
 		caldroidData
@@ -704,7 +705,6 @@ public class CaldroidFragment extends DialogFragment {
 		}
 	}
 
-	
 	public boolean isSixWeeksInCalendar() {
 		return sixWeeksInCalendar;
 	}
@@ -775,26 +775,30 @@ public class CaldroidFragment extends DialogFragment {
 	 * @return
 	 */
 	private OnItemClickListener getDateItemClickListener() {
-		dateItemClickListener = new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
+		if (dateItemClickListener == null) {
+			dateItemClickListener = new OnItemClickListener() {
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view,
+						int position, long id) {
 
-				DateTime dateTime = dateInMonthsList.get(position);
+					DateTime dateTime = dateInMonthsList.get(position);
 
-				if (caldroidListener != null) {
-					if ((minDateTime != null && dateTime.lt(minDateTime))
-							|| (maxDateTime != null && dateTime.gt(maxDateTime))
-							|| (disableDates != null && disableDates
-									.indexOf(dateTime) != -1)) {
-						return;
+					if (caldroidListener != null) {
+						if ((minDateTime != null && dateTime.lt(minDateTime))
+								|| (maxDateTime != null && dateTime
+										.gt(maxDateTime))
+								|| (disableDates != null && disableDates
+										.indexOf(dateTime) != -1)) {
+							return;
+						}
+
+						Date date = CalendarHelper
+								.convertDateTimeToDate(dateTime);
+						caldroidListener.onSelectDate(date, view);
 					}
-
-					Date date = CalendarHelper.convertDateTimeToDate(dateTime);
-					caldroidListener.onSelectDate(date, view);
 				}
-			}
-		};
+			};
+		}
 
 		return dateItemClickListener;
 	}
@@ -806,27 +810,31 @@ public class CaldroidFragment extends DialogFragment {
 	 * @return
 	 */
 	private OnItemLongClickListener getDateItemLongClickListener() {
-		dateItemLongClickListener = new OnItemLongClickListener() {
-			@Override
-			public boolean onItemLongClick(AdapterView<?> parent, View view,
-					int position, long id) {
+		if (dateItemLongClickListener == null) {
+			dateItemLongClickListener = new OnItemLongClickListener() {
+				@Override
+				public boolean onItemLongClick(AdapterView<?> parent,
+						View view, int position, long id) {
 
-				DateTime dateTime = dateInMonthsList.get(position);
+					DateTime dateTime = dateInMonthsList.get(position);
 
-				if (caldroidListener != null) {
-					if ((minDateTime != null && dateTime.lt(minDateTime))
-							|| (maxDateTime != null && dateTime.gt(maxDateTime))
-							|| (disableDates != null && disableDates
-									.indexOf(dateTime) != -1)) {
-						return false;
+					if (caldroidListener != null) {
+						if ((minDateTime != null && dateTime.lt(minDateTime))
+								|| (maxDateTime != null && dateTime
+										.gt(maxDateTime))
+								|| (disableDates != null && disableDates
+										.indexOf(dateTime) != -1)) {
+							return false;
+						}
+						Date date = CalendarHelper
+								.convertDateTimeToDate(dateTime);
+						caldroidListener.onLongClickDate(date, view);
 					}
-					Date date = CalendarHelper.convertDateTimeToDate(dateTime);
-					caldroidListener.onLongClickDate(date, view);
-				}
 
-				return true;
-			}
-		};
+					return true;
+				}
+			};
+		}
 
 		return dateItemLongClickListener;
 	}
