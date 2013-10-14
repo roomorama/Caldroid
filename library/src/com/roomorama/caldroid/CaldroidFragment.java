@@ -844,6 +844,11 @@ public class CaldroidFragment extends DialogFragment {
 	 * parameters first, then call this method.
 	 */
 	public void refreshView() {
+		// If month and year is not yet initialized, refreshView doesn't do anything
+		if (month == -1 || year == -1) {
+			return;
+		}
+		
 		// Refresh title view
 		monthTitleTextView
 				.setText(new DateTime(year, month, 1, 0, 0, 0, 0).format(
