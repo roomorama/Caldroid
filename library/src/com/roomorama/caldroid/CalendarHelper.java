@@ -34,7 +34,7 @@ public class CalendarHelper {
 		ArrayList<DateTime> datetimeList = new ArrayList<DateTime>();
 
 		DateTime firstDateOfMonth = new DateTime(year, month, 1, 0, 0, 0, 0);
-		DateTime lastDateOfMonth = firstDateOfMonth.getEndOfMonth();
+		DateTime lastDateOfMonth = firstDateOfMonth.plusDays(firstDateOfMonth.getNumDaysInMonth()-1);
 
 		// Add dates of first week from previous month
 		int weekdayOfFirstDate = firstDateOfMonth.getWeekDay();

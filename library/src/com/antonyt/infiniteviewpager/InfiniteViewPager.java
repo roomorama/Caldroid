@@ -1,10 +1,5 @@
 package com.antonyt.infiniteviewpager;
 
-import hirondelle.date4j.DateTime;
-
-import java.util.ArrayList;
-
-
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -23,9 +18,9 @@ public class InfiniteViewPager extends ViewPager {
 	public static final int OFFSET = 1000;
 
 	/**
-	 * dateInMonthsList is required to calculate the height correctly
+	 * numberOfDaysInMonth is required to calculate the height correctly
 	 */
-	private ArrayList<DateTime> dateInMonthsList;
+	private int numberOfDaysInMonth;
 
 	/**
 	 * Enable swipe
@@ -61,12 +56,12 @@ public class InfiniteViewPager extends ViewPager {
 		rowHeight = 0;
 	}
 	
-	public ArrayList<DateTime> getDateInMonthsList() {
-		return dateInMonthsList;
+	public int getNumberOfDaysInMonth() {
+		return numberOfDaysInMonth;
 	}
 
-	public void setDateInMonthsList(ArrayList<DateTime> dateInMonthsList) {
-		this.dateInMonthsList = dateInMonthsList;
+	public void setNumberOfDaysInMonth(int numberOfDaysInMonth) {
+		this.numberOfDaysInMonth = numberOfDaysInMonth;
 	}
 
 	// ************** Constructors ********************
@@ -116,7 +111,7 @@ public class InfiniteViewPager extends ViewPager {
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
 		// Calculate row height
-		int rows = dateInMonthsList.size() / 7;
+		int rows = numberOfDaysInMonth / 7;
 
 		boolean wrapHeight = MeasureSpec.getMode(heightMeasureSpec) == MeasureSpec.AT_MOST;
 

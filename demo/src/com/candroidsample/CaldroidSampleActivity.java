@@ -28,12 +28,12 @@ public class CaldroidSampleActivity extends FragmentActivity {
 		Calendar cal = Calendar.getInstance();
 
 		// Min date is last 7 days
-		cal.add(Calendar.DATE, -3);
+		cal.add(Calendar.DATE, -18);
 		Date blueDate = cal.getTime();
 
 		// Max date is next 7 days
 		cal = Calendar.getInstance();
-		cal.add(Calendar.DATE, 4);
+		cal.add(Calendar.DATE, 16);
 		Date greenDate = cal.getTime();
 
 		if (caldroidFragment != null) {

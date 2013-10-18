@@ -1066,9 +1066,7 @@ public class CaldroidFragment extends DialogFragment {
 	private void setupDateGridPages(View view) {
 		// Get current date time
 		DateTime currentDateTime = new DateTime(year, month, 1, 0, 0, 0, 0);
-		dateInMonthsList = CalendarHelper.getFullWeeks(month, year,
-				startDayOfWeek, sixWeeksInCalendar);
-
+		
 		// Set to pageChangeListener
 		pageChangeListener = new DatePageChangeListener();
 		pageChangeListener.setCurrentDateTime(currentDateTime);
@@ -1077,6 +1075,9 @@ public class CaldroidFragment extends DialogFragment {
 		// Current month
 		CaldroidGridAdapter adapter0 = getNewDatesGridAdapter(
 				currentDateTime.getMonth(), currentDateTime.getYear());
+		
+		// Setup dateInMonthsList
+		dateInMonthsList = adapter0.getDatetimeList();
 
 		// Next month
 		DateTime nextDateTime = currentDateTime.plus(0, 1, 0, 0, 0, 0, 0,
@@ -1118,9 +1119,10 @@ public class CaldroidFragment extends DialogFragment {
 		// Set if viewpager wrap around particular month or all months (6 rows)
 		dateViewPager.setSixWeeksInCalendar(sixWeeksInCalendar);
 
-		// Set the dateInMonthsList to dateViewPager so it can calculate the
+		// Set the numberOfDaysInMonth to dateViewPager so it can calculate the
 		// height correctly
-		dateViewPager.setDateInMonthsList(dateInMonthsList);
+		dateViewPager.setNumberOfDaysInMonth(dateInMonthsList.size());
+		
 
 		// MonthPagerAdapter actually provides 4 real fragments. The
 		// InfinitePagerAdapter only recycles fragment provided by this
