@@ -844,11 +844,12 @@ public class CaldroidFragment extends DialogFragment {
 	 * parameters first, then call this method.
 	 */
 	public void refreshView() {
-		// If month and year is not yet initialized, refreshView doesn't do anything
+		// If month and year is not yet initialized, refreshView doesn't do
+		// anything
 		if (month == -1 || year == -1) {
 			return;
 		}
-		
+
 		// Refresh title view
 		monthTitleTextView
 				.setText(new DateTime(year, month, 1, 0, 0, 0, 0).format(
@@ -905,7 +906,7 @@ public class CaldroidFragment extends DialogFragment {
 			// Should enable swipe to change month
 			enableSwipe = args.getBoolean(ENABLE_SWIPE, true);
 
-			// Get fitAllMonths
+			// Get sixWeeksInCalendar
 			sixWeeksInCalendar = args.getBoolean(SIX_WEEKS_IN_CALENDAR, true);
 
 			// Get disable dates
@@ -1066,7 +1067,7 @@ public class CaldroidFragment extends DialogFragment {
 	private void setupDateGridPages(View view) {
 		// Get current date time
 		DateTime currentDateTime = new DateTime(year, month, 1, 0, 0, 0, 0);
-		
+
 		// Set to pageChangeListener
 		pageChangeListener = new DatePageChangeListener();
 		pageChangeListener.setCurrentDateTime(currentDateTime);
@@ -1075,7 +1076,7 @@ public class CaldroidFragment extends DialogFragment {
 		// Current month
 		CaldroidGridAdapter adapter0 = getNewDatesGridAdapter(
 				currentDateTime.getMonth(), currentDateTime.getYear());
-		
+
 		// Setup dateInMonthsList
 		dateInMonthsList = adapter0.getDatetimeList();
 
@@ -1121,8 +1122,7 @@ public class CaldroidFragment extends DialogFragment {
 
 		// Set the numberOfDaysInMonth to dateViewPager so it can calculate the
 		// height correctly
-		dateViewPager.setNumberOfDaysInMonth(dateInMonthsList.size());
-		
+		dateViewPager.setDatesInMonth(dateInMonthsList);
 
 		// MonthPagerAdapter actually provides 4 real fragments. The
 		// InfinitePagerAdapter only recycles fragment provided by this

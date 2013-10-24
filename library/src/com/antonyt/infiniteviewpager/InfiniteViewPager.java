@@ -1,5 +1,9 @@
 package com.antonyt.infiniteviewpager;
 
+import hirondelle.date4j.DateTime;
+
+import java.util.ArrayList;
+
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -18,9 +22,9 @@ public class InfiniteViewPager extends ViewPager {
 	public static final int OFFSET = 1000;
 
 	/**
-	 * numberOfDaysInMonth is required to calculate the height correctly
+	 * datesInMonth is required to calculate the height correctly
 	 */
-	private int numberOfDaysInMonth;
+	private ArrayList<DateTime> datesInMonth;
 
 	/**
 	 * Enable swipe
@@ -31,7 +35,7 @@ public class InfiniteViewPager extends ViewPager {
 	 * A calendar height is not fixed, it may have 4, 5 or 6 rows. Set
 	 * fitAllMonths to true so that the calendar will always have 6 rows
 	 */
-	private boolean sixWeeksInCalendar = true;
+	private boolean sixWeeksInCalendar = false;
 
 	/**
 	 * Use internally to decide height of the calendar
@@ -46,22 +50,22 @@ public class InfiniteViewPager extends ViewPager {
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
-	
+
 	public boolean isSixWeeksInCalendar() {
 		return sixWeeksInCalendar;
+	}
+
+	public ArrayList<DateTime> getDatesInMonth() {
+		return datesInMonth;
+	}
+
+	public void setDatesInMonth(ArrayList<DateTime> datesInMonth) {
+		this.datesInMonth = datesInMonth;
 	}
 
 	public void setSixWeeksInCalendar(boolean sixWeeksInCalendar) {
 		this.sixWeeksInCalendar = sixWeeksInCalendar;
 		rowHeight = 0;
-	}
-	
-	public int getNumberOfDaysInMonth() {
-		return numberOfDaysInMonth;
-	}
-
-	public void setNumberOfDaysInMonth(int numberOfDaysInMonth) {
-		this.numberOfDaysInMonth = numberOfDaysInMonth;
 	}
 
 	// ************** Constructors ********************
@@ -111,7 +115,7 @@ public class InfiniteViewPager extends ViewPager {
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
 		// Calculate row height
-		int rows = numberOfDaysInMonth / 7;
+		int rows = datesInMonth.size() / 7;
 
 		boolean wrapHeight = MeasureSpec.getMode(heightMeasureSpec) == MeasureSpec.AT_MOST;
 
@@ -151,18 +155,16 @@ public class InfiniteViewPager extends ViewPager {
 
 		// Calculate height of the calendar
 		int calHeight = 0;
-		// If fitAllMonths, we need 6 rows
+
+		// If fit 6 weeks, we need 6 rows
 		if (sixWeeksInCalendar) {
 			calHeight = rowHeight * 6;
 		} else { // Otherwise we return correct number of rows
 			calHeight = rowHeight * rows;
 		}
 
-		// If the calculated height is bigger than the parent height, set it to
-		// parent height so the gridview can be scrolled
-		if (calHeight > height) {
-			calHeight = height;
-		}
+		// Prevent small vertical scroll
+		calHeight += 3;
 
 		heightMeasureSpec = MeasureSpec.makeMeasureSpec(calHeight,
 				MeasureSpec.EXACTLY);
