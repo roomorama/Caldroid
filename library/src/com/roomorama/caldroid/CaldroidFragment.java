@@ -119,6 +119,7 @@ public class CaldroidFragment extends DialogFragment {
 	public final static String ENABLE_SWIPE = "enableSwipe";
 	public final static String START_DAY_OF_WEEK = "startDayOfWeek";
 	public final static String SIX_WEEKS_IN_CALENDAR = "sixWeeksInCalendar";
+	public final static String ENABLE_CLICK_ON_DISABLED_DATES = "enableClickOnDisabledDates";
 
 	/**
 	 * For internal use
@@ -181,6 +182,7 @@ public class CaldroidFragment extends DialogFragment {
 	 */
 	protected boolean enableSwipe = true;
 	protected boolean showNavigationArrows = true;
+	protected boolean enableClickOnDisabledDates = false;
 
 	/**
 	 * dateItemClickListener is fired when user click on the date cell
@@ -784,12 +786,15 @@ public class CaldroidFragment extends DialogFragment {
 					DateTime dateTime = dateInMonthsList.get(position);
 
 					if (caldroidListener != null) {
-						if ((minDateTime != null && dateTime.lt(minDateTime))
-								|| (maxDateTime != null && dateTime
-										.gt(maxDateTime))
-								|| (disableDates != null && disableDates
-										.indexOf(dateTime) != -1)) {
-							return;
+						if (!enableClickOnDisabledDates) {
+							if ((minDateTime != null && dateTime
+									.lt(minDateTime))
+									|| (maxDateTime != null && dateTime
+											.gt(maxDateTime))
+									|| (disableDates != null && disableDates
+											.indexOf(dateTime) != -1)) {
+								return;
+							}
 						}
 
 						Date date = CalendarHelper
@@ -819,12 +824,15 @@ public class CaldroidFragment extends DialogFragment {
 					DateTime dateTime = dateInMonthsList.get(position);
 
 					if (caldroidListener != null) {
-						if ((minDateTime != null && dateTime.lt(minDateTime))
-								|| (maxDateTime != null && dateTime
-										.gt(maxDateTime))
-								|| (disableDates != null && disableDates
-										.indexOf(dateTime) != -1)) {
-							return false;
+						if (!enableClickOnDisabledDates) {
+							if ((minDateTime != null && dateTime
+									.lt(minDateTime))
+									|| (maxDateTime != null && dateTime
+											.gt(maxDateTime))
+									|| (disableDates != null && disableDates
+											.indexOf(dateTime) != -1)) {
+								return false;
+							}
 						}
 						Date date = CalendarHelper
 								.convertDateTimeToDate(dateTime);
@@ -874,7 +882,7 @@ public class CaldroidFragment extends DialogFragment {
 	 * dialogTitle, showNavigationArrows,(String) disableDates, selectedDates,
 	 * minDate, maxDate
 	 */
-	private void retrieveInitialArgs(Bundle savedInstanceState) {
+	protected void retrieveInitialArgs(Bundle savedInstanceState) {
 		// Get arguments
 		Bundle args = getArguments();
 		if (args != null) {
@@ -908,6 +916,10 @@ public class CaldroidFragment extends DialogFragment {
 
 			// Get sixWeeksInCalendar
 			sixWeeksInCalendar = args.getBoolean(SIX_WEEKS_IN_CALENDAR, true);
+
+			// Get clickable setting
+			enableClickOnDisabledDates = args.getBoolean(
+					ENABLE_CLICK_ON_DISABLED_DATES, false);
 
 			// Get disable dates
 			ArrayList<String> disableDateStrings = args

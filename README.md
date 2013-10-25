@@ -55,6 +55,7 @@ public final static String MAX_DATE = "maxDate";
 public final static String ENABLE_SWIPE = "enableSwipe";
 public final static String START_DAY_OF_WEEK = "startDayOfWeek";
 public final static String SIX_WEEKS_IN_CALENDAR = "sixWeeksInCalendar";
+public final static String ENABLE_CLICK_ON_DISABLED_DATES = "enableClickOnDisabledDates";
 ```
 
 To customize the startDayOfWeek, just use 
@@ -62,6 +63,14 @@ To customize the startDayOfWeek, just use
 ``` java
 Bundle args = new Bundle();
 args.putInt(CaldroidFragment.START_DAY_OF_WEEK, CaldroidFragment.TUESDAY); // Tuesday
+caldroidFragment.setArguments(args);
+```
+
+If you want to know when user clicks on disabled dates:
+
+```java
+Bundle args = new Bundle();
+args.putInt(CaldroidFragment.ENABLE_CLICK_ON_DISABLED_DATES, true); // Tuesday
 caldroidFragment.setArguments(args);
 ```
 
