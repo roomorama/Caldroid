@@ -70,7 +70,7 @@ If you want to know when user clicks on disabled dates:
 
 ```java
 Bundle args = new Bundle();
-args.putInt(CaldroidFragment.ENABLE_CLICK_ON_DISABLED_DATES, true); // Tuesday
+args.putInt(CaldroidFragment.ENABLE_CLICK_ON_DISABLED_DATES, true);
 caldroidFragment.setArguments(args);
 ```
 
