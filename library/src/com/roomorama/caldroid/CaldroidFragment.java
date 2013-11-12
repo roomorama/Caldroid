@@ -220,6 +220,13 @@ public class CaldroidFragment extends DialogFragment {
 	}
 
 	/**
+	 * For client to access array of rotating fragments
+	 */
+	public ArrayList<DateGridFragment> getFragments() {
+		return fragments;
+	}
+
+	/**
 	 * To let user customize the navigation buttons
 	 */
 	public Button getLeftArrowButton() {
