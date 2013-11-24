@@ -385,6 +385,30 @@ public View getView(int position, View convertView, ViewGroup parent) {
 }
 ```
 
+## Customize month names and days of week
+CaldroidFragment can be extended to override the default month name + year and day of week formatting used in the month header and week day column headers:
+```java
+public static class CustomCaldroidFragment extends CaldroidFragment {
+	/*
+	 * Use natural case week day names (default is upper case). 
+	 */
+	@Override
+	protected String formatDayOfWeek(DateTime dayOfWeek) {
+		return dayOfWeek.format("WWW", Locale.getDefault());
+	}
+	
+	/*
+	 * Use natural case year/month format, e.g. 2013/August (default is 
+	 * "AUGUST 2013")
+	 */
+	@Override
+	protected String formatMonthAndYear(DateTime monthAndYear) {
+		return monthAndYear.getYear() + "/" + 
+			monthAndYear.format("MMMM", Locale.getDefault());
+	}
+}
+```
+This can also be used to override the string formatting for languages other than English where the formats returned by Date4j are not correct for displaying in a wall calendar like Caldroid.
 
 Basic Structure
 ===============

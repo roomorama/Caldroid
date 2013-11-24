@@ -867,9 +867,7 @@ public class CaldroidFragment extends DialogFragment {
 
 		// Refresh title view
 		monthTitleTextView
-				.setText(new DateTime(year, month, 1, 0, 0, 0, 0).format(
-						"MMMM", Locale.getDefault()).toUpperCase()
-						+ " " + year);
+				.setText(formatMonthAndYear(new DateTime(year, month, 1, 0, 0, 0, 0)));
 
 		// Refresh the date grid views
 		for (CaldroidGridAdapter adapter : datePagerAdapters) {
@@ -1175,7 +1173,7 @@ public class CaldroidFragment extends DialogFragment {
 	/**
 	 * To display the week day title
 	 * 
-	 * @return "SUN, MON, TUE, WED, THU, FRI, SAT"
+	 * @return e.g. "SUN, MON, TUE, WED, THU, FRI, SAT"
 	 */
 	private ArrayList<String> getDaysOfWeek() {
 		ArrayList<String> list = new ArrayList<String>();
@@ -1185,11 +1183,40 @@ public class CaldroidFragment extends DialogFragment {
 		DateTime nextDay = sunday.plusDays(startDayOfWeek - SUNDAY);
 
 		for (int i = 0; i < 7; i++) {
-			list.add(nextDay.format("WWW", Locale.getDefault()).toUpperCase());
+			list.add(formatDayOfWeek(nextDay));
 			nextDay = nextDay.plusDays(1);
 		}
 
 		return list;
+	}
+	
+	/**
+	 * Override to specify custom day of week abbreviation format for the day of week
+	 * column headers. The default implementation returns the three-character abbreviation 
+	 * of the weekday according to the current locale raised to upper case.
+	 * @param dayOfWeek The day of week to get localized column header for (other fields in 
+	 * the DateTime should be ignored)
+	 * @return The localized abbreviation for the day of week specified by dayOfWeek.
+	 * @author vsin
+	 */
+	protected String formatDayOfWeek(DateTime dayOfWeek) {
+		return dayOfWeek.format("WWW", Locale.getDefault()).toUpperCase();
+	}
+	
+	/**
+	 * Override to specify custom month and year format for display in the month header at top 
+	 * of the calendar. The default implementation returns the full month name according to 
+	 * the current locale raised to upper case and concatenated with a space and the current 
+	 * year as integer.
+	 * @param monthAndYear The month and year to get localized header for (other fields in the 
+	 * DateTime should be ignored)
+	 * @return The localized combination of month and year specified by monthAndYear.
+	 * @author vsin
+	 */
+	protected String formatMonthAndYear(DateTime monthAndYear) {
+		return monthAndYear.format(
+				"MMMM", Locale.getDefault()).toUpperCase()
+				+ " " + monthAndYear.getYear();
 	}
 
 	/**
