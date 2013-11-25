@@ -857,6 +857,30 @@ public class CaldroidFragment extends DialogFragment {
 	}
 
 	/**
+	 * Refresh month title text view when user swipe
+	 */
+	@SuppressLint("NewApi")
+	protected void refreshMonthTitleTextView() {
+		// Refresh title view
+		Calendar cal = Calendar.getInstance();
+		cal.clear();
+		cal.set(year, month - 1, 1);
+
+		int apiLevel = android.os.Build.VERSION.SDK_INT;
+
+		String monthTitle = null;
+		if (apiLevel < 9) {
+			monthTitle = CalendarHelper.MMMMFormat.format(cal.getTime());
+		} else {
+			// This is more accurate display
+			monthTitle = cal.getDisplayName(Calendar.MONTH, Calendar.LONG,
+					Locale.getDefault());
+		}
+
+		monthTitleTextView.setText(monthTitle.toUpperCase() + " " + year);
+	}
+
+	/**
 	 * Refresh view when parameter changes. You should always change all
 	 * parameters first, then call this method.
 	 */
@@ -867,16 +891,7 @@ public class CaldroidFragment extends DialogFragment {
 			return;
 		}
 
-		// Refresh title view
-		Calendar cal = Calendar.getInstance();
-		cal.clear();
-		cal.set(year, month - 1, 1);
-		Date date = cal.getTime();
-
-		String monthTitle = CalendarHelper.MMMMMyyyyFormat.format(date)
-				.toUpperCase();
-
-		monthTitleTextView.setText(monthTitle);
+		refreshMonthTitleTextView();
 
 		// Refresh the date grid views
 		for (CaldroidGridAdapter adapter : datePagerAdapters) {

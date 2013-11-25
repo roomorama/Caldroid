@@ -20,8 +20,8 @@ public class CalendarHelper {
 	public static SimpleDateFormat yyyyMMddFormat = new SimpleDateFormat(
 			"yyyy-MM-dd", Locale.ENGLISH);
 
-	public static SimpleDateFormat MMMMMyyyyFormat = new SimpleDateFormat(
-			"MMMMM yyyy", Locale.getDefault());
+	public static SimpleDateFormat MMMMFormat = new SimpleDateFormat(
+			"MMMM", Locale.getDefault());
 
 	/**
 	 * Retrieve all the dates for a given calendar month Include previous month,
