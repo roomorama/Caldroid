@@ -5,6 +5,7 @@ import hirondelle.date4j.DateTime;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -16,6 +17,12 @@ import java.util.Locale;
  */
 public class CalendarHelper {
 
+	public static SimpleDateFormat yyyyMMddFormat = new SimpleDateFormat(
+			"yyyy-MM-dd", Locale.ENGLISH);
+
+	public static SimpleDateFormat MMMMMyyyyFormat = new SimpleDateFormat(
+			"MMMMM yyyy", Locale.ENGLISH);
+
 	/**
 	 * Retrieve all the dates for a given calendar month Include previous month,
 	 * current month and next month.
@@ -26,15 +33,13 @@ public class CalendarHelper {
 	 *            : calendar can start from customized date instead of Sunday
 	 * @return
 	 */
-	public static SimpleDateFormat yyyyMMddFormat = new SimpleDateFormat(
-			"yyyy-MM-dd", Locale.ENGLISH);;
-
 	public static ArrayList<DateTime> getFullWeeks(int month, int year,
 			int startDayOfWeek, boolean sixWeeksInCalendar) {
 		ArrayList<DateTime> datetimeList = new ArrayList<DateTime>();
 
 		DateTime firstDateOfMonth = new DateTime(year, month, 1, 0, 0, 0, 0);
-		DateTime lastDateOfMonth = firstDateOfMonth.plusDays(firstDateOfMonth.getNumDaysInMonth()-1);
+		DateTime lastDateOfMonth = firstDateOfMonth.plusDays(firstDateOfMonth
+				.getNumDaysInMonth() - 1);
 
 		// Add dates of first week from previous month
 		int weekdayOfFirstDate = firstDateOfMonth.getWeekDay();
@@ -80,12 +85,12 @@ public class CalendarHelper {
 				}
 			}
 		}
-		
+
 		// Add more weeks to fill remaining rows
 		if (sixWeeksInCalendar) {
 			int size = datetimeList.size();
-			int row = size/7;
-			int numOfDays = (6-row)*7;
+			int row = size / 7;
+			int numOfDays = (6 - row) * 7;
 			DateTime lastDateTime = datetimeList.get(size - 1);
 			for (int i = 1; i <= numOfDays; i++) {
 				DateTime nextDateTime = lastDateTime.plusDays(i);
@@ -103,21 +108,31 @@ public class CalendarHelper {
 	 * @return
 	 */
 	public static DateTime convertDateToDateTime(Date date) {
-		DateTime dateTime = new DateTime(yyyyMMddFormat.format(date));
-		dateTime = new DateTime(dateTime.getYear(), dateTime.getMonth(),
-				dateTime.getDay(), 0, 0, 0, 0);
-		return dateTime;
+		// Get year, javaMonth, date
+		Calendar calendar = Calendar.getInstance();
+		calendar.clear();
+		calendar.setTime(date);
+
+		int year = calendar.get(Calendar.YEAR);
+		int javaMonth = calendar.get(Calendar.MONTH);
+		int day = calendar.get(Calendar.DATE);
+
+		// javaMonth start at 0. Need to plus 1 to get datetimeMonth
+		return new DateTime(year, javaMonth + 1, day, 0, 0, 0, 0);
 	}
 
 	public static Date convertDateTimeToDate(DateTime dateTime) {
-		String dateString = dateTime.format("YYYY-MM-DD");
-		try {
-			return getDateFromString(dateString, null);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
+		int year = dateTime.getYear();
+		int datetimeMonth = dateTime.getMonth();
+		int day = dateTime.getDay();
+
+		Calendar calendar = Calendar.getInstance();
+		calendar.clear();
+
+		// datetimeMonth start at 1. Need to minus 1 to get javaMonth
+		calendar.set(year, datetimeMonth - 1, day);
+
+		return calendar.getTime();
 	}
 
 	/**
