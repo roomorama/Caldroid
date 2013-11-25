@@ -3,7 +3,9 @@ package com.roomorama.caldroid;
 import hirondelle.date4j.DateTime;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -866,10 +868,15 @@ public class CaldroidFragment extends DialogFragment {
 		}
 
 		// Refresh title view
-		monthTitleTextView
-				.setText(new DateTime(year, month, 1, 0, 0, 0, 0).format(
-						"MMMM", Locale.getDefault()).toUpperCase()
-						+ " " + year);
+		Calendar cal = Calendar.getInstance();
+		cal.clear();
+		cal.set(year, month - 1, 1);
+		Date date = cal.getTime();
+
+		String monthTitle = CalendarHelper.MMMMMyyyyFormat.format(date)
+				.toUpperCase();
+
+		monthTitleTextView.setText(monthTitle);
 
 		// Refresh the date grid views
 		for (CaldroidGridAdapter adapter : datePagerAdapters) {
@@ -1180,12 +1187,15 @@ public class CaldroidFragment extends DialogFragment {
 	private ArrayList<String> getDaysOfWeek() {
 		ArrayList<String> list = new ArrayList<String>();
 
+		SimpleDateFormat fmt = new SimpleDateFormat("EEE", Locale.getDefault());
+
 		// 17 Feb 2013 is Sunday
 		DateTime sunday = new DateTime(2013, 2, 17, 0, 0, 0, 0);
 		DateTime nextDay = sunday.plusDays(startDayOfWeek - SUNDAY);
 
 		for (int i = 0; i < 7; i++) {
-			list.add(nextDay.format("WWW", Locale.getDefault()).toUpperCase());
+			Date date = CalendarHelper.convertDateTimeToDate(nextDay);
+			list.add(fmt.format(date).toUpperCase());
 			nextDay = nextDay.plusDays(1);
 		}
 
