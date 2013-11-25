@@ -18,6 +18,8 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.text.format.DateUtils;
+import android.text.format.Time;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -856,28 +858,26 @@ public class CaldroidFragment extends DialogFragment {
 		return dateItemLongClickListener;
 	}
 
+	private static final int monthTitleDateUtilsFlags = DateUtils.FORMAT_SHOW_DATE | 
+			DateUtils.FORMAT_NO_MONTH_DAY | DateUtils.FORMAT_SHOW_YEAR;
+	
 	/**
 	 * Refresh month title text view when user swipe
 	 */
-	@SuppressLint("NewApi")
 	protected void refreshMonthTitleTextView() {
 		// Refresh title view
-		Calendar cal = Calendar.getInstance();
-		cal.clear();
-		cal.set(year, month - 1, 1);
-
-		int apiLevel = android.os.Build.VERSION.SDK_INT;
-
-		String monthTitle = null;
-		if (apiLevel < 9) {
-			monthTitle = CalendarHelper.MMMFormat.format(cal.getTime());
-		} else {
-			// This is more accurate display
-			monthTitle = cal.getDisplayName(Calendar.MONTH, Calendar.LONG,
-					Locale.getDefault());
-		}
-
-		monthTitleTextView.setText(monthTitle.toUpperCase() + " " + year);
+		Time platformTime = new Time();
+		platformTime.year = year;
+		platformTime.month = month - 1;
+		platformTime.monthDay = 1;
+		long millis = platformTime.toMillis(true);
+		
+		// This is the method used by the platform Calendar app to get a correctly localized
+		// month name for display on a wall calendar 
+		String monthTitle = DateUtils.formatDateRange(this.getActivity(), millis, millis, 
+				monthTitleDateUtilsFlags);
+		
+		monthTitleTextView.setText(monthTitle.toUpperCase());
 	}
 
 	/**
