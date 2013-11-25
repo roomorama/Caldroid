@@ -21,7 +21,7 @@ public class CalendarHelper {
 			"yyyy-MM-dd", Locale.ENGLISH);
 
 	public static SimpleDateFormat MMMMMyyyyFormat = new SimpleDateFormat(
-			"MMMMM yyyy", Locale.ENGLISH);
+			"MMMMM yyyy", Locale.getDefault());
 
 	/**
 	 * Retrieve all the dates for a given calendar month Include previous month,
