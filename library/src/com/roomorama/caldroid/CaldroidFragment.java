@@ -870,7 +870,7 @@ public class CaldroidFragment extends DialogFragment {
 
 		String monthTitle = null;
 		if (apiLevel < 9) {
-			monthTitle = CalendarHelper.MMMMFormat.format(cal.getTime());
+			monthTitle = CalendarHelper.MMMFormat.format(cal.getTime());
 		} else {
 			// This is more accurate display
 			monthTitle = cal.getDisplayName(Calendar.MONTH, Calendar.LONG,
