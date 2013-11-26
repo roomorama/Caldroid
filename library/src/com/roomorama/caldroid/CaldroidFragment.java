@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Formatter;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -82,6 +83,24 @@ public class CaldroidFragment extends DialogFragment {
 	public static int THURSDAY = 5;
 	public static int FRIDAY = 6;
 	public static int SATURDAY = 7;
+
+	/**
+	 * Flags to display month
+	 */
+	private static final int MONTH_YEAR_FLAG = DateUtils.FORMAT_SHOW_DATE
+			| DateUtils.FORMAT_NO_MONTH_DAY | DateUtils.FORMAT_SHOW_YEAR;
+
+	/**
+	 * First day of month time
+	 */
+	private Time firstMonthTime = new Time();
+
+	/**
+	 * Reuse formatter to print "MMMM yyyy" format
+	 */
+	private final StringBuilder monthYearStringBuilder = new StringBuilder(50);
+	private Formatter monthYearFormatter = new Formatter(
+			monthYearStringBuilder, Locale.getDefault());
 
 	/**
 	 * To customize the selected background drawable and text color
@@ -857,26 +876,23 @@ public class CaldroidFragment extends DialogFragment {
 		return dateItemLongClickListener;
 	}
 
-	private static final int monthTitleDateUtilsFlags = DateUtils.FORMAT_SHOW_DATE | 
-			DateUtils.FORMAT_NO_MONTH_DAY | DateUtils.FORMAT_SHOW_YEAR;
-	
 	/**
 	 * Refresh month title text view when user swipe
 	 */
 	protected void refreshMonthTitleTextView() {
 		// Refresh title view
-		Time platformTime = new Time();
-		platformTime.year = year;
-		platformTime.month = month - 1;
-		platformTime.monthDay = 1;
-		long millis = platformTime.toMillis(true);
-		
-		// This is the method used by the platform Calendar app to get a correctly localized
-		// month name for display on a wall calendar 
-		String monthTitle = DateUtils.formatDateRange(this.getActivity(), millis, millis, 
-				monthTitleDateUtilsFlags);
-		
-		monthTitleTextView.setText(monthTitle.toUpperCase());
+		firstMonthTime.year = year;
+		firstMonthTime.month = month - 1;
+		firstMonthTime.monthDay = 1;
+		long millis = firstMonthTime.toMillis(true);
+
+		// This is the method used by the platform Calendar app to get a
+		// correctly localized month name for display on a wall calendar
+		monthYearStringBuilder.setLength(0);
+		String monthTitle = DateUtils.formatDateRange(getActivity(),
+				monthYearFormatter, millis, millis, MONTH_YEAR_FLAG).toString();
+
+		monthTitleTextView.setText(monthTitle);
 	}
 
 	/**
