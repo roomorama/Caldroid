@@ -1031,6 +1031,14 @@ public class CaldroidFragment extends DialogFragment {
 		return f;
 	}
 
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		// Retrieve initial arguments only when CaldroidFragment is created
+		retrieveInitialArgs(savedInstanceState);
+	}
+
 	/**
 	 * Below code fixed the issue viewpager disappears in dialog mode on
 	 * orientation change
@@ -1052,7 +1060,6 @@ public class CaldroidFragment extends DialogFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		retrieveInitialArgs(savedInstanceState);
 
 		// To support keeping instance for dialog
 		if (getDialog() != null) {
