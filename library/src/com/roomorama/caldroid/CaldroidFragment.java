@@ -1049,8 +1049,9 @@ public class CaldroidFragment extends DialogFragment {
 	 */
 	@Override
 	public void onDestroyView() {
-		if (getDialog() != null && getRetainInstance())
+		if (getDialog() != null && getRetainInstance()) {
 			getDialog().setDismissMessage(null);
+		}
 		super.onDestroyView();
 	}
 
