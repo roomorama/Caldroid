@@ -433,3 +433,7 @@ App uses Caldroid
 [Work Mate](http://play.google.com/store/apps/details?id=com.michaelmcneildev.workmate)
 
 [Attendance Register (students)](https://play.google.com/store/apps/details?id=com.rudra.attendanceRegister)
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/roomorama/caldroid/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
