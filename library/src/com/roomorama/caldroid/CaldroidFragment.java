@@ -223,6 +223,10 @@ public class CaldroidFragment extends DialogFragment {
 	 */
 	private CaldroidListener caldroidListener;
 
+	public CaldroidListener getCaldroidListener() {
+		return caldroidListener;
+	}
+
 	/**
 	 * Meant to be subclassed. User who wants to provide custom view, need to
 	 * provide custom adapter here

@@ -109,6 +109,8 @@ caldroidFragment.setTextColorForDate(R.color.white, blueDate);
 caldroidFragment.setTextColorForDate(R.color.white, greenDate);
 ```
 
+You need to call ```refreshView()``` after above methods to update calendar appearance.
+
 ## Set min / max date
 
 Client can use below methods: 
