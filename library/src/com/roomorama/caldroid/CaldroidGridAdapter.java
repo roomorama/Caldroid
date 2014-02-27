@@ -183,7 +183,8 @@ public class CaldroidGridAdapter extends BaseAdapter {
 	}
 
 	@SuppressWarnings("unchecked")
-	protected void setCustomResources(DateTime dateTime, TextView textView) {
+	protected void setCustomResources(DateTime dateTime, View backgroundView,
+			TextView textView) {
 		// Set custom background resource
 		HashMap<DateTime, Integer> backgroundForDateTimeMap = (HashMap<DateTime, Integer>) caldroidData
 				.get(CaldroidFragment._BACKGROUND_FOR_DATETIME_MAP);
@@ -193,7 +194,8 @@ public class CaldroidGridAdapter extends BaseAdapter {
 
 			// Set it
 			if (backgroundResource != null) {
-				textView.setBackgroundResource(backgroundResource.intValue());
+				backgroundView.setBackgroundResource(backgroundResource
+						.intValue());
 			}
 		}
 
@@ -282,7 +284,7 @@ public class CaldroidGridAdapter extends BaseAdapter {
 		cellView.setText("" + dateTime.getDay());
 
 		// Set custom color if required
-		setCustomResources(dateTime, cellView);
+		setCustomResources(dateTime, cellView, cellView);
 	}
 
 	@Override

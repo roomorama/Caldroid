@@ -60,7 +60,7 @@ public class CaldroidSampleActivity extends FragmentActivity {
 		// //////////////////////////////////////////////////////////////////////
 		// **** This is to show customized fragment. If you want customized
 		// version, uncomment below line ****
-		// caldroidFragment = new CaldroidSampleCustomFragment();
+//		 caldroidFragment = new CaldroidSampleCustomFragment();
 
 		// Setup arguments
 

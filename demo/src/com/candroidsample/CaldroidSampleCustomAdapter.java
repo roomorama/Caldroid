@@ -109,6 +109,9 @@ public class CaldroidSampleCustomAdapter extends CaldroidGridAdapter {
 		cellView.setPadding(leftPadding, topPadding, rightPadding,
 				bottomPadding);
 
+		// Set custom color if required
+		setCustomResources(dateTime, cellView, tv1);
+
 		return cellView;
 	}
 
