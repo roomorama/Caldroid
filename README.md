@@ -111,6 +111,20 @@ caldroidFragment.setTextColorForDate(R.color.white, greenDate);
 
 You need to call ```refreshView()``` after above methods to update calendar appearance.
 
+## Display user events on Caldroid
+
+Caldroid is simply an UI library and it does *not* connect to user calendar database or fetch any user's events. If your app wants to display these events on Caldroid:
+
+- Your app needs to fetch events (from server or from user calendar database, depend on your app)
+
+- Design a drawable for the date with event. See more here for all types of drawable you can create: http://developer.android.com/guide/topics/resources/drawable-resource.html
+
+- Use above `setBackgroundResourceForDate` method to set the event drawable to correct date
+
+- Call `refreshView()` to update calendar appearance
+
+If you need to customize more for the cell, you can [supply your own cell design](https://github.com/roomorama/Caldroid#client-can-customize-look-and-feel-of-almost-all-views).
+
 ## Set min / max date
 
 Client can use below methods: 
