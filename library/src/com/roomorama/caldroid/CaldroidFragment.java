@@ -932,7 +932,7 @@ public class CaldroidFragment extends DialogFragment {
 	 * dialogTitle, showNavigationArrows,(String) disableDates, selectedDates,
 	 * minDate, maxDate
 	 */
-	protected void retrieveInitialArgs(Bundle savedInstanceState) {
+	protected void retrieveInitialArgs() {
 		// Get arguments
 		Bundle args = getArguments();
 		if (args != null) {
@@ -975,6 +975,7 @@ public class CaldroidFragment extends DialogFragment {
 			ArrayList<String> disableDateStrings = args
 					.getStringArrayList(DISABLE_DATES);
 			if (disableDateStrings != null && disableDateStrings.size() > 0) {
+				disableDates.clear();
 				for (String dateString : disableDateStrings) {
 					DateTime dt = CalendarHelper.getDateTimeFromString(
 							dateString, "yyyy-MM-dd");
@@ -986,6 +987,7 @@ public class CaldroidFragment extends DialogFragment {
 			ArrayList<String> selectedDateStrings = args
 					.getStringArrayList(SELECTED_DATES);
 			if (selectedDateStrings != null && selectedDateStrings.size() > 0) {
+				selectedDates.clear();
 				for (String dateString : selectedDateStrings) {
 					DateTime dt = CalendarHelper.getDateTimeFromString(
 							dateString, "yyyy-MM-dd");
@@ -1037,14 +1039,6 @@ public class CaldroidFragment extends DialogFragment {
 		return f;
 	}
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-
-		// Retrieve initial arguments only when CaldroidFragment is created
-		retrieveInitialArgs(savedInstanceState);
-	}
-
 	/**
 	 * Below code fixed the issue viewpager disappears in dialog mode on
 	 * orientation change
@@ -1067,6 +1061,7 @@ public class CaldroidFragment extends DialogFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		retrieveInitialArgs();
 
 		// To support keeping instance for dialog
 		if (getDialog() != null) {
@@ -1414,17 +1409,18 @@ public class CaldroidFragment extends DialogFragment {
 
 	@Override
 	public void onDetach() {
-	    super.onDetach();
+		super.onDetach();
 
-	    try {
-	        Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
-	        childFragmentManager.setAccessible(true);
-	        childFragmentManager.set(this, null);
+		try {
+			Field childFragmentManager = Fragment.class
+					.getDeclaredField("mChildFragmentManager");
+			childFragmentManager.setAccessible(true);
+			childFragmentManager.set(this, null);
 
-	    } catch (NoSuchFieldException e) {
-	        throw new RuntimeException(e);
-	    } catch (IllegalAccessException e) {
-	        throw new RuntimeException(e);
-	    }
+		} catch (NoSuchFieldException e) {
+			throw new RuntimeException(e);
+		} catch (IllegalAccessException e) {
+			throw new RuntimeException(e);
+		}
 	}
 }
