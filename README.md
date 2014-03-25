@@ -15,10 +15,14 @@ If you are using Caldroid in your app and keen to list it here, please open a ne
 
 Setup
 =====
-Just clone the repo and check out the CaldroidSample to see how the library works.
+
+**For Eclipse/ADT user**: just clone the repo and check out the CaldroidSample to see how the library works.
 
 To use in your project, reference the child library project as a library. If you see JAR mismatched error, replace your android-support-v4.jar to the jar inside Caldroid. Make sure you compile the project against Android 4.2 and above to allow nested fragment. See more at http://developer.android.com/about/versions/android-4.2.html#NestedFragments
 
+**For Android Studio user**: please refer to [this issue](https://github.com/roomorama/Caldroid/issues/110).
+
+**For Maven user**: Caldroid depends on [date4j](http://www.date4j.net/) library which is not available on Maven Central, so Caldroid won't be available on Maven Central as well. It might not work well for Maven.
 
 Features
 ========
