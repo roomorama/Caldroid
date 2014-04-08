@@ -452,6 +452,8 @@ App uses Caldroid
 
 [Attendance Register (students)](https://play.google.com/store/apps/details?id=com.rudra.attendanceRegister)
 
+[Tweet Roulette](https://play.google.com/store/apps/details?id=com.andreapivetta.tweetbooster&hl=it)
+
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/roomorama/caldroid/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
