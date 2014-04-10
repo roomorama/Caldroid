@@ -454,6 +454,7 @@ App uses Caldroid
 
 [Tweet Roulette](https://play.google.com/store/apps/details?id=com.andreapivetta.tweetbooster&hl=it)
 
+[eDiary](https://play.google.com/store/apps/details?id=it.dreamerspillow.ediary)
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/roomorama/caldroid/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
