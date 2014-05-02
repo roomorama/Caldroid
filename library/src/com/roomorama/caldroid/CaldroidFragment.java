@@ -137,6 +137,7 @@ public class CaldroidFragment extends DialogFragment {
 	public final static String YEAR = "year";
 	public final static String SHOW_NAVIGATION_ARROWS = "showNavigationArrows";
 	public final static String DISABLE_DATES = "disableDates";
+	public final static String STARTING_DATE = "startingDate";
 	public final static String SELECTED_DATES = "selectedDates";
 	public final static String MIN_DATE = "minDate";
 	public final static String MAX_DATE = "maxDate";
@@ -161,8 +162,10 @@ public class CaldroidFragment extends DialogFragment {
 	protected int year = -1;
 	protected ArrayList<DateTime> disableDates = new ArrayList<DateTime>();
 	protected ArrayList<DateTime> selectedDates = new ArrayList<DateTime>();
+
 	protected DateTime minDateTime;
 	protected DateTime maxDateTime;
+	protected int startingDate = 1;
 	protected ArrayList<DateTime> dateInMonthsList;
 
 	/**
@@ -297,6 +300,7 @@ public class CaldroidFragment extends DialogFragment {
 		caldroidData.put(SELECTED_DATES, selectedDates);
 		caldroidData.put(_MIN_DATE_TIME, minDateTime);
 		caldroidData.put(_MAX_DATE_TIME, maxDateTime);
+		caldroidData.put(STARTING_DATE, startingDate);
 		caldroidData.put(START_DAY_OF_WEEK, Integer.valueOf(startDayOfWeek));
 		caldroidData.put(SIX_WEEKS_IN_CALENDAR,
 				Boolean.valueOf(sixWeeksInCalendar));
@@ -427,6 +431,7 @@ public class CaldroidFragment extends DialogFragment {
 
 		bundle.putBoolean(SHOW_NAVIGATION_ARROWS, showNavigationArrows);
 		bundle.putBoolean(ENABLE_SWIPE, enableSwipe);
+		bundle.putInt(STARTING_DATE, startingDate);
 		bundle.putInt(START_DAY_OF_WEEK, startDayOfWeek);
 		bundle.putBoolean(SIX_WEEKS_IN_CALENDAR, sixWeeksInCalendar);
 
@@ -499,8 +504,8 @@ public class CaldroidFragment extends DialogFragment {
 	 */
 	public void moveToDateTime(DateTime dateTime) {
 
-		DateTime firstOfMonth = new DateTime(year, month, 1, 0, 0, 0, 0);
-		DateTime lastOfMonth = firstOfMonth.getEndOfMonth();
+		DateTime firstOfMonth = new DateTime(year, month, startingDate, 0, 0, 0, 0);
+		DateTime lastOfMonth = firstOfMonth.getEndOfMonth().plusDays(startingDate-1);
 
 		// To create a swipe effect
 		// Do nothing if the dateTime is in current month
@@ -891,12 +896,24 @@ public class CaldroidFragment extends DialogFragment {
 		firstMonthTime.month = month - 1;
 		firstMonthTime.monthDay = 1;
 		long millis = firstMonthTime.toMillis(true);
+		Time nextMonthTime = firstMonthTime;
+		nextMonthTime.month = month % 12;
+		long nextMillis = nextMonthTime.toMillis(true);
 
 		// This is the method used by the platform Calendar app to get a
 		// correctly localized month name for display on a wall calendar
 		monthYearStringBuilder.setLength(0);
 		String monthTitle = DateUtils.formatDateRange(getActivity(),
 				monthYearFormatter, millis, millis, MONTH_YEAR_FLAG).toString();
+
+		if(startingDate != 1) {
+			StringBuilder nextStringBuilder = new StringBuilder(50);
+			Formatter nextFormatter = new Formatter(
+					nextStringBuilder, Locale.getDefault());
+			monthTitle += " - " + DateUtils.formatDateRange(getActivity(), 
+					nextFormatter, nextMillis, nextMillis, 
+					DateUtils.FORMAT_NO_MONTH_DAY | DateUtils.FORMAT_SHOW_DATE).toString();
+		}
 
 		monthTitleTextView.setText(monthTitle);
 	}
@@ -956,6 +973,7 @@ public class CaldroidFragment extends DialogFragment {
 			if (startDayOfWeek > 7) {
 				startDayOfWeek = startDayOfWeek % 7;
 			}
+			startingDate = args.getInt(STARTING_DATE, 1);
 
 			// Should show arrow
 			showNavigationArrows = args
@@ -1131,7 +1149,7 @@ public class CaldroidFragment extends DialogFragment {
 	 */
 	private void setupDateGridPages(View view) {
 		// Get current date time
-		DateTime currentDateTime = new DateTime(year, month, 1, 0, 0, 0, 0);
+		DateTime currentDateTime = new DateTime(year, month, startingDate, 0, 0, 0, 0);
 
 		// Set to pageChangeListener
 		pageChangeListener = new DatePageChangeListener();
@@ -1184,7 +1202,7 @@ public class CaldroidFragment extends DialogFragment {
 
 		// Set if viewpager wrap around particular month or all months (6 rows)
 		dateViewPager.setSixWeeksInCalendar(sixWeeksInCalendar);
-
+		
 		// Set the numberOfDaysInMonth to dateViewPager so it can calculate the
 		// height correctly
 		dateViewPager.setDatesInMonth(dateInMonthsList);
