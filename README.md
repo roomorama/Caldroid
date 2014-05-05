@@ -458,5 +458,7 @@ App uses Caldroid
 
 [Moon Calendar](https://play.google.com/store/apps/details?id=fr.calendrierlunaire.android)
 
+![Moon Calendar](https://lh3.ggpht.com/gWBquKlsGBkBSsyhBFbPyrG7_gEuNE4wqcnfwNT093-Ute_xWDPQEOtb-jH-pRWHqZw=h900-rw)
+
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/roomorama/caldroid/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
