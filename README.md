@@ -457,8 +457,7 @@ App uses Caldroid
 [eDiary](https://play.google.com/store/apps/details?id=it.dreamerspillow.ediary)
 
 [Moon Calendar](https://play.google.com/store/apps/details?id=fr.calendrierlunaire.android)
-
-[![Moon Calendar]](https://lh3.ggpht.com/gWBquKlsGBkBSsyhBFbPyrG7_gEuNE4wqcnfwNT093-Ute_xWDPQEOtb-jH-pRWHqZw=h900-rw)
+<img src="https://lh3.ggpht.com/gWBquKlsGBkBSsyhBFbPyrG7_gEuNE4wqcnfwNT093-Ute_xWDPQEOtb-jH-pRWHqZw=h900-rw" height="150" />
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/roomorama/caldroid/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
