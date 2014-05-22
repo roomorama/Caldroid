@@ -36,3 +36,6 @@ android {
 		}
 	}
 }
+
+group 'com.roomorama.caldroid'
+version '1.0'
