@@ -475,4 +475,6 @@ App uses Caldroid
 
 [eDiary](https://play.google.com/store/apps/details?id=it.dreamerspillow.ediary)
 
+[Moon Calendar](https://play.google.com/store/apps/details?id=fr.calendrierlunaire.android)
+
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/roomorama/caldroid/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
