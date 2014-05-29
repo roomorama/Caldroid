@@ -9,6 +9,9 @@ buildscript {
 
 apply plugin: 'android-library'
 
+group 'com.roomorama.caldroid'
+version '1.0'
+
 repositories {
     mavenCentral()
 }
@@ -21,7 +24,6 @@ dependencies {
 android {
     compileSdkVersion 19
     buildToolsVersion '19.0.3'
-
 	sourceSets {
 		main {
 			manifest {
@@ -35,7 +37,7 @@ android {
 			}
 		}
 	}
+    defaultConfig {
+        proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt'
+    }
 }
-
-group 'com.roomorama.caldroid'
-version '1.0'
