@@ -1231,7 +1231,7 @@ public class CaldroidFragment extends DialogFragment {
 	 * 
 	 * @return "SUN, MON, TUE, WED, THU, FRI, SAT"
 	 */
-	private ArrayList<String> getDaysOfWeek() {
+	protected ArrayList<String> getDaysOfWeek() {
 		ArrayList<String> list = new ArrayList<String>();
 
 		SimpleDateFormat fmt = new SimpleDateFormat("EEE", Locale.getDefault());
