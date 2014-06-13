@@ -239,6 +239,16 @@ public class CaldroidFragment extends DialogFragment {
 	}
 
 	/**
+	 * Meant to be subclassed. User who wants to provide custom view, need to
+	 * provide custom adapter here
+	 */
+	public WeekdayArrayAdapter getNewWeekdayAdapter() {
+		return new WeekdayArrayAdapter(
+				getActivity(), android.R.layout.simple_list_item_1,
+				getDaysOfWeek());
+	}
+	
+	/**
 	 * For client to customize the weekDayGridView
 	 * 
 	 * @return
@@ -1103,9 +1113,7 @@ public class CaldroidFragment extends DialogFragment {
 
 		// For the weekday gridview ("SUN, MON, TUE, WED, THU, FRI, SAT")
 		weekdayGridView = (GridView) view.findViewById(R.id.weekday_gridview);
-		WeekdayArrayAdapter weekdaysAdapter = new WeekdayArrayAdapter(
-				getActivity(), android.R.layout.simple_list_item_1,
-				getDaysOfWeek());
+		WeekdayArrayAdapter weekdaysAdapter = getNewWeekdayAdapter();
 		weekdayGridView.setAdapter(weekdaysAdapter);
 
 		// Setup all the pages of date grid views. These pages are recycled
@@ -1223,7 +1231,7 @@ public class CaldroidFragment extends DialogFragment {
 	 * 
 	 * @return "SUN, MON, TUE, WED, THU, FRI, SAT"
 	 */
-	private ArrayList<String> getDaysOfWeek() {
+	protected ArrayList<String> getDaysOfWeek() {
 		ArrayList<String> list = new ArrayList<String>();
 
 		SimpleDateFormat fmt = new SimpleDateFormat("EEE", Locale.getDefault());
