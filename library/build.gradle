@@ -1,29 +1,20 @@
-buildscript {
-	repositories {
-		mavenCentral()
-	}
-	dependencies {
-		classpath 'com.android.tools.build:gradle:0.9.+'
-	}
-}
-
 apply plugin: 'android-library'
 
 group 'com.roomorama.caldroid'
 version '1.0'
 
-repositories {
-    mavenCentral()
-}
-
 dependencies {
     compile fileTree(dir: 'libs', include: 'date4j.jar')
-    compile 'com.android.support:support-v4:19.+'
+    compile 'com.android.support:support-v4:18.+'
 }
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion '19.0.3'
+    compileSdkVersion Integer.parseInt(project.ANDROID_BUILD_SDK_VERSION)
+    buildToolsVersion project.ANDROID_BUILD_TOOLS_VERSION
+    defaultConfig {
+        minSdkVersion Integer.parseInt(project.ANDROID_BUILD_MIN_SDK_VERSION)
+        targetSdkVersion Integer.parseInt(project.ANDROID_BUILD_TARGET_SDK_VERSION)
+    }
 	sourceSets {
 		main {
 			manifest {
@@ -37,7 +28,4 @@ android {
 			}
 		}
 	}
-    defaultConfig {
-        proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt'
-    }
 }
