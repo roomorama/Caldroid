@@ -174,6 +174,10 @@ public class CaldroidGridAdapter extends BaseAdapter {
 		this.datetimeList = CalendarHelper.getFullWeeks(this.month, this.year,
 				startDayOfWeek, sixWeeksInCalendar);
 	}
+	
+	public void updateToday() {
+		today = CalendarHelper.convertDateToDateTime(new Date());		
+	}
 
 	protected DateTime getToday() {
 		if (today == null) {

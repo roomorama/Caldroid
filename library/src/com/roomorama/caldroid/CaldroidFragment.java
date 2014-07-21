@@ -931,6 +931,9 @@ public class CaldroidFragment extends DialogFragment {
 
 			// Reset extra data
 			adapter.setExtraData(extraData);
+			
+			// Update today variable
+			adapter.updateToday();
 
 			// Refresh view
 			adapter.notifyDataSetChanged();
