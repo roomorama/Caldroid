@@ -342,12 +342,11 @@ public class CaldroidFragment extends DialogFragment {
 	 */
 	public void setBackgroundResourceForDates(
 			HashMap<Date, Integer> backgroundForDateMap) {
-		// Clear first
-		backgroundForDateTimeMap.clear();
-
 		if (backgroundForDateMap == null || backgroundForDateMap.size() == 0) {
 			return;
 		}
+		
+		backgroundForDateTimeMap.clear();
 
 		for (Date date : backgroundForDateMap.keySet()) {
 			Integer resource = backgroundForDateMap.get(date);
@@ -377,12 +376,11 @@ public class CaldroidFragment extends DialogFragment {
 	 * @return
 	 */
 	public void setTextColorForDates(HashMap<Date, Integer> textColorForDateMap) {
-		// Clear first
-		textColorForDateTimeMap.clear();
-
 		if (textColorForDateMap == null || textColorForDateMap.size() == 0) {
 			return;
 		}
+
+		textColorForDateTimeMap.clear();
 
 		for (Date date : textColorForDateMap.keySet()) {
 			Integer resource = textColorForDateMap.get(date);
@@ -600,10 +598,11 @@ public class CaldroidFragment extends DialogFragment {
 	 * @param disableDateList
 	 */
 	public void setDisableDates(ArrayList<Date> disableDateList) {
-		disableDates.clear();
 		if (disableDateList == null || disableDateList.size() == 0) {
 			return;
 		}
+		
+		disableDates.clear();
 
 		for (Date date : disableDateList) {
 			DateTime dateTime = CalendarHelper.convertDateToDateTime(date);
@@ -633,10 +632,11 @@ public class CaldroidFragment extends DialogFragment {
 	 */
 	public void setDisableDatesFromString(ArrayList<String> disableDateStrings,
 			String dateFormat) {
-		disableDates.clear();
 		if (disableDateStrings == null) {
 			return;
 		}
+		
+		disableDates.clear();
 
 		for (String dateString : disableDateStrings) {
 			DateTime dateTime = CalendarHelper.getDateTimeFromString(
