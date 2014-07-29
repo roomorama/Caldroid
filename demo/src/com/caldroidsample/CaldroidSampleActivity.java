@@ -1,4 +1,4 @@
-package com.candroidsample;
+package com.caldroidsample;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

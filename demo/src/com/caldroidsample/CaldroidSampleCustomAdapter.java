@@ -1,4 +1,4 @@
-package com.candroidsample;
+package com.caldroidsample;
 
 import hirondelle.date4j.DateTime;
 
