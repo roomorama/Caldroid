@@ -36,7 +36,7 @@ import android.widget.TextView;
 
 import com.antonyt.infiniteviewpager.InfinitePagerAdapter;
 import com.antonyt.infiniteviewpager.InfiniteViewPager;
-import com.caldroid.R;
+import com.roomorama.caldroid.R;
 
 /**
  * Caldroid is a fragment that display calendar with dates in a month. Caldroid

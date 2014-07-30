@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.caldroid.R;
+import com.roomorama.caldroid.R;
 
 /**
  * The CaldroidGridAdapter provides customized view for the dates gridview

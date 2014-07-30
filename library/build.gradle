@@ -1,0 +1,31 @@
+apply plugin: 'android-library'
+
+group 'com.roomorama.caldroid'
+version '1.0'
+
+dependencies {
+    compile fileTree(dir: 'libs', include: 'date4j.jar')
+    compile 'com.android.support:support-v4:18.+'
+}
+
+android {
+    compileSdkVersion Integer.parseInt(project.ANDROID_BUILD_SDK_VERSION)
+    buildToolsVersion project.ANDROID_BUILD_TOOLS_VERSION
+    defaultConfig {
+        minSdkVersion Integer.parseInt(project.ANDROID_BUILD_MIN_SDK_VERSION)
+        targetSdkVersion Integer.parseInt(project.ANDROID_BUILD_TARGET_SDK_VERSION)
+    }
+	sourceSets {
+		main {
+			manifest {
+				srcFile 'AndroidManifest.xml'
+			}
+			java {
+				srcDir 'src'
+			}
+			res {
+				srcDir 'res'
+			}
+		}
+	}
+}
