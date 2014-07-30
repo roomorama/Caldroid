@@ -33,13 +33,12 @@ public class CalendarHelper {
 	 *            : calendar can start from customized date instead of Sunday
 	 * @return
 	 */
-	public static ArrayList<DateTime> getFullWeeks(int month, int year,
+	public static ArrayList<DateTime> getFullWeeks(int month, int year, int day,
 			int startDayOfWeek, boolean sixWeeksInCalendar) {
 		ArrayList<DateTime> datetimeList = new ArrayList<DateTime>();
 
-		DateTime firstDateOfMonth = new DateTime(year, month, 1, 0, 0, 0, 0);
-		DateTime lastDateOfMonth = firstDateOfMonth.plusDays(firstDateOfMonth
-				.getNumDaysInMonth() - 1);
+		DateTime firstDateOfMonth = new DateTime(year, month, day, 0, 0, 0, 0);
+		DateTime lastDateOfMonth = firstDateOfMonth.getEndOfMonth().plusDays(day - 1);
 
 		// Add dates of first week from previous month
 		int weekdayOfFirstDate = firstDateOfMonth.getWeekDay();
@@ -63,8 +62,10 @@ public class CalendarHelper {
 		}
 
 		// Add dates of current month
-		for (int i = 0; i < lastDateOfMonth.getDay(); i++) {
-			datetimeList.add(firstDateOfMonth.plusDays(i));
+		DateTime index = firstDateOfMonth;
+		while(index.lt(lastDateOfMonth)) {
+			datetimeList.add(index);
+			index = index.plusDays(1);
 		}
 
 		// Add dates of last week from next month

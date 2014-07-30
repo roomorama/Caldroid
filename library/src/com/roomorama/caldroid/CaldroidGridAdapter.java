@@ -40,6 +40,7 @@ public class CaldroidGridAdapter extends BaseAdapter {
 	protected DateTime maxDateTime;
 	protected DateTime today;
 	protected int startDayOfWeek;
+	protected int startingDate = 1;
 	protected boolean sixWeeksInCalendar;
 	protected Resources resources;
 
@@ -55,7 +56,7 @@ public class CaldroidGridAdapter extends BaseAdapter {
 	public void setAdapterDateTime(DateTime dateTime) {
 		this.month = dateTime.getMonth();
 		this.year = dateTime.getYear();
-		this.datetimeList = CalendarHelper.getFullWeeks(this.month, this.year,
+		this.datetimeList = CalendarHelper.getFullWeeks(this.month, this.year, startingDate,
 				startDayOfWeek, sixWeeksInCalendar);
 	}
 
@@ -168,10 +169,12 @@ public class CaldroidGridAdapter extends BaseAdapter {
 				.get(CaldroidFragment._MAX_DATE_TIME);
 		startDayOfWeek = (Integer) caldroidData
 				.get(CaldroidFragment.START_DAY_OF_WEEK);
+		startingDate = (Integer) caldroidData
+				.get(CaldroidFragment.STARTING_DATE);
 		sixWeeksInCalendar = (Boolean) caldroidData
 				.get(CaldroidFragment.SIX_WEEKS_IN_CALENDAR);
 
-		this.datetimeList = CalendarHelper.getFullWeeks(this.month, this.year,
+		this.datetimeList = CalendarHelper.getFullWeeks(this.month, this.year, startingDate, 
 				startDayOfWeek, sixWeeksInCalendar);
 	}
 	
@@ -232,9 +235,11 @@ public class CaldroidGridAdapter extends BaseAdapter {
 
 		// Get dateTime of this cell
 		DateTime dateTime = this.datetimeList.get(position);
+		DateTime startDate = new DateTime(year, month, startingDate, 0, 0, 0, 0);
+		DateTime endDate = startDate.getEndOfMonth().plusDays(startingDate - 1);
 
 		// Set color of the dates in previous / next month
-		if (dateTime.getMonth() != month) {
+		if (dateTime.lt(startDate) || dateTime.gt(endDate)) {
 			cellView.setTextColor(resources
 					.getColor(R.color.caldroid_darker_gray));
 		}
@@ -285,7 +290,10 @@ public class CaldroidGridAdapter extends BaseAdapter {
 			}
 		}
 
-		cellView.setText("" + dateTime.getDay());
+		if(startingDate != 1 && dateTime.getDay() == 1)
+			cellView.setText(dateTime.getMonth() + "." + dateTime.getDay());
+		else
+			cellView.setText("" + dateTime.getDay());
 
 		// Set custom color if required
 		setCustomResources(dateTime, cellView, cellView);
