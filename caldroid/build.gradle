@@ -1,0 +1,26 @@
+apply plugin: 'android-library'
+
+android {
+    compileSdkVersion 20
+    buildToolsVersion "19.1.0"
+
+    defaultConfig {
+        applicationId "com.caldroid"
+        minSdkVersion 8
+        targetSdkVersion 20
+    }
+
+    buildTypes {
+        release {
+            runProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+}
+
+dependencies {
+    compile 'com.android.support:support-v4:20.0.0'
+    compile 'com.darwinsys:hirondelle-date4j:1.5.0'
+}
+
+apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'
