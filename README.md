@@ -16,13 +16,20 @@ If you are using Caldroid in your app and keen to list it here, please open a ne
 Setup
 =====
 
-**For Eclipse/ADT user**: just clone the repo and check out the CaldroidSample to see how the library works.
+**For Eclipse/ADT user**: please see tag [eclipse_project], download the source codes, check out the CaldroidSample to see how the library works.
 
 To use in your project, reference the child library project as a library. If you see JAR mismatched error, replace your android-support-v4.jar to the jar inside Caldroid. Make sure you compile the project against Android 4.2 and above to allow nested fragment. See more at http://developer.android.com/about/versions/android-4.2.html#NestedFragments
 
-**For Android Studio user**: please refer to [this issue](https://github.com/roomorama/Caldroid/issues/110).
+**For Android Studio user**: add `compile 'com.roomorama:caldroid:1.1.0’` to your gradle build file.
 
-**For Maven user**: Caldroid depends on [date4j](http://www.date4j.net/) library which is not available on Maven Central, so Caldroid won't be available on Maven Central as well. It might not work well for Maven.
+**For Maven user**:
+```
+<dependency>
+    <groupId>com.roomorama</groupId>
+    <artifactId>caldroid</artifactId>
+    <version>1.1.0</version>
+</dependency>
+```
 
 Features
 ========
@@ -440,6 +447,8 @@ As most of Caldroid public API use Date instead of internal DateTime, you might 
 3) The package is renamed from ```com.caldroid``` to ```com.roomorama.caldroid```.
 
 4) The ```FIT_ALL_MONTH``` key has been renamed to ```SIX_WEEKS_IN_CALENDAR```. The display of calendar also depends on this parameter: if it is true, calendar always display 6 weeks in a calendar. Else, calendar will resize dynamically to the dates gridview.
+
+5) The project has been converted to support Gradle and Android studio. It will move away from Eclipse project structure, to make support for Maven and Gradle easier. If you need Eclipse project, download source in tag `eclipse_project`.
 
 License
 =======
