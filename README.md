@@ -16,7 +16,7 @@ If you are using Caldroid in your app and keen to list it here, please open a ne
 Setup
 =====
 
-**For Eclipse/ADT user**: please see tag [eclipse_project], download the source codes, check out the CaldroidSample to see how the library works.
+**For Eclipse/ADT user**: please see tag [eclipse_project](https://github.com/roomorama/Caldroid/releases/tag/eclipse_project), download the source codes, check out the CaldroidSample to see how the library works.
 
 To use in your project, reference the child library project as a library. If you see JAR mismatched error, replace your android-support-v4.jar to the jar inside Caldroid. Make sure you compile the project against Android 4.2 and above to allow nested fragment. See more at http://developer.android.com/about/versions/android-4.2.html#NestedFragments
 
