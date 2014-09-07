@@ -20,7 +20,7 @@ Setup
 
 To use in your project, reference the child library project as a library. If you see JAR mismatched error, replace your android-support-v4.jar to the jar inside Caldroid. Make sure you compile the project against Android 4.2 and above to allow nested fragment. See more at http://developer.android.com/about/versions/android-4.2.html#NestedFragments
 
-**For Android Studio user**: add `compile 'com.roomorama:caldroid:1.1.0’` to your gradle build file.
+**For Android Studio user**: add `compile 'com.roomorama:caldroid:1.1.0'` to your gradle build file.
 
 **For Maven user**:
 ```

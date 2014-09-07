@@ -19,7 +19,7 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:20.0.0'
+    compile 'com.android.support:support-v4:+'
     compile 'com.darwinsys:hirondelle-date4j:1.5.0'
 }
 
