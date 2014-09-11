@@ -1,17 +1,5 @@
 package com.roomorama.caldroid;
 
-import hirondelle.date4j.DateTime;
-
-import java.lang.reflect.Field;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Formatter;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.TimeZone;
-
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.graphics.Color;
@@ -37,6 +25,18 @@ import android.widget.TextView;
 import com.antonyt.infiniteviewpager.InfinitePagerAdapter;
 import com.antonyt.infiniteviewpager.InfiniteViewPager;
 import com.caldroid.R;
+
+import java.lang.reflect.Field;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Formatter;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.TimeZone;
+
+import hirondelle.date4j.DateTime;
 
 /**
  * Caldroid is a fragment that display calendar with dates in a month. Caldroid
@@ -908,7 +908,7 @@ public class CaldroidFragment extends DialogFragment {
 		String monthTitle = DateUtils.formatDateRange(getActivity(),
 				monthYearFormatter, millis, millis, MONTH_YEAR_FLAG).toString();
 
-		monthTitleTextView.setText(monthTitle);
+		monthTitleTextView.setText(monthTitle.toUpperCase(Locale.getDefault()));
 	}
 
 	/**
