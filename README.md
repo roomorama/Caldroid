@@ -35,7 +35,7 @@ Features
 ========
 
 ##Flexible setup: can be embedded or shown as dialog
-To embed the caldroid fragment in your activity, use below code:
+If you support Android 2.2 and above, you can embed caldroid fragment in your activity with below code:
 
 ``` java
 CaldroidFragment caldroidFragment = new CaldroidFragment();
@@ -47,6 +47,21 @@ caldroidFragment.setArguments(args);
 
 FragmentTransaction t = getSupportFragmentManager().beginTransaction();
 t.replace(R.id.calendar1, caldroidFragment);
+t.commit();
+```
+
+If your app only target minSdkVersion 16 and above, you can use Caldroid too. First, you need to change your `Activity` class to `FragmentActivity`, and add support library to your project. You don't have to change how you use `android.app.Fragment`.
+
+```
+CaldroidFragment caldroidFragment = new CaldroidFragment();
+Bundle args = new Bundle();
+Calendar cal = Calendar.getInstance();
+args.putInt(CaldroidFragment.MONTH, cal.get(Calendar.MONTH) + 1);
+args.putInt(CaldroidFragment.YEAR, cal.get(Calendar.YEAR));
+caldroidFragment.setArguments(args);
+
+android.support.v4.app.FragmentTransaction t = getSupportFragmentManager().beginTransaction();
+t.replace(R.id.cal, caldroidFragment);
 t.commit();
 ```
 
