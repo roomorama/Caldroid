@@ -3,12 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/caldroid_white"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/calendar_title_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content">
 
         <Button
             android:id="@+id/calendar_left_arrow"
@@ -42,8 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="-10dp"
         android:numColumns="7"
-        android:stretchMode="columnWidth" >
-    </GridView>
+        android:stretchMode="columnWidth" />
 
     <com.antonyt.infiniteviewpager.InfiniteViewPager
         android:id="@+id/months_infinite_pager"

@@ -1,12 +1,5 @@
 package com.caldroidsample;
 
-import hirondelle.date4j.DateTime;
-
-import java.util.HashMap;
-
-import com.roomorama.caldroid.CaldroidFragment;
-import com.roomorama.caldroid.CaldroidGridAdapter;
-
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -15,11 +8,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.roomorama.caldroid.CaldroidFragment;
+import com.roomorama.caldroid.CaldroidGridAdapter;
+
+import java.util.HashMap;
+
+import hirondelle.date4j.DateTime;
+
 public class CaldroidSampleCustomAdapter extends CaldroidGridAdapter {
 
 	public CaldroidSampleCustomAdapter(Context context, int month, int year,
-			HashMap<String, Object> caldroidData,
-			HashMap<String, Object> extraData) {
+			HashMap<String, Object> caldroidData, HashMap<String, Object> extraData) {
 		super(context, month, year, caldroidData, extraData);
 	}
 
@@ -50,8 +49,7 @@ public class CaldroidSampleCustomAdapter extends CaldroidGridAdapter {
 
 		// Set color of the dates in previous / next month
 		if (dateTime.getMonth() != month) {
-			tv1.setTextColor(resources
-					.getColor(com.caldroid.R.color.caldroid_darker_gray));
+			tv1.setTextColor(resources.getColor(com.caldroid.R.color.caldroid_darker_gray));
 		}
 
 		boolean shouldResetDiabledView = false;
@@ -106,8 +104,7 @@ public class CaldroidSampleCustomAdapter extends CaldroidGridAdapter {
 
 		// Somehow after setBackgroundResource, the padding collapse.
 		// This is to recover the padding
-		cellView.setPadding(leftPadding, topPadding, rightPadding,
-				bottomPadding);
+		cellView.setPadding(leftPadding, topPadding, rightPadding, bottomPadding);
 
 		// Set custom color if required
 		setCustomResources(dateTime, cellView, tv1);

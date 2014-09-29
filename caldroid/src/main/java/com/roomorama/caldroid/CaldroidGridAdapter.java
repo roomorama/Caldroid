@@ -117,7 +117,7 @@ public class CaldroidGridAdapter extends BaseAdapter {
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param context
 	 * @param month
 	 * @param year
@@ -174,9 +174,9 @@ public class CaldroidGridAdapter extends BaseAdapter {
 		this.datetimeList = CalendarHelper.getFullWeeks(this.month, this.year,
 				startDayOfWeek, sixWeeksInCalendar);
 	}
-	
+
 	public void updateToday() {
-		today = CalendarHelper.convertDateToDateTime(new Date());		
+		today = CalendarHelper.convertDateToDateTime(new Date());
 	}
 
 	protected DateTime getToday() {
@@ -221,9 +221,9 @@ public class CaldroidGridAdapter extends BaseAdapter {
 	/**
 	 * Customize colors of text and background based on states of the cell
 	 * (disabled, active, selected, etc)
-	 * 
+	 *
 	 * To be used only in getView method
-	 * 
+	 *
 	 * @param position
 	 * @param cellView
 	 */

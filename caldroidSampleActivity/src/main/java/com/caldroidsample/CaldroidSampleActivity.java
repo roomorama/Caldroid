@@ -1,13 +1,5 @@
 package com.caldroidsample;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-
-import com.roomorama.caldroid.CaldroidFragment;
-import com.roomorama.caldroid.CaldroidListener;
-
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -15,8 +7,17 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.roomorama.caldroid.CaldroidFragment;
+import com.roomorama.caldroid.CaldroidListener;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 @SuppressLint("SimpleDateFormat")
 public class CaldroidSampleActivity extends FragmentActivity {
@@ -37,10 +38,8 @@ public class CaldroidSampleActivity extends FragmentActivity {
 		Date greenDate = cal.getTime();
 
 		if (caldroidFragment != null) {
-			caldroidFragment.setBackgroundResourceForDate(R.color.blue,
-					blueDate);
-			caldroidFragment.setBackgroundResourceForDate(R.color.green,
-					greenDate);
+			caldroidFragment.setBackgroundResourceForDate(R.color.blue, blueDate);
+			caldroidFragment.setBackgroundResourceForDate(R.color.green, greenDate);
 			caldroidFragment.setTextColorForDate(R.color.white, blueDate);
 			caldroidFragment.setTextColorForDate(R.color.white, greenDate);
 		}
@@ -60,14 +59,13 @@ public class CaldroidSampleActivity extends FragmentActivity {
 		// //////////////////////////////////////////////////////////////////////
 		// **** This is to show customized fragment. If you want customized
 		// version, uncomment below line ****
-//		 caldroidFragment = new CaldroidSampleCustomFragment();
+		// caldroidFragment = new CaldroidSampleCustomFragment();
 
 		// Setup arguments
 
 		// If Activity is created after rotation
 		if (savedInstanceState != null) {
-			caldroidFragment.restoreStatesFromKey(savedInstanceState,
-					"CALDROID_SAVED_STATE");
+			caldroidFragment.restoreStatesFromKey(savedInstanceState, "CALDROID_SAVED_STATE");
 		}
 		// If activity is created from fresh
 		else {
@@ -96,31 +94,28 @@ public class CaldroidSampleActivity extends FragmentActivity {
 
 			@Override
 			public void onSelectDate(Date date, View view) {
-				Toast.makeText(getApplicationContext(), formatter.format(date),
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), formatter.format(date), Toast.LENGTH_SHORT)
+						.show();
 
 			}
 
 			@Override
 			public void onChangeMonth(int month, int year) {
 				String text = "month: " + month + " year: " + year;
-				Toast.makeText(getApplicationContext(), text,
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
 			}
 
 			@Override
 			public void onLongClickDate(Date date, View view) {
-				Toast.makeText(getApplicationContext(),
-						"Long click " + formatter.format(date),
+				Toast.makeText(getApplicationContext(), "Long click " + formatter.format(date),
 						Toast.LENGTH_SHORT).show();
 			}
 
 			@Override
 			public void onCaldroidViewCreated() {
 				if (caldroidFragment.getLeftArrowButton() != null) {
-					Toast.makeText(getApplicationContext(),
-							"Caldroid view is created", Toast.LENGTH_SHORT)
-							.show();
+					Toast.makeText(getApplicationContext(), "Caldroid view is created",
+							Toast.LENGTH_SHORT).show();
 				}
 			}
 
@@ -194,6 +189,14 @@ public class CaldroidSampleActivity extends FragmentActivity {
 				caldroidFragment.setSelectedDates(fromDate, toDate);
 				caldroidFragment.setShowNavigationArrows(false);
 				caldroidFragment.setEnableSwipe(false);
+				caldroidFragment.getCalendarTitleView().setBackgroundColor(
+						getResources().getColor(R.color.blue));
+
+				LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+						LinearLayout.LayoutParams.MATCH_PARENT,
+						LinearLayout.LayoutParams.WRAP_CONTENT);
+				layoutParams.setMargins(0, 10, 0, 0);
+				caldroidFragment.getWeekdayGridView().setLayoutParams(layoutParams);
 
 				caldroidFragment.refreshView();
 
@@ -205,8 +208,7 @@ public class CaldroidSampleActivity extends FragmentActivity {
 				String text = "Today: " + formatter.format(new Date()) + "\n";
 				text += "Min Date: " + formatter.format(minDate) + "\n";
 				text += "Max Date: " + formatter.format(maxDate) + "\n";
-				text += "Select From Date: " + formatter.format(fromDate)
-						+ "\n";
+				text += "Select From Date: " + formatter.format(fromDate) + "\n";
 				text += "Select To Date: " + formatter.format(toDate) + "\n";
 				for (Date date : disabledDates) {
 					text += "Disabled Date: " + formatter.format(date) + "\n";
@@ -230,27 +232,23 @@ public class CaldroidSampleActivity extends FragmentActivity {
 				// If activity is recovered from rotation
 				final String dialogTag = "CALDROID_DIALOG_FRAGMENT";
 				if (state != null) {
-					dialogCaldroidFragment.restoreDialogStatesFromKey(
-							getSupportFragmentManager(), state,
-							"DIALOG_CALDROID_SAVED_STATE", dialogTag);
+					dialogCaldroidFragment.restoreDialogStatesFromKey(getSupportFragmentManager(),
+							state, "DIALOG_CALDROID_SAVED_STATE", dialogTag);
 					Bundle args = dialogCaldroidFragment.getArguments();
 					if (args == null) {
 						args = new Bundle();
 						dialogCaldroidFragment.setArguments(args);
 					}
-					args.putString(CaldroidFragment.DIALOG_TITLE,
-							"Select a date");
+					args.putString(CaldroidFragment.DIALOG_TITLE, "Select a date");
 				} else {
 					// Setup arguments
 					Bundle bundle = new Bundle();
 					// Setup dialogTitle
-					bundle.putString(CaldroidFragment.DIALOG_TITLE,
-							"Select a date");
+					bundle.putString(CaldroidFragment.DIALOG_TITLE, "Select a date");
 					dialogCaldroidFragment.setArguments(bundle);
 				}
 
-				dialogCaldroidFragment.show(getSupportFragmentManager(),
-						dialogTag);
+				dialogCaldroidFragment.show(getSupportFragmentManager(), dialogTag);
 			}
 		});
 	}
@@ -268,8 +266,7 @@ public class CaldroidSampleActivity extends FragmentActivity {
 		}
 
 		if (dialogCaldroidFragment != null) {
-			dialogCaldroidFragment.saveStatesToKey(outState,
-					"DIALOG_CALDROID_SAVED_STATE");
+			dialogCaldroidFragment.saveStatesToKey(outState, "DIALOG_CALDROID_SAVED_STATE");
 		}
 	}
 
