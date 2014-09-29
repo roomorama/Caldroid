@@ -52,7 +52,7 @@ t.commit();
 
 If your app only target minSdkVersion 16 and above, you can use Caldroid too. First, you need to change your `Activity` class to `FragmentActivity`, and add support library to your project. You don't have to change how you use `android.app.Fragment`.
 
-```
+```java
 CaldroidFragment caldroidFragment = new CaldroidFragment();
 Bundle args = new Bundle();
 Calendar cal = Calendar.getInstance();
