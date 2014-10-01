@@ -2,6 +2,7 @@ package com.roomorama.caldroid;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -144,6 +145,7 @@ public class CaldroidFragment extends DialogFragment {
 	public final static String START_DAY_OF_WEEK = "startDayOfWeek";
 	public final static String SIX_WEEKS_IN_CALENDAR = "sixWeeksInCalendar";
 	public final static String ENABLE_CLICK_ON_DISABLED_DATES = "enableClickOnDisabledDates";
+  public final static String SQUARE_TEXT_VIEW_CELL = "squareTextViewCell";
 
 	/**
 	 * For internal use
@@ -207,6 +209,12 @@ public class CaldroidFragment extends DialogFragment {
 	protected boolean enableSwipe = true;
 	protected boolean showNavigationArrows = true;
 	protected boolean enableClickOnDisabledDates = false;
+
+  /**
+   * To use SquareTextView to display Date cell.By default, it is true,
+   * however in many cases with compact screen, it can be collapsed to save space
+   */
+  protected boolean squareTextViewCell;
 
 	/**
 	 * dateItemClickListener is fired when user click on the date cell
@@ -310,6 +318,7 @@ public class CaldroidFragment extends DialogFragment {
 		caldroidData.put(START_DAY_OF_WEEK, Integer.valueOf(startDayOfWeek));
 		caldroidData.put(SIX_WEEKS_IN_CALENDAR,
 				Boolean.valueOf(sixWeeksInCalendar));
+    caldroidData.put(SQUARE_TEXT_VIEW_CELL, squareTextViewCell);
 
 		// For internal use
 		caldroidData
@@ -404,7 +413,9 @@ public class CaldroidFragment extends DialogFragment {
 	}
 
 	/**
-	 * Get current saved sates of the Caldroid. Useful for handling rotation
+	 * Get current saved sates of the Caldroid. Useful for handling rotation.
+   * It does not need to save state of SQUARE_TEXT_VIEW_CELL because this
+   * may change on orientation change
 	 */
 	public Bundle getSavedStates() {
 		Bundle bundle = new Bundle();
@@ -943,7 +954,7 @@ public class CaldroidFragment extends DialogFragment {
 	/**
 	 * Retrieve initial arguments to the fragment Data can include: month, year,
 	 * dialogTitle, showNavigationArrows,(String) disableDates, selectedDates,
-	 * minDate, maxDate
+	 * minDate, maxDate, squareTextViewCell
 	 */
 	protected void retrieveInitialArgs() {
 		// Get arguments
@@ -979,6 +990,15 @@ public class CaldroidFragment extends DialogFragment {
 
 			// Get sixWeeksInCalendar
 			sixWeeksInCalendar = args.getBoolean(SIX_WEEKS_IN_CALENDAR, true);
+
+      // Get squareTextViewCell, by default, use square cell in portrait mode
+      // and using normal cell in landscape mode
+      int orientation = getResources().getConfiguration().orientation;
+      if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+          squareTextViewCell = args.getBoolean(SQUARE_TEXT_VIEW_CELL, true);
+      } else {
+          squareTextViewCell = args.getBoolean(SQUARE_TEXT_VIEW_CELL, false);
+      }
 
 			// Get clickable setting
 			enableClickOnDisabledDates = args.getBoolean(

@@ -1,13 +1,5 @@
 package com.caldroidsample;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-
-import com.roomorama.caldroid.CaldroidFragment;
-import com.roomorama.caldroid.CaldroidListener;
-
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -17,6 +9,14 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.roomorama.caldroid.CaldroidFragment;
+import com.roomorama.caldroid.CaldroidListener;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 @SuppressLint("SimpleDateFormat")
 public class CaldroidSampleActivity extends FragmentActivity {
@@ -81,15 +81,19 @@ public class CaldroidSampleActivity extends FragmentActivity {
 			// Uncomment this to customize startDayOfWeek
 			// args.putInt(CaldroidFragment.START_DAY_OF_WEEK,
 			// CaldroidFragment.TUESDAY); // Tuesday
+
+      // Uncomment this line to use Caldroid in compact mode
+      // args.putBoolean(CaldroidFragment.SQUARE_TEXT_VIEW_CELL, false);
+
 			caldroidFragment.setArguments(args);
 		}
 
 		setCustomResourceForDates();
 
 		// Attach to the activity
-		FragmentTransaction t = getSupportFragmentManager().beginTransaction();
-		t.replace(R.id.calendar1, caldroidFragment);
-		t.commit();
+    FragmentTransaction t = getSupportFragmentManager().beginTransaction();
+    t.replace(R.id.calendar1, caldroidFragment);
+    t.commit();
 
 		// Setup listener
 		final CaldroidListener listener = new CaldroidListener() {
@@ -238,14 +242,10 @@ public class CaldroidSampleActivity extends FragmentActivity {
 						args = new Bundle();
 						dialogCaldroidFragment.setArguments(args);
 					}
-					args.putString(CaldroidFragment.DIALOG_TITLE,
-							"Select a date");
 				} else {
 					// Setup arguments
 					Bundle bundle = new Bundle();
 					// Setup dialogTitle
-					bundle.putString(CaldroidFragment.DIALOG_TITLE,
-							"Select a date");
 					dialogCaldroidFragment.setArguments(bundle);
 				}
 

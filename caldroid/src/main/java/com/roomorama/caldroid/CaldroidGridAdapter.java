@@ -1,11 +1,5 @@
 package com.roomorama.caldroid;
 
-import hirondelle.date4j.DateTime;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -16,6 +10,12 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.caldroid.R;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+
+import hirondelle.date4j.DateTime;
 
 /**
  * The CaldroidGridAdapter provides customized view for the dates gridview
@@ -41,6 +41,7 @@ public class CaldroidGridAdapter extends BaseAdapter {
 	protected DateTime today;
 	protected int startDayOfWeek;
 	protected boolean sixWeeksInCalendar;
+  protected boolean squareTextViewCell;
 	protected Resources resources;
 
 	/**
@@ -170,6 +171,8 @@ public class CaldroidGridAdapter extends BaseAdapter {
 				.get(CaldroidFragment.START_DAY_OF_WEEK);
 		sixWeeksInCalendar = (Boolean) caldroidData
 				.get(CaldroidFragment.SIX_WEEKS_IN_CALENDAR);
+    squareTextViewCell = (Boolean) caldroidData
+        .get(CaldroidFragment.SQUARE_TEXT_VIEW_CELL);
 
 		this.datetimeList = CalendarHelper.getFullWeeks(this.month, this.year,
 				startDayOfWeek, sixWeeksInCalendar);
@@ -230,6 +233,12 @@ public class CaldroidGridAdapter extends BaseAdapter {
 	protected void customizeTextView(int position, TextView cellView) {
 		cellView.setTextColor(Color.BLACK);
 
+    // Get the padding of cell so that it can be restored later
+    int topPadding = cellView.getPaddingTop();
+    int leftPadding = cellView.getPaddingLeft();
+    int bottomPadding = cellView.getPaddingBottom();
+    int rightPadding = cellView.getPaddingRight();
+
 		// Get dateTime of this cell
 		DateTime dateTime = this.datetimeList.get(position);
 
@@ -285,22 +294,26 @@ public class CaldroidGridAdapter extends BaseAdapter {
 			}
 		}
 
+    // Set text
 		cellView.setText("" + dateTime.getDay());
 
 		// Set custom color if required
 		setCustomResources(dateTime, cellView, cellView);
+
+    // Somehow after setBackgroundResource, the padding collapse.
+    // This is to recover the padding
+    cellView.setPadding(leftPadding, topPadding, rightPadding,
+            bottomPadding);
 	}
 
 	@Override
 	public int getCount() {
-		// TODO Auto-generated method stub
 		return this.datetimeList.size();
 	}
 
 	@Override
-	public Object getItem(int arg0) {
-		// TODO Auto-generated method stub
-		return null;
+	public Object getItem(int position) {
+		return datetimeList.get(position);
 	}
 
 	@Override
@@ -317,7 +330,11 @@ public class CaldroidGridAdapter extends BaseAdapter {
 
 		// For reuse
 		if (convertView == null) {
-			cellView = (TextView) inflater.inflate(R.layout.date_cell, null);
+      if (squareTextViewCell) {
+        cellView = (TextView) inflater.inflate(R.layout.square_date_cell, null);
+      } else {
+        cellView = (TextView) inflater.inflate(R.layout.normal_date_cell, null);
+      }
 		}
 
 		customizeTextView(position, cellView);
