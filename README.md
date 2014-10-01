@@ -82,6 +82,7 @@ public final static String ENABLE_SWIPE = "enableSwipe";
 public final static String START_DAY_OF_WEEK = "startDayOfWeek";
 public final static String SIX_WEEKS_IN_CALENDAR = "sixWeeksInCalendar";
 public final static String ENABLE_CLICK_ON_DISABLED_DATES = "enableClickOnDisabledDates";
+public final static String SQUARE_TEXT_VIEW_CELL = "squareTextViewCell";
 ```
 
 To customize the startDayOfWeek, just use 
@@ -100,6 +101,15 @@ args.putBoolean(CaldroidFragment.ENABLE_CLICK_ON_DISABLED_DATES, true);
 caldroidFragment.setArguments(args);
 ```
 
+By default, Caldroid use square TextView to display date. However when the screen has limited space, user can switch to normal TextView instead:
+
+```java
+Bundle args = new Bundle();
+args.putBoolean(CaldroidFragment.SQUARE_TEXT_VIEW_CELL, false);
+caldroidFragment.setArguments(args);
+```
+
+Caldroid uses `SQUARE_TEXT_VIEW_CELL` parameter internally as well. When the phone is in portrait mode, it will default `SQUARE_TEXT_VIEW_CELL` to `true`, and on landscape, `SQUARE_TEXT_VIEW_CELL` is set to `false`. If your app provides different value, Caldroid will use your value instead of the default one.
 
 To show the caldroid fragment as a dialog, you might want to set the dialog title. There is a convenient method for that:
 
