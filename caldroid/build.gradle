@@ -20,7 +20,7 @@ android {
 
 dependencies {
     compile 'com.android.support:support-v4:21.+'
-    compile 'com.darwinsys:hirondelle-date4j:1.5.0'
+    compile 'com.darwinsys:hirondelle-date4j:1.5.1'
 }
 
 apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'
