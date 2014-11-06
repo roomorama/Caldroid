@@ -272,7 +272,17 @@ public class CaldroidFragment extends DialogFragment {
 		return fragments;
 	}
 
-	/**
+  /**
+   * For client wants to access dateViewPager
+   * @return
+   */
+  public InfiniteViewPager getDateViewPager() {
+    return dateViewPager;
+  }
+
+
+
+  /**
 	 * To let user customize the navigation buttons
 	 */
 	public Button getLeftArrowButton() {
@@ -832,7 +842,7 @@ public class CaldroidFragment extends DialogFragment {
 	 * 
 	 * @return
 	 */
-	private OnItemClickListener getDateItemClickListener() {
+	public OnItemClickListener getDateItemClickListener() {
 		if (dateItemClickListener == null) {
 			dateItemClickListener = new OnItemClickListener() {
 				@Override
@@ -870,7 +880,7 @@ public class CaldroidFragment extends DialogFragment {
 	 * 
 	 * @return
 	 */
-	private OnItemLongClickListener getDateItemLongClickListener() {
+	public OnItemLongClickListener getDateItemLongClickListener() {
 		if (dateItemLongClickListener == null) {
 			dateItemLongClickListener = new OnItemLongClickListener() {
 				@Override
