@@ -1108,7 +1108,11 @@ public class CaldroidFragment extends DialogFragment {
 
 		// To support keeping instance for dialog
 		if (getDialog() != null) {
-			setRetainInstance(true);
+      try {
+        setRetainInstance(true);
+      } catch (IllegalStateException e) {
+        e.printStackTrace();
+      }
 		}
 
 		// Inflate layout
