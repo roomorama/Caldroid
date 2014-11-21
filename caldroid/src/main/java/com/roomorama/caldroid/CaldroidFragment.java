@@ -1468,4 +1468,12 @@ public class CaldroidFragment extends DialogFragment {
 			throw new RuntimeException(e);
 		}
 	}
+
+	public HashMap<DateTime, Integer>getBackgroundForDateTimeMap(){
+		return this.backgroundForDateTimeMap;
+	}
+	
+	public HashMap<DateTime, Integer>getTextColorForDateTimeMap(){
+		return this.textColorForDateTimeMap;
+	}
 }
