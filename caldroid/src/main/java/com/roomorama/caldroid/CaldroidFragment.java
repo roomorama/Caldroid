@@ -1448,6 +1448,13 @@ public class CaldroidFragment extends DialogFragment {
 
 	}
 
+  @Override
+  public void show(FragmentManager manager, String tag) {
+    if (manager.findFragmentByTag(tag) == null) {
+      super.show(manager, tag);
+    }
+  }
+
 	@Override
 	public void onDetach() {
 		super.onDetach();
