@@ -1445,6 +1445,12 @@ public class CaldroidFragment extends DialogFragment {
 			dateInMonthsList.addAll(currentAdapter.getDatetimeList());
 		}
 
+    @Override
+    public void show(FragmentManager manager, String tag) {
+      if (manager.findFragmentByTag(tag) == null) {
+        super.show(manager, tag);
+      }
+    }
 	}
 
 
