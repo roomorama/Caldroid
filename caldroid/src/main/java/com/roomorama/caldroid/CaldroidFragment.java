@@ -1093,6 +1093,13 @@ public class CaldroidFragment extends DialogFragment {
         return f;
     }
 
+    @Override
+    public void show(FragmentManager manager, String tag) {
+        if (manager.findFragmentByTag(tag) == null) {
+         super.show(manager, tag);
+        }
+    }
+
     /**
      * Below code fixed the issue viewpager disappears in dialog mode on
      * orientation change
