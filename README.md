@@ -20,14 +20,14 @@ Setup
 
 To use in your project, reference the child library project as a library. If you see JAR mismatched error, replace your android-support-v4.jar to the jar inside Caldroid. Make sure you compile the project against Android 4.2 and above to allow nested fragment. See more at http://developer.android.com/about/versions/android-4.2.html#NestedFragments
 
-**For Android Studio user**: add `compile 'com.roomorama:caldroid:1.1.5'` to your gradle build file.
+**For Android Studio user**: add `compile 'com.roomorama:caldroid:1.1.7'` to your gradle build file.
 
 **For Maven user**:
 ```
 <dependency>
     <groupId>com.roomorama</groupId>
     <artifactId>caldroid</artifactId>
-    <version>1.1.5</version>
+    <version>1.1.7</version>
 </dependency>
 ```
 
@@ -297,7 +297,17 @@ final CaldroidListener listener = new CaldroidListener() {
 };
 
 caldroidFragment.setCaldroidListener(listener);
+```
 
+User can also customize the gridview that displays dates (background, spacing, etc). First, you need to create your own layout, see `layout/date_grid_fragment.xml` for more detail. Second, you subclass `CaldroidFragment` to supply your gridview layout:
+
+```java
+public class CustomGridFragment extends CaldroidFragment {
+	@Override
+	protected int getGridViewRes() {
+		return R.layout.your_custom_grid_fragment;
+	}
+}
 ```
 
 
