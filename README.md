@@ -287,7 +287,7 @@ final CaldroidListener listener = new CaldroidListener() {
 		// Supply your own adapter to weekdayGridView (SUN, MON, etc)
 		caldroidFragment.getWeekdayGridView().setAdapter(YOUR_ADAPTER);
 
-		Button leftButton = caldroidFragment.getLeftArrowButton;
+		Button leftButton = caldroidFragment.getLeftArrowButton();
 		Button rightButton = caldroidFragment.getLeftArrowButton();
 		TextView textView = caldroidFragment.getMonthTitleTextView();
 
