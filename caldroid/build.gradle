@@ -5,7 +5,6 @@ android {
     buildToolsVersion "21.1"
 
     defaultConfig {
-        applicationId "com.caldroid"
         minSdkVersion 8
         targetSdkVersion 21
     }
