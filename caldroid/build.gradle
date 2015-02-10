@@ -2,10 +2,9 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 21
-    buildToolsVersion "21.1"
+    buildToolsVersion "21.1.2"
 
     defaultConfig {
-        applicationId "com.caldroid"
         minSdkVersion 8
         targetSdkVersion 21
     }
