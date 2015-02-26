@@ -220,6 +220,14 @@ public class CaldroidGridAdapter extends BaseAdapter {
         }
     }
 
+    View.OnLayoutChangeListener onLayoutChangeListener = new View.OnLayoutChangeListener() {
+        @Override
+        public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+            v.setSelected(true);
+            v.removeOnLayoutChangeListener(this);
+        }
+    };
+
     /**
      * Customize colors of text and background based on states of the cell
      * (disabled, active, selected, etc)
@@ -280,6 +288,7 @@ public class CaldroidGridAdapter extends BaseAdapter {
             }
 
             cellView.setTextColor(CaldroidFragment.selectedTextColor);
+            cellView.addOnLayoutChangeListener(onLayoutChangeListener);
         } else {
             shouldResetSelectedView = true;
         }
