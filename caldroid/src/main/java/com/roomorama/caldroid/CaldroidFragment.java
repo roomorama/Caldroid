@@ -65,7 +65,7 @@ import hirondelle.date4j.DateTime;
  * work with date and string, enable or disable the navigation arrows. User can
  * also swipe left/right to change months.<br/>
  * <br/>
- * Caldroid code is simple and clean partly because of powerful JODA DateTime
+ * Caldroid code is simple and clean partly because of powerful Date4J DateTime
  * library!
  *
  * @author thomasdao
