@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@color/caldroid_lighter_gray" android:state_pressed="true"/> <!-- pressed -->
+    <item android:drawable="@color/caldroid_black" android:state_pressed="false"/> <!-- normal -->
+
+</selector>
