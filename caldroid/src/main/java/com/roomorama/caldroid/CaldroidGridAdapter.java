@@ -189,8 +189,7 @@ public class CaldroidGridAdapter extends BaseAdapter {
     }
 
     @SuppressWarnings("unchecked")
-    protected void setCustomResources(DateTime dateTime, View backgroundView,
-                                      TextView textView) {
+    protected void setCustomResources(DateTime dateTime, View backgroundView, TextView textView) {
         // Set custom background resource
         HashMap<DateTime, Integer> backgroundForDateTimeMap = (HashMap<DateTime, Integer>) caldroidData
                 .get(CaldroidFragment._BACKGROUND_FOR_DATETIME_MAP);
@@ -200,8 +199,7 @@ public class CaldroidGridAdapter extends BaseAdapter {
 
             // Set it
             if (backgroundResource != null) {
-                backgroundView.setBackgroundResource(backgroundResource
-                        .intValue());
+                backgroundView.setBackgroundResource(backgroundResource);
             }
         }
 
@@ -214,11 +212,20 @@ public class CaldroidGridAdapter extends BaseAdapter {
 
             // Set it
             if (textColorResource != null) {
-                textView.setTextColor(resources.getColor(textColorResource
-                        .intValue()));
+                textView.setTextColor(resources.getColor(textColorResource));
             }
         }
     }
+
+	private int getCustomizedResourceId(String key, int defaultResourceId) {
+		HashMap<String, Integer> customResourcesMap = (HashMap<String, Integer>) caldroidData.get(CaldroidFragment._CUSTOM_RESOURCES_MAP);
+		if (customResourcesMap != null) {
+			Integer resourceId = customResourcesMap.get(key);
+			if (resourceId != null && resourceId != 0)
+				return resourceId;
+		}
+		return defaultResourceId;
+	}
 
     /**
      * Customize colors of text and background based on states of the cell
@@ -275,8 +282,7 @@ public class CaldroidGridAdapter extends BaseAdapter {
             if (CaldroidFragment.selectedBackgroundDrawable != -1) {
                 cellView.setBackgroundResource(CaldroidFragment.selectedBackgroundDrawable);
             } else {
-                cellView.setBackgroundColor(resources
-                        .getColor(R.color.caldroid_sky_blue));
+                cellView.setBackgroundColor(resources.getColor(R.color.caldroid_sky_blue));
             }
 
             cellView.setTextColor(CaldroidFragment.selectedTextColor);
@@ -287,9 +293,9 @@ public class CaldroidGridAdapter extends BaseAdapter {
         if (shouldResetDiabledView && shouldResetSelectedView) {
             // Customize for today
             if (dateTime.equals(getToday())) {
-                cellView.setBackgroundResource(R.drawable.red_border);
+                cellView.setBackgroundResource(getCustomizedResourceId(CaldroidFragment.CURRENT_DATE_CELL_BACKGROUND, R.drawable.red_border));
             } else {
-                cellView.setBackgroundResource(R.drawable.cell_bg);
+                cellView.setBackgroundResource(getCustomizedResourceId(CaldroidFragment.DEFAULT_DATE_CELL_BACKGROUND, R.drawable.cell_bg));
             }
         }
 
@@ -330,9 +336,9 @@ public class CaldroidGridAdapter extends BaseAdapter {
         // For reuse
         if (convertView == null) {
             if (squareTextViewCell) {
-                cellView = (TextView) inflater.inflate(R.layout.square_date_cell, null);
+                cellView = (TextView) inflater.inflate(getCustomizedResourceId(CaldroidFragment.SQUARE_CELL_LAYOUT, R.layout.square_date_cell), null);
             } else {
-                cellView = (TextView) inflater.inflate(R.layout.normal_date_cell, null);
+                cellView = (TextView) inflater.inflate(getCustomizedResourceId(CaldroidFragment.NORMAL_CELL_LAYOUT, R.layout.normal_date_cell), null);
             }
         }
 
