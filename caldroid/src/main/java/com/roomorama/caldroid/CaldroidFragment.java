@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -1170,16 +1171,21 @@ public class CaldroidFragment extends DialogFragment {
         // Refresh view
         refreshView();
 
-        // Inform client that all views are created and not null
-        // Client should perform customization for buttons and textviews here
-        if (caldroidListener != null) {
-            caldroidListener.onCaldroidViewCreated();
-        }
-
         return view;
     }
 
-    /**
+	@Override
+	public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+
+		// Inform client that all views are created and not null
+		// Client should perform customization for buttons and textviews here
+		if (caldroidListener != null) {
+			caldroidListener.onCaldroidViewCreated();
+		}
+	}
+
+	/**
      * This method can be used to provide different gridview.
      *
      * @return
