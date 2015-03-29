@@ -145,6 +145,11 @@ public class CaldroidFragment extends DialogFragment {
     public final static String SIX_WEEKS_IN_CALENDAR = "sixWeeksInCalendar";
     public final static String ENABLE_CLICK_ON_DISABLED_DATES = "enableClickOnDisabledDates";
     public final static String SQUARE_TEXT_VIEW_CELL = "squareTextViewCell";
+	public final static String DEFAULT_DATE_CELL_BACKGROUND = "defaultBackground";
+	public final static String CURRENT_DATE_CELL_BACKGROUND = "currentBackground";
+	public final static String SQUARE_CELL_LAYOUT = "squareCellLayout";
+	public final static String NORMAL_CELL_LAYOUT = "normalCellLayout";
+	public final static String WEEK_DAY_CELL_LAYOUT = "weekDayCellLayout";
 
     /**
      * For internal use
@@ -153,6 +158,7 @@ public class CaldroidFragment extends DialogFragment {
     public final static String _MAX_DATE_TIME = "_maxDateTime";
     public final static String _BACKGROUND_FOR_DATETIME_MAP = "_backgroundForDateTimeMap";
     public final static String _TEXT_COLOR_FOR_DATETIME_MAP = "_textColorForDateTimeMap";
+	public final static String _CUSTOM_RESOURCES_MAP = "_customResourcesMap";
 
     /**
      * Initial data
@@ -185,7 +191,9 @@ public class CaldroidFragment extends DialogFragment {
      * textColorForDateMap holds color for text for each date
      */
     protected HashMap<DateTime, Integer> textColorForDateTimeMap = new HashMap<DateTime, Integer>();
-    ;
+
+
+	protected HashMap<String, Integer> customResourcesMap = new HashMap<>();
 
     /**
      * First column of calendar is Sunday
@@ -251,8 +259,11 @@ public class CaldroidFragment extends DialogFragment {
      * provide custom adapter here
      */
     public WeekdayArrayAdapter getNewWeekdayAdapter() {
+		Integer layoutId = customResourcesMap.get(WEEK_DAY_CELL_LAYOUT);
+		if (layoutId == null || layoutId == 0)
+			layoutId = R.layout.weekday_textview;
         return new WeekdayArrayAdapter(
-                getActivity(), android.R.layout.simple_list_item_1,
+                getActivity(), layoutId, android.R.layout.simple_list_item_1,
                 getDaysOfWeek());
     }
 
@@ -337,14 +348,13 @@ public class CaldroidFragment extends DialogFragment {
         caldroidData.put(_MIN_DATE_TIME, minDateTime);
         caldroidData.put(_MAX_DATE_TIME, maxDateTime);
         caldroidData.put(START_DAY_OF_WEEK, Integer.valueOf(startDayOfWeek));
-        caldroidData.put(SIX_WEEKS_IN_CALENDAR,
-                Boolean.valueOf(sixWeeksInCalendar));
+        caldroidData.put(SIX_WEEKS_IN_CALENDAR, Boolean.valueOf(sixWeeksInCalendar));
         caldroidData.put(SQUARE_TEXT_VIEW_CELL, squareTextViewCell);
 
         // For internal use
-        caldroidData
-                .put(_BACKGROUND_FOR_DATETIME_MAP, backgroundForDateTimeMap);
+        caldroidData.put(_BACKGROUND_FOR_DATETIME_MAP, backgroundForDateTimeMap);
         caldroidData.put(_TEXT_COLOR_FOR_DATETIME_MAP, textColorForDateTimeMap);
+		caldroidData.put(_CUSTOM_RESOURCES_MAP, customResourcesMap);
 
         return caldroidData;
     }
@@ -432,6 +442,10 @@ public class CaldroidFragment extends DialogFragment {
     public void setTextColorForDateTime(int textColorRes, DateTime dateTime) {
         textColorForDateTimeMap.put(dateTime, Integer.valueOf(textColorRes));
     }
+
+	public void setCustomResource(String resourceKey, int resourceId) {
+		customResourcesMap.put(resourceKey, resourceId);
+	}
 
     /**
      * Get current saved sates of the Caldroid. Useful for handling rotation.
@@ -1061,7 +1075,6 @@ public class CaldroidFragment extends DialogFragment {
                 maxDateTime = CalendarHelper.getDateTimeFromString(
                         maxDateTimeString, null);
             }
-
         }
         if (month == -1 || year == -1) {
             DateTime dateTime = DateTime.today(TimeZone.getDefault());

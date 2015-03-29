@@ -19,9 +19,11 @@ import java.util.List;
 public class WeekdayArrayAdapter extends ArrayAdapter<String> {
     public static int textColor = Color.LTGRAY;
 
-    public WeekdayArrayAdapter(Context context, int textViewResourceId,
-                               List<String> objects) {
+	int layoutId;
+
+    public WeekdayArrayAdapter(Context context, int layoutId, int textViewResourceId,List<String> objects) {
         super(context, textViewResourceId, objects);
+		this.layoutId = layoutId;
     }
 
     // To prevent cell highlighted when clicked
@@ -39,7 +41,7 @@ public class WeekdayArrayAdapter extends ArrayAdapter<String> {
     public View getView(int position, View convertView, ViewGroup parent) {
         // To customize text size and color
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        TextView textView = (TextView) inflater.inflate(R.layout.weekday_textview, null);
+        TextView textView = (TextView) inflater.inflate(layoutId, null);
 
         // Set content
         String item = getItem(position);
