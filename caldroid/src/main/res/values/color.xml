@@ -8,6 +8,7 @@
     <color name="caldroid_lighter_gray">#ddd</color>
     <color name="caldroid_gray">#CCC</color>
     <color name="caldroid_darker_gray">#aaa</color>
+    <color name="caldroid_middle_gray">#888</color>
     <!-- A light Holo shade of blue -->
     <color name="caldroid_holo_blue_light">#ff33b5e5</color>
     <!-- A dark Holo shade of blue -->
@@ -15,4 +16,5 @@
     <!-- A really bright Holo shade of blue -->
     <color name="caldroid_sky_blue">#FFA3E8F7</color>
 
+    <color name="red">#FFF</color>
 </resources>

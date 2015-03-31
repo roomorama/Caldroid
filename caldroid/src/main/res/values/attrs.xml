@@ -8,4 +8,10 @@
     <attr name="styleCaldroidSquareCell" format="reference"/>
     <attr name="styleCaldroidGridView" format="reference"/>
     <attr name="styleCaldroidWeekdayView" format="reference"/>
+    <declare-styleable name="DateState">
+        <attr name="state_date_today" format="boolean"/>
+        <attr name="state_date_selected" format="boolean"/>
+        <attr name="state_date_disabled" format="boolean"/>
+        <attr name="state_date_prev_next_month" format="boolean"/>
+    </declare-styleable>
 </resources>

@@ -2,6 +2,7 @@ package com.roomorama.caldroid;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -11,11 +12,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.text.format.DateUtils;
 import android.text.format.Time;
-import android.view.LayoutInflater;
-import android.view.View;
+import android.view.*;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -128,6 +126,12 @@ public class CaldroidFragment extends DialogFragment {
     private InfiniteViewPager dateViewPager;
     private DatePageChangeListener pageChangeListener;
     private ArrayList<DateGridFragment> fragments;
+
+    private static int themeResourceId = R.style.CaldroidDefault;
+
+    public static final int CUSTOMIZATION_MODE_LEGACY = 1;
+    public static final int CUSTOMIZATION_MODE_THEME = 2;
+    private static int customizationMode = CUSTOMIZATION_MODE_LEGACY;
 
     /**
      * Initial params key
@@ -1109,6 +1113,31 @@ public class CaldroidFragment extends DialogFragment {
         super.onDestroyView();
     }
 
+    public static void setThemeResourceId(int id) {
+        themeResourceId = id;
+    }
+
+    public static int getThemeResourceId() {
+        return themeResourceId;
+    }
+
+    public static void setLegacyCustomizationMode() {
+        customizationMode = CUSTOMIZATION_MODE_LEGACY;
+    }
+
+    public static void setThemeCustomizationMode() {
+        customizationMode = CUSTOMIZATION_MODE_THEME;
+    }
+
+    public static boolean isLegacyCustomizationMode() {
+        return customizationMode == CUSTOMIZATION_MODE_LEGACY;
+    }
+
+    public static LayoutInflater getLayoutInflater(Context context, LayoutInflater origInflater) {
+        Context wrapped = new ContextThemeWrapper(context, CaldroidFragment.getThemeResourceId());
+        return origInflater.cloneInContext(wrapped);
+    }
+
     /**
      * Setup view
      */
@@ -1126,8 +1155,9 @@ public class CaldroidFragment extends DialogFragment {
             }
         }
 
-        // Inflate layout
-        View view = inflater.inflate(R.layout.calendar_view, container, false);
+        LayoutInflater localInflater = getLayoutInflater(getActivity(), inflater);
+
+        View view = localInflater.inflate(R.layout.calendar_view, container, false);
 
         // For the monthTitleTextView
         monthTitleTextView = (TextView) view

@@ -229,7 +229,18 @@ public class CaldroidGridAdapter extends BaseAdapter {
      * @param position
      * @param cellView
      */
-    protected void customizeTextView(int position, TextView cellView) {
+    protected void customizeTextView(int position, CellView cellView) {
+        // Get dateTime of this cell
+        DateTime dateTime = this.datetimeList.get(position);
+
+        if (CaldroidFragment.isLegacyCustomizationMode()) {
+            customizeTextViewLegacy(dateTime, cellView);
+        } else {
+            customizeTextViewStateBased(dateTime, cellView);
+        }
+    }
+
+    private void customizeTextViewLegacy(DateTime dateTime, CellView cellView) {
         cellView.setTextColor(Color.BLACK);
 
         // Get the padding of cell so that it can be restored later
@@ -238,8 +249,9 @@ public class CaldroidGridAdapter extends BaseAdapter {
         int bottomPadding = cellView.getPaddingBottom();
         int rightPadding = cellView.getPaddingRight();
 
-        // Get dateTime of this cell
-        DateTime dateTime = this.datetimeList.get(position);
+        if (dateTime.equals(getToday())) {
+            cellView.addCustomState(CellView.STATE_TODAY);
+        }
 
         // Set color of the dates in previous / next month
         if (dateTime.getMonth() != month) {
@@ -293,16 +305,52 @@ public class CaldroidGridAdapter extends BaseAdapter {
             }
         }
 
-        // Set text
-        cellView.setText("" + dateTime.getDay());
-
-        // Set custom color if required
-        setCustomResources(dateTime, cellView, cellView);
+        setTextAndCustomResources(dateTime, cellView);
 
         // Somehow after setBackgroundResource, the padding collapse.
         // This is to recover the padding
         cellView.setPadding(leftPadding, topPadding, rightPadding,
                 bottomPadding);
+    }
+
+    private void customizeTextViewStateBased(DateTime dateTime, CellView cellView) {
+
+        cellView.resetCustomState();
+
+        if (dateTime.equals(getToday())) {
+            cellView.addCustomState(CellView.STATE_TODAY);
+        }
+
+        // Set color of the dates in previous / next month
+        if (dateTime.getMonth() != month) {
+            cellView.addCustomState(CellView.STATE_PREV_NEXT_MONTH);
+        }
+
+        // Customize for disabled dates and date outside min/max dates
+        if ((minDateTime != null && dateTime.lt(minDateTime))
+                || (maxDateTime != null && dateTime.gt(maxDateTime))
+                || (disableDates != null && disableDatesMap
+                .containsKey(dateTime))) {
+
+            cellView.addCustomState(CellView.STATE_DISABLED);
+        }
+
+        // Customize for selected dates
+        if (selectedDates != null && selectedDatesMap.containsKey(dateTime)) {
+            cellView.addCustomState(CellView.STATE_SELECTED);
+        }
+
+        cellView.refreshDrawableState();
+
+        setTextAndCustomResources(dateTime, cellView);
+    }
+
+    private void setTextAndCustomResources(DateTime dateTime, CellView cellView) {
+        // Set text
+        cellView.setText("" + dateTime.getDay());
+
+        // Set custom color if required
+        setCustomResources(dateTime, cellView, cellView);
     }
 
     @Override
@@ -325,14 +373,16 @@ public class CaldroidGridAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        TextView cellView = (TextView) convertView;
+        CellView cellView = (CellView) convertView;
+
+        LayoutInflater localInflater = CaldroidFragment.getLayoutInflater(context, inflater);
 
         // For reuse
         if (convertView == null) {
             if (squareTextViewCell) {
-                cellView = (TextView) inflater.inflate(R.layout.square_date_cell, null);
+                cellView = (CellView) localInflater.inflate(R.layout.square_date_cell, null);
             } else {
-                cellView = (TextView) inflater.inflate(R.layout.normal_date_cell, null);
+                cellView = (CellView) localInflater.inflate(R.layout.normal_date_cell, null);
             }
         }
 

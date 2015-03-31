@@ -22,4 +22,4 @@ dependencies {
     compile 'com.darwinsys:hirondelle-date4j:1.5.1'
 }
 
-apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'
+//apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'

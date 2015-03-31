@@ -1,20 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!--
-        Base application theme, dependent on API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
-    -->
-    <style name="AppBaseTheme" parent="android:Theme.Light">
-        <!--
-            Theme customizations available in newer API levels can go in
-            res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
-        -->
+    <style name="CaldroidBaseTheme" parent="android:Theme.Light"/>
+
+    <style name="CaldroidDefault" parent="CaldroidBaseTheme">
+        <item name="styleCaldroidViewLayout">@style/CaldroidDefaultCalendarViewLayout</item>
+        <item name="styleCaldroidLeftArrow">@style/CaldroidDefaultLeftButton</item>
+        <item name="styleCaldroidRightArrow">@style/CaldroidDefaultRightButton</item>
+        <item name="styleCaldroidMonthName">@style/CaldroidDefaultMonthName</item>
+        <item name="styleCaldroidGridView">@style/CaldroidDefaultGridView</item>
+        <item name="styleCaldroidNormalCell">@style/CaldroidDefaultNormalCell</item>
+        <item name="styleCaldroidSquareCell">@style/CaldroidDefaultSquareCell</item>
+        <item name="styleCaldroidWeekdayView">@style/CaldroidDefaultWeekday</item>
     </style>
 
-    <!-- Application theme. -->
-    <style name="AppTheme" parent="AppBaseTheme">
-        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    <style name="CaldroidDefaultCalendarViewLayout">
+        <item name="android:background">@color/caldroid_white</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="CaldroidDefaultArrowButton">
+        <item name="android:layout_width">50dp</item>
+        <item name="android:layout_height">44dp</item>
+    </style>
+
+    <style name="CaldroidDefaultLeftButton" parent="CaldroidDefaultArrowButton">
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:background">@drawable/left_arrow</item>
+    </style>
+
+    <style name="CaldroidDefaultRightButton" parent="CaldroidDefaultArrowButton">
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:background">@drawable/right_arrow</item>
+    </style>
+
+    <style name="CaldroidDefaultMonthName">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">6dp</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textSize">21sp</item>
+    </style>
+
+    <style name="CaldroidDefaultGridView">
+        <item name="android:listSelector">@null</item>
+        <item name="android:background">@color/caldroid_lighter_gray</item>
+        <item name="android:horizontalSpacing">1dp</item>
+        <item name="android:padding">1dp</item>
+        <item name="android:verticalSpacing">1dp</item>
+    </style>
+
+    <style name="CaldroidDefaultCell">
+        <item name="android:textColor">@drawable/cell_text_color</item>
+        <item name="android:background">@drawable/cell_bg</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="CaldroidDefaultNormalCell" parent="CaldroidDefaultCell"/>
+
+    <style name="CaldroidDefaultSquareCell" parent="CaldroidDefaultCell">
+        <item name="android:padding">5dp</item>
+    </style>
+
+    <style name="CaldroidDefaultWeekday">
+        <item name="android:textColor">@color/caldroid_middle_gray</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:paddingTop">6dp</item>
+        <item name="android:paddingBottom">5dp</item>
+    </style>
+
+    <!-- Dark theme. -->
+    <style name="CaldroidDefaultDark" parent="CaldroidDefault">
+        <item name="styleCaldroidViewLayout">@style/CaldroidDefaultDarkCalendarViewLayout</item>
+        <item name="styleCaldroidMonthName">@style/CaldroidDefaultDarkMonthName</item>
+        <item name="styleCaldroidNormalCell">@style/CaldroidDefaultDarkNormalCell</item>
+        <item name="styleCaldroidSquareCell">@style/CaldroidDefaultDarkSquareCell</item>
+        <item name="styleCaldroidGridView">@style/CaldroidDefaultGridView</item>
+    </style>
+
+    <style name="CaldroidDefaultDarkCalendarViewLayout">
+        <item name="android:background">@android:color/black</item>
+    </style>
+
+    <style name="CaldroidDefaultDarkMonthName" parent="CaldroidDefaultMonthName">
+        <item name="android:textColor">@color/caldroid_white</item>
+    </style>
+
+    <style name="CaldroidDefaultDarkCell" parent="CaldroidDefaultCell">
+        <item name="android:textColor">@drawable/cell_text_color_dark</item>
+        <item name="android:background">@drawable/cell_bg_dark</item>
+    </style>
+
+    <style name="CaldroidDefaultDarkNormalCell" parent="CaldroidDefaultDarkCell"/>
+
+    <style name="CaldroidDefaultDarkSquareCell" parent="CaldroidDefaultDarkCell">
+        <item name="android:padding">5dp</item>
     </style>
 
 </resources>
