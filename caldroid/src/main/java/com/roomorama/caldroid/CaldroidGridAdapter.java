@@ -233,88 +233,6 @@ public class CaldroidGridAdapter extends BaseAdapter {
         // Get dateTime of this cell
         DateTime dateTime = this.datetimeList.get(position);
 
-        if (CaldroidFragment.isLegacyCustomizationMode()) {
-            customizeTextViewLegacy(dateTime, cellView);
-        } else {
-            customizeTextViewStateBased(dateTime, cellView);
-        }
-    }
-
-    private void customizeTextViewLegacy(DateTime dateTime, CellView cellView) {
-        cellView.setTextColor(Color.BLACK);
-
-        // Get the padding of cell so that it can be restored later
-        int topPadding = cellView.getPaddingTop();
-        int leftPadding = cellView.getPaddingLeft();
-        int bottomPadding = cellView.getPaddingBottom();
-        int rightPadding = cellView.getPaddingRight();
-
-        if (dateTime.equals(getToday())) {
-            cellView.addCustomState(CellView.STATE_TODAY);
-        }
-
-        // Set color of the dates in previous / next month
-        if (dateTime.getMonth() != month) {
-            cellView.setTextColor(resources
-                    .getColor(R.color.caldroid_darker_gray));
-        }
-
-        boolean shouldResetDiabledView = false;
-        boolean shouldResetSelectedView = false;
-
-        // Customize for disabled dates and date outside min/max dates
-        if ((minDateTime != null && dateTime.lt(minDateTime))
-                || (maxDateTime != null && dateTime.gt(maxDateTime))
-                || (disableDates != null && disableDatesMap
-                .containsKey(dateTime))) {
-
-            cellView.setTextColor(CaldroidFragment.disabledTextColor);
-            if (CaldroidFragment.disabledBackgroundDrawable == -1) {
-                cellView.setBackgroundResource(R.drawable.disable_cell);
-            } else {
-                cellView.setBackgroundResource(CaldroidFragment.disabledBackgroundDrawable);
-            }
-
-            if (dateTime.equals(getToday())) {
-                cellView.setBackgroundResource(R.drawable.red_border_gray_bg);
-            }
-        } else {
-            shouldResetDiabledView = true;
-        }
-
-        // Customize for selected dates
-        if (selectedDates != null && selectedDatesMap.containsKey(dateTime)) {
-            if (CaldroidFragment.selectedBackgroundDrawable != -1) {
-                cellView.setBackgroundResource(CaldroidFragment.selectedBackgroundDrawable);
-            } else {
-                cellView.setBackgroundColor(resources
-                        .getColor(R.color.caldroid_sky_blue));
-            }
-
-            cellView.setTextColor(CaldroidFragment.selectedTextColor);
-        } else {
-            shouldResetSelectedView = true;
-        }
-
-        if (shouldResetDiabledView && shouldResetSelectedView) {
-            // Customize for today
-            if (dateTime.equals(getToday())) {
-                cellView.setBackgroundResource(R.drawable.red_border);
-            } else {
-                cellView.setBackgroundResource(R.drawable.cell_bg);
-            }
-        }
-
-        setTextAndCustomResources(dateTime, cellView);
-
-        // Somehow after setBackgroundResource, the padding collapse.
-        // This is to recover the padding
-        cellView.setPadding(leftPadding, topPadding, rightPadding,
-                bottomPadding);
-    }
-
-    private void customizeTextViewStateBased(DateTime dateTime, CellView cellView) {
-
         cellView.resetCustomState();
 
         if (dateTime.equals(getToday())) {
@@ -342,10 +260,6 @@ public class CaldroidGridAdapter extends BaseAdapter {
 
         cellView.refreshDrawableState();
 
-        setTextAndCustomResources(dateTime, cellView);
-    }
-
-    private void setTextAndCustomResources(DateTime dateTime, CellView cellView) {
         // Set text
         cellView.setText("" + dateTime.getDay());
 

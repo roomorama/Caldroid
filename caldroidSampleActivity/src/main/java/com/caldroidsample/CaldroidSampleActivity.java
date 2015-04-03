@@ -90,11 +90,8 @@ public class CaldroidSampleActivity extends FragmentActivity {
 
 		setCustomResourceForDates();
 
-//		Uncomment this if you want to have full control over XML theme/drawables for your Caldroid
-		CaldroidFragment.setThemeCustomizationMode();
-
 //		Uncomment this to apply dark theme
-		CaldroidFragment.setThemeResourceId(com.caldroid.R.style.CaldroidDefaultDark);
+//		CaldroidFragment.setThemeResourceId(com.caldroid.R.style.CaldroidDefaultDark);
 
 		// Attach to the activity
 		FragmentTransaction t = getSupportFragmentManager().beginTransaction();

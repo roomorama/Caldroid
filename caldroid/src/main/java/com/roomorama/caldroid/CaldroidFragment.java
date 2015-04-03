@@ -129,10 +129,6 @@ public class CaldroidFragment extends DialogFragment {
 
     private static int themeResourceId = R.style.CaldroidDefault;
 
-    public static final int CUSTOMIZATION_MODE_LEGACY = 1;
-    public static final int CUSTOMIZATION_MODE_THEME = 2;
-    private static int customizationMode = CUSTOMIZATION_MODE_LEGACY;
-
     /**
      * Initial params key
      */
@@ -1119,18 +1115,6 @@ public class CaldroidFragment extends DialogFragment {
 
     public static int getThemeResourceId() {
         return themeResourceId;
-    }
-
-    public static void setLegacyCustomizationMode() {
-        customizationMode = CUSTOMIZATION_MODE_LEGACY;
-    }
-
-    public static void setThemeCustomizationMode() {
-        customizationMode = CUSTOMIZATION_MODE_THEME;
-    }
-
-    public static boolean isLegacyCustomizationMode() {
-        return customizationMode == CUSTOMIZATION_MODE_LEGACY;
     }
 
     public static LayoutInflater getLayoutInflater(Context context, LayoutInflater origInflater) {
