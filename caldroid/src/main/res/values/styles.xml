@@ -53,18 +53,18 @@
     </style>
 
     <style name="CaldroidDefaultCell">
-        <item name="android:textColor">@drawable/cell_text_color</item>
+        <item name="android:textColor">@color/cell_text_color</item>
         <item name="android:background">@drawable/cell_bg</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="CaldroidDefaultNormalCell" parent="CaldroidDefaultCell"/>
-
-    <style name="CaldroidDefaultSquareCell" parent="CaldroidDefaultCell">
+    <style name="CaldroidDefaultNormalCell" parent="CaldroidDefaultCell">
         <item name="android:padding">5dp</item>
     </style>
+
+    <style name="CaldroidDefaultSquareCell" parent="CaldroidDefaultCell" />
 
     <style name="CaldroidDefaultWeekday">
         <item name="android:textColor">@color/caldroid_middle_gray</item>
@@ -92,14 +92,14 @@
     </style>
 
     <style name="CaldroidDefaultDarkCell" parent="CaldroidDefaultCell">
-        <item name="android:textColor">@drawable/cell_text_color_dark</item>
+        <item name="android:textColor">@color/cell_text_color_dark</item>
         <item name="android:background">@drawable/cell_bg_dark</item>
     </style>
 
-    <style name="CaldroidDefaultDarkNormalCell" parent="CaldroidDefaultDarkCell"/>
-
-    <style name="CaldroidDefaultDarkSquareCell" parent="CaldroidDefaultDarkCell">
+    <style name="CaldroidDefaultDarkNormalCell" parent="CaldroidDefaultDarkCell">
         <item name="android:padding">5dp</item>
     </style>
+
+    <style name="CaldroidDefaultDarkSquareCell" parent="CaldroidDefaultDarkCell" />
 
 </resources>

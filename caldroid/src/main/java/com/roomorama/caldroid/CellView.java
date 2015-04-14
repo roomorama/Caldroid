@@ -17,7 +17,7 @@ public class CellView extends TextView {
     public static final int STATE_DISABLED = R.attr.state_date_disabled;
     public static final int STATE_PREV_NEXT_MONTH = R.attr.state_date_prev_next_month;
 
-    private ArrayList<Integer> customState = new ArrayList<Integer>();
+    private ArrayList<Integer> customStates = new ArrayList<Integer>();
 
     public CellView(Context context) {
         super(context);
@@ -34,28 +34,28 @@ public class CellView extends TextView {
     }
 
     private void init() {
-        if (null == customState) customState = new ArrayList<Integer>();
+        if (null == customStates) customStates = new ArrayList<Integer>();
     }
 
-    public void resetCustomState() {
-        customState.clear();
+    public void resetCustomStates() {
+        customStates.clear();
     }
 
     public void addCustomState(int state) {
-        if (!customState.contains(state)) {
-            customState.add(state);
+        if (!customStates.contains(state)) {
+            customStates.add(state);
         }
     }
 
     @Override
     protected int[] onCreateDrawableState(int extraSpace) {
         init();
-        int customStateSize = customState.size();
+        int customStateSize = customStates.size();
         if (customStateSize > 0) {
             final int[] drawableState = super.onCreateDrawableState(extraSpace + customStateSize);
             int[] stateArray = new int[customStateSize];
             int i = 0;
-            for (Integer state : customState) {
+            for (Integer state : customStates) {
                 stateArray[i] = state;
                 i++;
             }

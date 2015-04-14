@@ -1,8 +1,11 @@
 package com.roomorama.caldroid;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
-import android.graphics.Color;
+import android.content.res.TypedArray;
+import android.util.TypedValue;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +45,9 @@ public class CaldroidGridAdapter extends BaseAdapter {
     protected boolean sixWeeksInCalendar;
     protected boolean squareTextViewCell;
     protected Resources resources;
+
+    protected int defaultCellBackgroundRes = -1;
+    protected ColorStateList defaultTextColorRes;
 
     /**
      * caldroidData belongs to Caldroid
@@ -175,6 +181,29 @@ public class CaldroidGridAdapter extends BaseAdapter {
 
         this.datetimeList = CalendarHelper.getFullWeeks(this.month, this.year,
                 startDayOfWeek, sixWeeksInCalendar);
+
+        getDefaultResources();
+    }
+
+    // This method retrieve default resources for background and text color,
+    // based on the Caldroid theme
+    private void getDefaultResources() {
+        Context wrapped = new ContextThemeWrapper(context, CaldroidFragment.getThemeResourceId());
+
+        // Get style of normal cell or square cell in the theme
+        Resources.Theme theme = wrapped.getTheme();
+        TypedValue styleCellVal = new TypedValue();
+        if (squareTextViewCell) {
+            theme.resolveAttribute(R.attr.styleCaldroidSquareCell, styleCellVal, true);
+        } else {
+            theme.resolveAttribute(R.attr.styleCaldroidNormalCell, styleCellVal, true);
+        }
+
+        // Get default background of cell
+        TypedArray typedArray = wrapped.obtainStyledAttributes(styleCellVal.data, R.styleable.Cell);
+        defaultCellBackgroundRes = typedArray.getResourceId(R.styleable.Cell_android_background, -1);
+        defaultTextColorRes = typedArray.getColorStateList(R.styleable.Cell_android_textColor);
+        typedArray.recycle();
     }
 
     public void updateToday() {
@@ -200,8 +229,7 @@ public class CaldroidGridAdapter extends BaseAdapter {
 
             // Set it
             if (backgroundResource != null) {
-                backgroundView.setBackgroundResource(backgroundResource
-                        .intValue());
+                backgroundView.setBackgroundResource(backgroundResource);
             }
         }
 
@@ -214,10 +242,14 @@ public class CaldroidGridAdapter extends BaseAdapter {
 
             // Set it
             if (textColorResource != null) {
-                textView.setTextColor(resources.getColor(textColorResource
-                        .intValue()));
+                textView.setTextColor(resources.getColor(textColorResource));
             }
         }
+    }
+
+    private void resetCustomResources(CellView cellView) {
+        cellView.setBackgroundResource(defaultCellBackgroundRes);
+        cellView.setTextColor(defaultTextColorRes);
     }
 
     /**
@@ -230,10 +262,17 @@ public class CaldroidGridAdapter extends BaseAdapter {
      * @param cellView
      */
     protected void customizeTextView(int position, CellView cellView) {
+        // Get the padding of cell so that it can be restored later
+        int topPadding = cellView.getPaddingTop();
+        int leftPadding = cellView.getPaddingLeft();
+        int bottomPadding = cellView.getPaddingBottom();
+        int rightPadding = cellView.getPaddingRight();
+
         // Get dateTime of this cell
         DateTime dateTime = this.datetimeList.get(position);
 
-        cellView.resetCustomState();
+        cellView.resetCustomStates();
+        resetCustomResources(cellView);
 
         if (dateTime.equals(getToday())) {
             cellView.addCustomState(CellView.STATE_TODAY);
@@ -265,6 +304,11 @@ public class CaldroidGridAdapter extends BaseAdapter {
 
         // Set custom color if required
         setCustomResources(dateTime, cellView, cellView);
+
+        // Somehow after setBackgroundResource, the padding collapse.
+        // This is to recover the padding
+        cellView.setPadding(leftPadding, topPadding, rightPadding,
+                bottomPadding);
     }
 
     @Override
