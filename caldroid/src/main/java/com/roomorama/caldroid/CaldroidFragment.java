@@ -136,6 +136,7 @@ public class CaldroidFragment extends DialogFragment {
     public final static String MONTH = "month";
     public final static String YEAR = "year";
     public final static String SHOW_NAVIGATION_ARROWS = "showNavigationArrows";
+    public final static String SHOW_MONTH_TITLE_TEXT = "showMonthTitleText";
     public final static String DISABLE_DATES = "disableDates";
     public final static String SELECTED_DATES = "selectedDates";
     public final static String MIN_DATE = "minDate";
@@ -208,6 +209,7 @@ public class CaldroidFragment extends DialogFragment {
      */
     protected boolean enableSwipe = true;
     protected boolean showNavigationArrows = true;
+    protected boolean showMonthTitleText = true;
     protected boolean enableClickOnDisabledDates = false;
 
     /**
@@ -466,6 +468,7 @@ public class CaldroidFragment extends DialogFragment {
         }
 
         bundle.putBoolean(SHOW_NAVIGATION_ARROWS, showNavigationArrows);
+        bundle.putBoolean(SHOW_MONTH_TITLE_TEXT, showMonthTitleText);
         bundle.putBoolean(ENABLE_SWIPE, enableSwipe);
         bundle.putInt(START_DAY_OF_WEEK, startDayOfWeek);
         bundle.putBoolean(SIX_WEEKS_IN_CALENDAR, sixWeeksInCalendar);
@@ -758,6 +761,22 @@ public class CaldroidFragment extends DialogFragment {
     }
 
     /**
+     * Check if the month title text is shown
+     */
+    public boolean isShowMonthTitleText() {
+      return showMonthTitleText;
+    }
+
+    public void setShowMonthTitleText(boolean showMonthTitleText) {
+      this.showMonthTitleText = showMonthTitleText;
+      if (showMonthTitleText) {
+        monthTitleTextView.setVisibility(View.VISIBLE);
+      } else {
+        monthTitleTextView.setVisibility(View.INVISIBLE);
+      }
+    }
+
+    /**
      * Enable / Disable swipe to navigate different months
      *
      * @return
@@ -1006,6 +1025,9 @@ public class CaldroidFragment extends DialogFragment {
             showNavigationArrows = args
                     .getBoolean(SHOW_NAVIGATION_ARROWS, true);
 
+            // Should show month title text
+            showMonthTitleText = args.getBoolean(SHOW_MONTH_TITLE_TEXT, true);
+
             // Should enable swipe to change month
             enableSwipe = args.getBoolean(ENABLE_SWIPE, true);
 
@@ -1172,6 +1194,9 @@ public class CaldroidFragment extends DialogFragment {
 
         // Show navigation arrows depend on initial arguments
         setShowNavigationArrows(showNavigationArrows);
+
+        // Show month title text depend on initial arguments
+        setShowMonthTitleText(showMonthTitleText);
 
         // For the weekday gridview ("SUN, MON, TUE, WED, THU, FRI, SAT")
         weekdayGridView = (GridView) view.findViewById(R.id.weekday_gridview);
