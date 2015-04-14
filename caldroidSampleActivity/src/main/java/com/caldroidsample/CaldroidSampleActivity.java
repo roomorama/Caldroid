@@ -28,12 +28,12 @@ public class CaldroidSampleActivity extends FragmentActivity {
 		Calendar cal = Calendar.getInstance();
 
 		// Min date is last 7 days
-		cal.add(Calendar.DATE, -18);
+		cal.add(Calendar.DATE, -7);
 		Date blueDate = cal.getTime();
 
 		// Max date is next 7 days
 		cal = Calendar.getInstance();
-		cal.add(Calendar.DATE, 16);
+		cal.add(Calendar.DATE, 7);
 		Date greenDate = cal.getTime();
 
 		if (caldroidFragment != null) {
@@ -90,10 +90,13 @@ public class CaldroidSampleActivity extends FragmentActivity {
 
 		setCustomResourceForDates();
 
+//		Uncomment this to apply dark theme
+//		CaldroidFragment.setThemeResourceId(com.caldroid.R.style.CaldroidDefaultDark);
+
 		// Attach to the activity
-    FragmentTransaction t = getSupportFragmentManager().beginTransaction();
-    t.replace(R.id.calendar1, caldroidFragment);
-    t.commit();
+		FragmentTransaction t = getSupportFragmentManager().beginTransaction();
+		t.replace(R.id.calendar1, caldroidFragment);
+		t.commit();
 
 		// Setup listener
 		final CaldroidListener listener = new CaldroidListener() {

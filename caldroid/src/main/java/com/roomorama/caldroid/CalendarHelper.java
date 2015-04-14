@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- * Convenient helper to work with date, JODA DateTime and String
+ * Convenient helper to work with date, Date4J DateTime and String
  *
  * @author thomasdao
  */

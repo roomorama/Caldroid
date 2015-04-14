@@ -60,6 +60,8 @@ public class DateGridFragment extends Fragment {
     }
 
     private void setupGridView() {
+
+
         // Client normally needs to provide the adapter and onItemClickListener
         // before the fragment is attached to avoid complex crash due to
         // fragment life cycles
@@ -78,13 +80,17 @@ public class DateGridFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // If gridViewRes is not valid, use default fragment layout
         if (gridViewRes == 0) {
             gridViewRes = R.layout.date_grid_fragment;
         }
 
         if (gridView == null) {
-            gridView = (GridView) inflater.inflate(gridViewRes, container, false);
+
+            LayoutInflater localInflater = CaldroidFragment.getLayoutInflater(getActivity(), inflater);
+
+            gridView = (GridView) localInflater.inflate(gridViewRes, container, false);
             setupGridView();
         } else {
             ViewGroup parent = (ViewGroup) gridView.getParent();

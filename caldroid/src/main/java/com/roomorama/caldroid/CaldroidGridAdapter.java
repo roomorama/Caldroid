@@ -1,8 +1,11 @@
 package com.roomorama.caldroid;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
-import android.graphics.Color;
+import android.content.res.TypedArray;
+import android.util.TypedValue;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +45,9 @@ public class CaldroidGridAdapter extends BaseAdapter {
     protected boolean sixWeeksInCalendar;
     protected boolean squareTextViewCell;
     protected Resources resources;
+
+    protected int defaultCellBackgroundRes = -1;
+    protected ColorStateList defaultTextColorRes;
 
     /**
      * caldroidData belongs to Caldroid
@@ -175,6 +181,29 @@ public class CaldroidGridAdapter extends BaseAdapter {
 
         this.datetimeList = CalendarHelper.getFullWeeks(this.month, this.year,
                 startDayOfWeek, sixWeeksInCalendar);
+
+        getDefaultResources();
+    }
+
+    // This method retrieve default resources for background and text color,
+    // based on the Caldroid theme
+    private void getDefaultResources() {
+        Context wrapped = new ContextThemeWrapper(context, CaldroidFragment.getThemeResourceId());
+
+        // Get style of normal cell or square cell in the theme
+        Resources.Theme theme = wrapped.getTheme();
+        TypedValue styleCellVal = new TypedValue();
+        if (squareTextViewCell) {
+            theme.resolveAttribute(R.attr.styleCaldroidSquareCell, styleCellVal, true);
+        } else {
+            theme.resolveAttribute(R.attr.styleCaldroidNormalCell, styleCellVal, true);
+        }
+
+        // Get default background of cell
+        TypedArray typedArray = wrapped.obtainStyledAttributes(styleCellVal.data, R.styleable.Cell);
+        defaultCellBackgroundRes = typedArray.getResourceId(R.styleable.Cell_android_background, -1);
+        defaultTextColorRes = typedArray.getColorStateList(R.styleable.Cell_android_textColor);
+        typedArray.recycle();
     }
 
     public void updateToday() {
@@ -200,8 +229,7 @@ public class CaldroidGridAdapter extends BaseAdapter {
 
             // Set it
             if (backgroundResource != null) {
-                backgroundView.setBackgroundResource(backgroundResource
-                        .intValue());
+                backgroundView.setBackgroundResource(backgroundResource);
             }
         }
 
@@ -214,10 +242,14 @@ public class CaldroidGridAdapter extends BaseAdapter {
 
             // Set it
             if (textColorResource != null) {
-                textView.setTextColor(resources.getColor(textColorResource
-                        .intValue()));
+                textView.setTextColor(resources.getColor(textColorResource));
             }
         }
+    }
+
+    private void resetCustomResources(CellView cellView) {
+        cellView.setBackgroundResource(defaultCellBackgroundRes);
+        cellView.setTextColor(defaultTextColorRes);
     }
 
     /**
@@ -229,9 +261,7 @@ public class CaldroidGridAdapter extends BaseAdapter {
      * @param position
      * @param cellView
      */
-    protected void customizeTextView(int position, TextView cellView) {
-        cellView.setTextColor(Color.BLACK);
-
+    protected void customizeTextView(int position, CellView cellView) {
         // Get the padding of cell so that it can be restored later
         int topPadding = cellView.getPaddingTop();
         int leftPadding = cellView.getPaddingLeft();
@@ -241,14 +271,17 @@ public class CaldroidGridAdapter extends BaseAdapter {
         // Get dateTime of this cell
         DateTime dateTime = this.datetimeList.get(position);
 
-        // Set color of the dates in previous / next month
-        if (dateTime.getMonth() != month) {
-            cellView.setTextColor(resources
-                    .getColor(R.color.caldroid_darker_gray));
+        cellView.resetCustomStates();
+        resetCustomResources(cellView);
+
+        if (dateTime.equals(getToday())) {
+            cellView.addCustomState(CellView.STATE_TODAY);
         }
 
-        boolean shouldResetDiabledView = false;
-        boolean shouldResetSelectedView = false;
+        // Set color of the dates in previous / next month
+        if (dateTime.getMonth() != month) {
+            cellView.addCustomState(CellView.STATE_PREV_NEXT_MONTH);
+        }
 
         // Customize for disabled dates and date outside min/max dates
         if ((minDateTime != null && dateTime.lt(minDateTime))
@@ -256,42 +289,15 @@ public class CaldroidGridAdapter extends BaseAdapter {
                 || (disableDates != null && disableDatesMap
                 .containsKey(dateTime))) {
 
-            cellView.setTextColor(CaldroidFragment.disabledTextColor);
-            if (CaldroidFragment.disabledBackgroundDrawable == -1) {
-                cellView.setBackgroundResource(R.drawable.disable_cell);
-            } else {
-                cellView.setBackgroundResource(CaldroidFragment.disabledBackgroundDrawable);
-            }
-
-            if (dateTime.equals(getToday())) {
-                cellView.setBackgroundResource(R.drawable.red_border_gray_bg);
-            }
-        } else {
-            shouldResetDiabledView = true;
+            cellView.addCustomState(CellView.STATE_DISABLED);
         }
 
         // Customize for selected dates
         if (selectedDates != null && selectedDatesMap.containsKey(dateTime)) {
-            if (CaldroidFragment.selectedBackgroundDrawable != -1) {
-                cellView.setBackgroundResource(CaldroidFragment.selectedBackgroundDrawable);
-            } else {
-                cellView.setBackgroundColor(resources
-                        .getColor(R.color.caldroid_sky_blue));
-            }
-
-            cellView.setTextColor(CaldroidFragment.selectedTextColor);
-        } else {
-            shouldResetSelectedView = true;
+            cellView.addCustomState(CellView.STATE_SELECTED);
         }
 
-        if (shouldResetDiabledView && shouldResetSelectedView) {
-            // Customize for today
-            if (dateTime.equals(getToday())) {
-                cellView.setBackgroundResource(R.drawable.red_border);
-            } else {
-                cellView.setBackgroundResource(R.drawable.cell_bg);
-            }
-        }
+        cellView.refreshDrawableState();
 
         // Set text
         cellView.setText("" + dateTime.getDay());
@@ -325,14 +331,16 @@ public class CaldroidGridAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        TextView cellView = (TextView) convertView;
+        CellView cellView = (CellView) convertView;
+
+        LayoutInflater localInflater = CaldroidFragment.getLayoutInflater(context, inflater);
 
         // For reuse
         if (convertView == null) {
             if (squareTextViewCell) {
-                cellView = (TextView) inflater.inflate(R.layout.square_date_cell, null);
+                cellView = (CellView) localInflater.inflate(R.layout.square_date_cell, null);
             } else {
-                cellView = (TextView) inflater.inflate(R.layout.normal_date_cell, null);
+                cellView = (CellView) localInflater.inflate(R.layout.normal_date_cell, null);
             }
         }
 

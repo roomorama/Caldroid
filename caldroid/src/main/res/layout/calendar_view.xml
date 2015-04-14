@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/caldroid_white"
+    style="?styleCaldroidViewLayout"
     android:orientation="vertical" >
 
     <RelativeLayout
@@ -14,27 +14,24 @@
             android:id="@+id/calendar_left_arrow"
             android:layout_width="50dp"
             android:layout_height="44dp"
-            android:layout_alignParentLeft="true"
-            android:background="@drawable/left_arrow" />
+            style="?styleCaldroidLeftArrow" />
 
         <TextView
             android:id="@+id/calendar_month_year_textview"
+            android:layout_toLeftOf="@+id/calendar_right_arrow"
+            android:layout_toStartOf="@+id/calendar_right_arrow"
+            android:layout_toRightOf="@+id/calendar_left_arrow"
+            android:layout_toEndOf="@+id/calendar_left_arrow"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:layout_toLeftOf="@+id/calendar_right_arrow"
-            android:layout_toRightOf="@+id/calendar_left_arrow"
-            android:gravity="center_horizontal"
             android:textIsSelectable="true"
-            android:textSize="21sp"
-            android:textColor="@android:color/black"/>
+            style="?styleCaldroidMonthName"/>
 
         <Button
             android:id="@+id/calendar_right_arrow"
             android:layout_width="50dp"
             android:layout_height="44dp"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/right_arrow" />
+            style="?styleCaldroidRightArrow" />
     </RelativeLayout>
 
     <GridView

@@ -503,8 +503,6 @@ App uses Caldroid
 
 [Attendance Register (students)](https://play.google.com/store/apps/details?id=com.rudra.attendanceRegister)
 
-[Tweet Roulette](https://play.google.com/store/apps/details?id=com.andreapivetta.tweetbooster&hl=it)
-
 [eDiary](https://play.google.com/store/apps/details?id=it.dreamerspillow.ediary)
 
 [Moon Calendar](https://play.google.com/store/apps/details?id=fr.calendrierlunaire.android)

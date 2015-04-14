@@ -3,8 +3,5 @@
     android:id="@+id/calendar_tv"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/cell_bg"
-    android:gravity="center"
-    android:textSize="14sp"
-    android:textStyle="bold" />
+    style="?styleCaldroidSquareCell" />
 
