@@ -3,7 +3,7 @@ Caldroid
 
 Caldroid is a fragment that display calendar with dates in a month. Caldroid can be used as embedded fragment, or as dialog fragment. User can also swipe left/right to navigate to different months.
 
-It's very easy to customize look and feel of Caldroid using your own theme, thanks to @crocodile2u contribution. There are two default themes in Caldroid (Light and Dark). You can provide your own theme based on these default themes as well.
+It's very easy to customize look and feel of Caldroid using your own theme, thanks to [@crocodile2u](https://github.com/crocodile2u) contribution. There are two default themes in Caldroid (Light and Dark). You can provide your own theme based on these default themes as well.
 
 Caldroid is fully localized. You can customize start day of the week for different countries. By default calendar start on Sunday.
 
