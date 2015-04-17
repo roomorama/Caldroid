@@ -475,6 +475,7 @@ public class CaldroidFragment extends DialogFragment {
         bundle.putBoolean(ENABLE_SWIPE, enableSwipe);
         bundle.putInt(START_DAY_OF_WEEK, startDayOfWeek);
         bundle.putBoolean(SIX_WEEKS_IN_CALENDAR, sixWeeksInCalendar);
+        bundle.putInt(THEME_RESOURCE, themeResource);
 
         return bundle;
     }
