@@ -327,54 +327,6 @@ caldroidFragment.setCaldroidListener(listener);
 
 ```
 
-
-## Client can customize look and feel of almost all views
-
-Client can set color of the weekday symbols (SUN, MON, ...) by:
-
-``` java
-WeekdayArrayAdapter.textColor = Color.BLUE;
-```
-
-User can also customize the navigation arrows and month title textView: font, size, onClickListener, onLongClickListener, etc. Client can supply different adapter to the weekdayGridView. Make sure you only access these methods after Caldroid has been successfully attached to view, otherwise you will see NullPointerException.
-
-``` java
-final CaldroidListener listener = new CaldroidListener() {
-
-	@Override
-	public void onSelectDate(Date date, View view) {
-		// Do something
-	}
-
-	@Override
-	public void onCaldroidViewCreated() {
-		// Supply your own adapter to weekdayGridView (SUN, MON, etc)
-		caldroidFragment.getWeekdayGridView().setAdapter(YOUR_ADAPTER);
-
-		Button leftButton = caldroidFragment.getLeftArrowButton();
-		Button rightButton = caldroidFragment.getRightArrowButton();
-		TextView textView = caldroidFragment.getMonthTitleTextView();
-
-		// Do customization here
-	}
-
-};
-
-caldroidFragment.setCaldroidListener(listener);
-```
-
-User can also customize the gridview that displays dates (background, spacing, etc). First, you need to create your own layout, see `layout/date_grid_fragment.xml` for more detail. Second, you subclass `CaldroidFragment` to supply your gridview layout:
-
-```java
-public class CustomGridFragment extends CaldroidFragment {
-	@Override
-	protected int getGridViewRes() {
-		return R.layout.your_custom_grid_fragment;
-	}
-}
-```
-
-
 ##Handle screen rotation
 
 To handle rotation properly, Caldroid provides method to get current states of the fragment:
@@ -449,9 +401,6 @@ if (savedInstanceState != null) {
 ```
 
 Refer to the CaldroidSampleActivity for more detail.
-
-
-
 
 ##Allow customized cell for the dates gridView
 
@@ -534,20 +483,6 @@ Others
   
 Caldroid code is simple and clean partly because of powerful [date4j](http://www.date4j.net/) library!
 
-
-Upgrade Note
-============
-1) Caldroid used date4j to work with date instead of Joda. This change is to make Caldroid light weight: date4j is only 35kb, but Joda is about 500kb. 
-
-As most of Caldroid public API use Date instead of internal DateTime, you might not have to change much of your program. You can still use your favorite DateTime lib in your program without depend on Caldroid lib.
-
-2) Projects are restructured to support Maven. 
-
-3) The package is renamed from ```com.caldroid``` to ```com.roomorama.caldroid```.
-
-4) The ```FIT_ALL_MONTH``` key has been renamed to ```SIX_WEEKS_IN_CALENDAR```. The display of calendar also depends on this parameter: if it is true, calendar always display 6 weeks in a calendar. Else, calendar will resize dynamically to the dates gridview.
-
-5) The project has been converted to support Gradle and Android studio. It will move away from Eclipse project structure, to make support for Maven and Gradle easier. If you need Eclipse project, download source in tag `eclipse_project`.
 
 License
 =======

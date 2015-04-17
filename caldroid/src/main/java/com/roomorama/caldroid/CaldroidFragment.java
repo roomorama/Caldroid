@@ -104,12 +104,6 @@ public class CaldroidFragment extends DialogFragment {
     private Formatter monthYearFormatter = new Formatter(
             monthYearStringBuilder, Locale.getDefault());
 
-    /**
-     * To customize the selected background drawable and text color
-     */
-    public static int selectedBackgroundDrawable = -1;
-    public static int selectedTextColor = Color.BLACK;
-
     public final static int NUMBER_OF_PAGES = 4;
 
     /**

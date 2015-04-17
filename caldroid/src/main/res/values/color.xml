@@ -17,6 +17,7 @@
     <color name="caldroid_sky_blue">#FFA3E8F7</color>
 
     <color name="caldroid_333">#333</color>
+    <color name="caldroid_555">#555</color>
     <color name="caldroid_light_red">#ff7f7f</color>
 
 </resources>

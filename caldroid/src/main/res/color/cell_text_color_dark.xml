@@ -3,7 +3,7 @@
           xmlns:caldroid="http://schemas.android.com/apk/res-auto">
 
     <!--<item android:color="@color/caldroid_darker_gray" android:state_pressed="false" caldroid:state_date_disabled="true" caldroid:state_date_today="true"/>-->
-    <!--<item android:color="@color/caldroid_darker_gray" android:state_pressed="false" caldroid:state_date_disabled="true"/>-->
+    <item android:color="@color/caldroid_lighter_gray" caldroid:state_date_prev_next_month="true"/>
     <item android:color="@color/caldroid_white"/>
 
 </selector>
