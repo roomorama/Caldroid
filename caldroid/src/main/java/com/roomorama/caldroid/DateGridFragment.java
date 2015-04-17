@@ -26,6 +26,7 @@ public class DateGridFragment extends Fragment {
     private OnItemClickListener onItemClickListener;
     private OnItemLongClickListener onItemLongClickListener;
     private int gridViewRes = 0;
+    private int themeResource = 0;
 
     public OnItemClickListener getOnItemClickListener() {
         return onItemClickListener;
@@ -86,10 +87,15 @@ public class DateGridFragment extends Fragment {
             gridViewRes = R.layout.date_grid_fragment;
         }
 
+        if (themeResource == 0) {
+            if (gridAdapter != null) {
+                themeResource = gridAdapter.getThemeResource();
+            }
+        }
+
         if (gridView == null) {
-
-            LayoutInflater localInflater = CaldroidFragment.getLayoutInflater(getActivity(), inflater);
-
+            LayoutInflater localInflater = CaldroidFragment.getLayoutInflater(getActivity(),
+                    inflater, themeResource);
             gridView = (GridView) localInflater.inflate(gridViewRes, container, false);
             setupGridView();
         } else {

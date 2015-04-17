@@ -76,13 +76,14 @@ public class CaldroidFragment extends DialogFragment {
     /**
      * Weekday conventions
      */
-    public static int SUNDAY = 1;
-    public static int MONDAY = 2;
-    public static int TUESDAY = 3;
-    public static int WEDNESDAY = 4;
-    public static int THURSDAY = 5;
-    public static int FRIDAY = 6;
-    public static int SATURDAY = 7;
+    public static int
+            SUNDAY = 1,
+            MONDAY = 2,
+            TUESDAY = 3,
+            WEDNESDAY = 4,
+            THURSDAY = 5,
+            FRIDAY = 6,
+            SATURDAY = 7;
 
     /**
      * Flags to display month
@@ -127,32 +128,35 @@ public class CaldroidFragment extends DialogFragment {
     private DatePageChangeListener pageChangeListener;
     private ArrayList<DateGridFragment> fragments;
 
-    private static int themeResourceId = R.style.CaldroidDefault;
+    private int themeResource = R.style.CaldroidDefault;
 
     /**
      * Initial params key
      */
-    public final static String DIALOG_TITLE = "dialogTitle";
-    public final static String MONTH = "month";
-    public final static String YEAR = "year";
-    public final static String SHOW_NAVIGATION_ARROWS = "showNavigationArrows";
-    public final static String DISABLE_DATES = "disableDates";
-    public final static String SELECTED_DATES = "selectedDates";
-    public final static String MIN_DATE = "minDate";
-    public final static String MAX_DATE = "maxDate";
-    public final static String ENABLE_SWIPE = "enableSwipe";
-    public final static String START_DAY_OF_WEEK = "startDayOfWeek";
-    public final static String SIX_WEEKS_IN_CALENDAR = "sixWeeksInCalendar";
-    public final static String ENABLE_CLICK_ON_DISABLED_DATES = "enableClickOnDisabledDates";
-    public final static String SQUARE_TEXT_VIEW_CELL = "squareTextViewCell";
+    public final static String
+            DIALOG_TITLE = "dialogTitle",
+            MONTH = "month",
+            YEAR = "year",
+            SHOW_NAVIGATION_ARROWS = "showNavigationArrows",
+            DISABLE_DATES = "disableDates",
+            SELECTED_DATES = "selectedDates",
+            MIN_DATE = "minDate",
+            MAX_DATE = "maxDate",
+            ENABLE_SWIPE = "enableSwipe",
+            START_DAY_OF_WEEK = "startDayOfWeek",
+            SIX_WEEKS_IN_CALENDAR = "sixWeeksInCalendar",
+            ENABLE_CLICK_ON_DISABLED_DATES = "enableClickOnDisabledDates",
+            SQUARE_TEXT_VIEW_CELL = "squareTextViewCell",
+            THEME_RESOURCE = "themeResource";
 
     /**
      * For internal use
      */
-    public final static String _MIN_DATE_TIME = "_minDateTime";
-    public final static String _MAX_DATE_TIME = "_maxDateTime";
-    public final static String _BACKGROUND_FOR_DATETIME_MAP = "_backgroundForDateTimeMap";
-    public final static String _TEXT_COLOR_FOR_DATETIME_MAP = "_textColorForDateTimeMap";
+    public final static String
+            _MIN_DATE_TIME = "_minDateTime",
+            _MAX_DATE_TIME = "_maxDateTime",
+            _BACKGROUND_FOR_DATETIME_MAP = "_backgroundForDateTimeMap",
+            _TEXT_COLOR_FOR_DATETIME_MAP = "_textColorForDateTimeMap";
 
     /**
      * Initial data
@@ -340,6 +344,8 @@ public class CaldroidFragment extends DialogFragment {
         caldroidData.put(SIX_WEEKS_IN_CALENDAR,
                 Boolean.valueOf(sixWeeksInCalendar));
         caldroidData.put(SQUARE_TEXT_VIEW_CELL, squareTextViewCell);
+        caldroidData.put(THEME_RESOURCE, themeResource);
+
 
         // For internal use
         caldroidData
@@ -1062,6 +1068,8 @@ public class CaldroidFragment extends DialogFragment {
                         maxDateTimeString, null);
             }
 
+            // Get theme
+            themeResource = args.getInt(THEME_RESOURCE, R.style.CaldroidDefault);
         }
         if (month == -1 || year == -1) {
             DateTime dateTime = DateTime.today(TimeZone.getDefault());
@@ -1109,16 +1117,16 @@ public class CaldroidFragment extends DialogFragment {
         super.onDestroyView();
     }
 
-    public static void setThemeResourceId(int id) {
-        themeResourceId = id;
+    public void setThemeResource(int id) {
+        themeResource = id;
     }
 
-    public static int getThemeResourceId() {
-        return themeResourceId;
+    public int getThemeResource() {
+        return themeResource;
     }
 
-    public static LayoutInflater getLayoutInflater(Context context, LayoutInflater origInflater) {
-        Context wrapped = new ContextThemeWrapper(context, CaldroidFragment.getThemeResourceId());
+    public static LayoutInflater getLayoutInflater(Context context, LayoutInflater origInflater, int themeResource) {
+        Context wrapped = new ContextThemeWrapper(context, themeResource);
         return origInflater.cloneInContext(wrapped);
     }
 
@@ -1139,7 +1147,7 @@ public class CaldroidFragment extends DialogFragment {
             }
         }
 
-        LayoutInflater localInflater = getLayoutInflater(getActivity(), inflater);
+        LayoutInflater localInflater = getLayoutInflater(getActivity(), inflater, themeResource);
 
         View view = localInflater.inflate(R.layout.calendar_view, container, false);
 

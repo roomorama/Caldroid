@@ -44,6 +44,7 @@ public class CaldroidGridAdapter extends BaseAdapter {
     protected int startDayOfWeek;
     protected boolean sixWeeksInCalendar;
     protected boolean squareTextViewCell;
+    protected int themeResource;
     protected Resources resources;
 
     protected int defaultCellBackgroundRes = -1;
@@ -100,6 +101,10 @@ public class CaldroidGridAdapter extends BaseAdapter {
 
     public void setSelectedDates(ArrayList<DateTime> selectedDates) {
         this.selectedDates = selectedDates;
+    }
+
+    public int getThemeResource() {
+        return themeResource;
     }
 
     public HashMap<String, Object> getCaldroidData() {
@@ -179,6 +184,10 @@ public class CaldroidGridAdapter extends BaseAdapter {
         squareTextViewCell = (Boolean) caldroidData
                 .get(CaldroidFragment.SQUARE_TEXT_VIEW_CELL);
 
+        // Get theme
+        themeResource = (Integer) caldroidData
+                .get(CaldroidFragment.THEME_RESOURCE);
+
         this.datetimeList = CalendarHelper.getFullWeeks(this.month, this.year,
                 startDayOfWeek, sixWeeksInCalendar);
 
@@ -188,7 +197,7 @@ public class CaldroidGridAdapter extends BaseAdapter {
     // This method retrieve default resources for background and text color,
     // based on the Caldroid theme
     private void getDefaultResources() {
-        Context wrapped = new ContextThemeWrapper(context, CaldroidFragment.getThemeResourceId());
+        Context wrapped = new ContextThemeWrapper(context, themeResource);
 
         // Get style of normal cell or square cell in the theme
         Resources.Theme theme = wrapped.getTheme();
@@ -333,7 +342,7 @@ public class CaldroidGridAdapter extends BaseAdapter {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         CellView cellView = (CellView) convertView;
 
-        LayoutInflater localInflater = CaldroidFragment.getLayoutInflater(context, inflater);
+        LayoutInflater localInflater = CaldroidFragment.getLayoutInflater(context, inflater, themeResource);
 
         // For reuse
         if (convertView == null) {
