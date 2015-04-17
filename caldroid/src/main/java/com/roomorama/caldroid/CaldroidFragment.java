@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Formatter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -391,19 +392,46 @@ public class CaldroidFragment extends DialogFragment {
         }
     }
 
+    public void clearBackgroundResourceForDates(List<Date> dates) {
+        if (dates == null || dates.size() == 0) {
+            return;
+        }
+
+        for (Date date : dates) {
+            clearBackgroundResourceForDate(date);
+        }
+    }
+
     public void setBackgroundResourceForDateTimes(
             HashMap<DateTime, Integer> backgroundForDateTimeMap) {
         this.backgroundForDateTimeMap.putAll(backgroundForDateTimeMap);
     }
 
+    public void clearBackgroundResourceForDateTimes(List<DateTime> dateTimes) {
+        if (dateTimes == null || dateTimes.size() == 0) return;
+
+        for (DateTime dateTime : dateTimes) {
+            backgroundForDateTimeMap.remove(dateTime);
+        }
+    }
+
     public void setBackgroundResourceForDate(int backgroundRes, Date date) {
         DateTime dateTime = CalendarHelper.convertDateToDateTime(date);
-        backgroundForDateTimeMap.put(dateTime, Integer.valueOf(backgroundRes));
+        backgroundForDateTimeMap.put(dateTime, backgroundRes);
+    }
+
+    public void clearBackgroundResourceForDate(Date date) {
+        DateTime dateTime = CalendarHelper.convertDateToDateTime(date);
+        backgroundForDateTimeMap.remove(dateTime);
     }
 
     public void setBackgroundResourceForDateTime(int backgroundRes,
                                                  DateTime dateTime) {
-        backgroundForDateTimeMap.put(dateTime, Integer.valueOf(backgroundRes));
+        backgroundForDateTimeMap.put(dateTime, backgroundRes);
+    }
+
+    public void clearBackgroundResourceForDateTime(DateTime dateTime) {
+        backgroundForDateTimeMap.remove(dateTime);
     }
 
     /**
@@ -425,6 +453,14 @@ public class CaldroidFragment extends DialogFragment {
         }
     }
 
+    public void clearTextColorForDates(List<Date> dates) {
+        if (dates == null || dates.size() == 0) return;
+
+        for (Date date : dates) {
+            clearTextColorForDate(date);
+        }
+    }
+
     public void setTextColorForDateTimes(
             HashMap<DateTime, Integer> textColorForDateTimeMap) {
         this.textColorForDateTimeMap.putAll(textColorForDateTimeMap);
@@ -432,11 +468,16 @@ public class CaldroidFragment extends DialogFragment {
 
     public void setTextColorForDate(int textColorRes, Date date) {
         DateTime dateTime = CalendarHelper.convertDateToDateTime(date);
-        textColorForDateTimeMap.put(dateTime, Integer.valueOf(textColorRes));
+        textColorForDateTimeMap.put(dateTime, textColorRes);
+    }
+
+    public void clearTextColorForDate(Date date) {
+        DateTime dateTime = CalendarHelper.convertDateToDateTime(date);
+        textColorForDateTimeMap.remove(dateTime);
     }
 
     public void setTextColorForDateTime(int textColorRes, DateTime dateTime) {
-        textColorForDateTimeMap.put(dateTime, Integer.valueOf(textColorRes));
+        textColorForDateTimeMap.put(dateTime, textColorRes);
     }
 
     /**

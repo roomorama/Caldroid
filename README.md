@@ -3,31 +3,33 @@ Caldroid
 
 Caldroid is a fragment that display calendar with dates in a month. Caldroid can be used as embedded fragment, or as dialog fragment. User can also swipe left/right to navigate to different months.
 
-Caldroid is fully localized. Client can customize start day of the week for different countries. By default calendar start on Sunday.
+It's very easy to customize look and feel of Caldroid using your own theme, thanks to @crocodile2u contribution. There are two default themes in Caldroid (Light and Dark). You can provide your own theme based on these default themes as well.
 
-Caldroid can be used with Android 2.2 and above. Caldroid is extracted from [official Roomorama application](https://play.google.com/store/apps/details?id=com.roomorama)
+Caldroid is fully localized. You can customize start day of the week for different countries. By default calendar start on Sunday.
 
-If you found bugs specific to Caldroid, please open a new issue on Github. However for general Android questions (about layout, drawable, etc), you probably can find more information on StackOverflow.
-
+Caldroid can be used with Android 2.2 and above. It is extracted from [official Roomorama application](https://play.google.com/store/apps/details?id=com.roomorama)
 
 <img src="https://raw.github.com/roomorama/Caldroid/master/screenshot/1.png" width="270" style="margin-right:10px;">
 <img src="https://raw.github.com/roomorama/Caldroid/master/screenshot/2.png" width="270">
+<img src="https://raw.github.com/roomorama/Caldroid/master/screenshot/dark.png" width="270">
+
+If you found bugs specific to Caldroid, please open a new issue on Github. However for general Android questions (about layout, drawable, etc), you probably can find more information on StackOverflow.
 
 Setup
 =====
 
-**For Eclipse/ADT user**: please see tag [eclipse_project](https://github.com/roomorama/Caldroid/releases/tag/eclipse_project), download the source codes, check out the CaldroidSample to see how the library works.
+**For Eclipse/ADT user**: please see tag [eclipse_project](https://github.com/roomorama/Caldroid/releases/tag/eclipse_project), download the source codes, check out the CaldroidSample to see how the library works. However you are strongly recommended to use Maven or gradle, because this tag is no longer supported.
 
 To use in your project, reference the child library project as a library. If you see JAR mismatched error, replace your android-support-v4.jar to the jar inside Caldroid. Make sure you compile the project against Android 4.2 and above to allow nested fragment. See more at http://developer.android.com/about/versions/android-4.2.html#NestedFragments
 
-**For Android Studio user**: add `compile 'com.roomorama:caldroid:1.1.8'` to your gradle build file.
+**For Android Studio user**: add `compile 'com.roomorama:caldroid:2.0.0'` to your gradle build file.
 
 **For Maven user**:
 ```
 <dependency>
     <groupId>com.roomorama</groupId>
     <artifactId>caldroid</artifactId>
-    <version>1.1.8</version>
+    <version>2.0.0</version>
 </dependency>
 ```
 
@@ -70,19 +72,21 @@ You can also embed caldroid fragment as a child in your fragment.
 Caldroid accepts numerous arguments during start up: 
 
 ``` java
-public final static String DIALOG_TITLE = "dialogTitle";
-public final static String MONTH = "month";
-public final static String YEAR = "year";
-public final static String SHOW_NAVIGATION_ARROWS = "showNavigationArrows";
-public final static String DISABLE_DATES = "disableDates";
-public final static String SELECTED_DATES = "selectedDates";
-public final static String MIN_DATE = "minDate";
-public final static String MAX_DATE = "maxDate";
-public final static String ENABLE_SWIPE = "enableSwipe";
-public final static String START_DAY_OF_WEEK = "startDayOfWeek";
-public final static String SIX_WEEKS_IN_CALENDAR = "sixWeeksInCalendar";
-public final static String ENABLE_CLICK_ON_DISABLED_DATES = "enableClickOnDisabledDates";
-public final static String SQUARE_TEXT_VIEW_CELL = "squareTextViewCell";
+public final static String
+            DIALOG_TITLE = "dialogTitle",
+            MONTH = "month",
+            YEAR = "year",
+            SHOW_NAVIGATION_ARROWS = "showNavigationArrows",
+            DISABLE_DATES = "disableDates",
+            SELECTED_DATES = "selectedDates",
+            MIN_DATE = "minDate",
+            MAX_DATE = "maxDate",
+            ENABLE_SWIPE = "enableSwipe",
+            START_DAY_OF_WEEK = "startDayOfWeek",
+            SIX_WEEKS_IN_CALENDAR = "sixWeeksInCalendar",
+            ENABLE_CLICK_ON_DISABLED_DATES = "enableClickOnDisabledDates",
+            SQUARE_TEXT_VIEW_CELL = "squareTextViewCell",
+            THEME_RESOURCE = "themeResource";
 ```
 
 To customize the startDayOfWeek, just use 
@@ -118,7 +122,53 @@ CaldroidFragment dialogCaldroidFragment = CaldroidFragment.newInstance("Select a
 dialogCaldroidFragment.show(getSupportFragmentManager(),"TAG");
 ```
 
-##Custom backgrounds and text colors for different dates
+## Custom theme
+
+You can define your own theme to change the look and feel of Caldroid without having to subclass it. You should inherit from base theme `CaldroidDefault`. Here's how to create a dark theme:
+
+```xml
+    <!-- Dark theme. -->
+    <style name="CaldroidDefaultDark" parent="CaldroidDefault">
+        <item name="styleCaldroidViewLayout">@style/CaldroidDefaultDarkCalendarViewLayout</item>
+        <item name="styleCaldroidMonthName">@style/CaldroidDefaultDarkMonthName</item>
+        <item name="styleCaldroidNormalCell">@style/CaldroidDefaultDarkNormalCell</item>
+        <item name="styleCaldroidSquareCell">@style/CaldroidDefaultDarkSquareCell</item>
+        <item name="styleCaldroidGridView">@style/CaldroidDefaultDarkGridView</item>
+    </style>
+
+    <style name="CaldroidDefaultDarkCalendarViewLayout">
+        <item name="android:background">@android:color/black</item>
+    </style>
+
+    <style name="CaldroidDefaultDarkMonthName" parent="CaldroidDefaultMonthName">
+        <item name="android:textColor">@color/caldroid_white</item>
+    </style>
+
+    <style name="CaldroidDefaultDarkGridView" parent="CaldroidDefaultGridView">
+        <item name="android:background">@color/caldroid_middle_gray</item>
+    </style>
+
+    <style name="CaldroidDefaultDarkCell" parent="CaldroidDefaultCell">
+        <item name="android:textColor">@color/cell_text_color_dark</item>
+        <item name="android:background">@drawable/cell_bg_dark</item>
+    </style>
+
+    <style name="CaldroidDefaultDarkNormalCell" parent="CaldroidDefaultDarkCell">
+        <item name="android:padding">5dp</item>
+    </style>
+
+    <style name="CaldroidDefaultDarkSquareCell" parent="CaldroidDefaultDarkCell" />
+```
+
+After creating your own theme, supply it to your Caldroid fragment:
+
+```java
+Bundle args = new Bundle();
+args.putInt(CaldroidFragment.THEME_RESOURCE, com.caldroid.R.style.CaldroidDefaultDark);
+caldroidFragment.setArguments(args);
+```
+
+## Custom backgrounds and text colors for different dates
 
 It is very easy to supply different backgrounds and text colors for different dates:
 
@@ -153,6 +203,14 @@ CaldroidFragment.disabledBackgroundDrawable = R.drawable.your_custom_disabled_ba
 ```
 
 You need to call ```refreshView()``` after above methods to update calendar appearance.
+
+You can also clear the background and text color:
+```java
+public void clearBackgroundResourceForDate(Date date);
+public void clearBackgroundResourceForDates(List<Date> dates);
+public void clearTextColorForDates(List<Date> dates);
+public void clearTextColorForDate(Date date);
+```
 
 ## Display user events on Caldroid
 
