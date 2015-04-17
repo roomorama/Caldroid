@@ -10,7 +10,6 @@ Caldroid is fully localized. You can customize start day of the week for differe
 Caldroid can be used with Android 2.2 and above. It is extracted from [official Roomorama application](https://play.google.com/store/apps/details?id=com.roomorama)
 
 <img src="https://raw.github.com/roomorama/Caldroid/master/screenshot/1.png" width="270" style="margin-right:10px;">
-<img src="https://raw.github.com/roomorama/Caldroid/master/screenshot/2.png" width="270">
 <img src="https://raw.github.com/roomorama/Caldroid/master/screenshot/dark.png" width="270">
 
 If you found bugs specific to Caldroid, please open a new issue on Github. However for general Android questions (about layout, drawable, etc), you probably can find more information on StackOverflow.
