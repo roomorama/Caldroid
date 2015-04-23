@@ -230,7 +230,9 @@ public class CaldroidGridAdapter extends BaseAdapter {
      * @param cellView
      */
     protected void customizeTextView(int position, TextView cellView) {
-        cellView.setTextColor(Color.BLACK);
+        cellView.setTextColor(CaldroidFragment.selectedTextColor);
+        if(CaldroidFragment.selectedBackgroundDrawable==-1)
+            CaldroidFragment.selectedBackgroundDrawable=R.drawable.cell_bg;
 
         // Get the padding of cell so that it can be restored later
         int topPadding = cellView.getPaddingTop();
@@ -289,7 +291,8 @@ public class CaldroidGridAdapter extends BaseAdapter {
             if (dateTime.equals(getToday())) {
                 cellView.setBackgroundResource(R.drawable.red_border);
             } else {
-                cellView.setBackgroundResource(R.drawable.cell_bg);
+//                Set the background of every cell
+                cellView.setBackgroundResource(CaldroidFragment.selectedBackgroundDrawable);
             }
         }
 

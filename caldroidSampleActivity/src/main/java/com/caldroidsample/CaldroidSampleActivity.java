@@ -1,6 +1,7 @@
 package com.caldroidsample;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
@@ -44,6 +45,9 @@ public class CaldroidSampleActivity extends FragmentActivity {
 			caldroidFragment.setTextColorForDate(R.color.white, blueDate);
 			caldroidFragment.setTextColorForDate(R.color.white, greenDate);
 		}
+// Modifying these values to change the default color and selector background of dates
+//		CaldroidFragment.selectedBackgroundDrawable=R.drawable.newcell_bg;
+//		CaldroidFragment.selectedTextColor= Color.BLUE;
 	}
 
 	@Override
@@ -82,8 +86,8 @@ public class CaldroidSampleActivity extends FragmentActivity {
 			// args.putInt(CaldroidFragment.START_DAY_OF_WEEK,
 			// CaldroidFragment.TUESDAY); // Tuesday
 
-      // Uncomment this line to use Caldroid in compact mode
-      // args.putBoolean(CaldroidFragment.SQUARE_TEXT_VIEW_CELL, false);
+			// Uncomment this line to use Caldroid in compact mode
+			// args.putBoolean(CaldroidFragment.SQUARE_TEXT_VIEW_CELL, false);
 
 			caldroidFragment.setArguments(args);
 		}
@@ -91,9 +95,9 @@ public class CaldroidSampleActivity extends FragmentActivity {
 		setCustomResourceForDates();
 
 		// Attach to the activity
-    FragmentTransaction t = getSupportFragmentManager().beginTransaction();
-    t.replace(R.id.calendar1, caldroidFragment);
-    t.commit();
+		FragmentTransaction t = getSupportFragmentManager().beginTransaction();
+		t.replace(R.id.calendar1, caldroidFragment);
+		t.commit();
 
 		// Setup listener
 		final CaldroidListener listener = new CaldroidListener() {
