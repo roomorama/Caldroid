@@ -145,13 +145,18 @@ caldroidFragment.setTextColorForDate(R.color.white, blueDate);
 caldroidFragment.setTextColorForDate(R.color.white, greenDate);
 ```
 
-You can also change background of selected dates and disabled dates by changing static `CaldroidFragment.selectedBackgroundDrawable` and `CaldroidFragment.disabledBackgroundDrawable` to your own drawable:
+You can also change default background of cells by changing static variables
+`CaldroidFragment.selectedBackgroundDrawable` and `CaldroidFragment.disabledBackgroundDrawable` to your own drawable:
 
 ```java
 CaldroidFragment.selectedBackgroundDrawable = R.drawable.your_custom_selected_background;
 CaldroidFragment.disabledBackgroundDrawable = R.drawable.your_custom_disabled_background;
 ```
-
+In order to change default text color of each cell change the value of following static variables
+```java
+//Changes the color of default text to blue
+CaldroidFragment.selectedTextColor= Color.BLUE;
+```
 You need to call ```refreshView()``` after above methods to update calendar appearance.
 
 ## Display user events on Caldroid
