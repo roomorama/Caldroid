@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:caldroid="http://schemas.android.com/apk/res-auto">
+
+    <!-- Change colors here -->
+    <item android:color="@color/cell_text_color_dark" android:state_pressed="false" caldroid:state_date_disabled="true" caldroid:state_date_today="true"/>
+    <item android:color="@color/cell_text_color_dark" android:state_pressed="false" caldroid:state_date_today="true"/>
+    <item android:color="@color/cell_text_color_dark" android:state_pressed="false" caldroid:state_date_prev_next_month="true"/>
+    <item android:color="@color/cell_text_color_dark" android:state_pressed="false" caldroid:state_date_disabled="true"/>
+    <item android:color="@color/cell_text_color_dark" android:state_pressed="false" caldroid:state_date_selected="true"/>
+    <item android:color="@color/cell_text_color_dark" android:state_pressed="true"/>
+    <item android:color="@color/cell_text_color_dark" android:state_pressed="false"/>
+
+</selector>
