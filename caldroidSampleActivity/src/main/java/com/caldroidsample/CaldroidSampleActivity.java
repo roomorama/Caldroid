@@ -2,8 +2,8 @@ package com.caldroidsample;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -19,7 +19,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 @SuppressLint("SimpleDateFormat")
-public class CaldroidSampleActivity extends FragmentActivity {
+public class CaldroidSampleActivity extends AppCompatActivity {
     private boolean undo = false;
     private CaldroidFragment caldroidFragment;
     private CaldroidFragment dialogCaldroidFragment;
@@ -86,7 +86,7 @@ public class CaldroidSampleActivity extends FragmentActivity {
             // args.putBoolean(CaldroidFragment.SQUARE_TEXT_VIEW_CELL, false);
 
             // Uncomment this line to use dark theme
-            args.putInt(CaldroidFragment.THEME_RESOURCE, com.caldroid.R.style.CaldroidDefaultDark);
+//            args.putInt(CaldroidFragment.THEME_RESOURCE, com.caldroid.R.style.CaldroidDefaultDark);
 
             caldroidFragment.setArguments(args);
         }
