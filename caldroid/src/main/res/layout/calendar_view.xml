@@ -8,13 +8,19 @@
     <RelativeLayout
         android:id="@+id/calendar_title_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
 
-        <Button
+        <ImageView
             android:id="@+id/calendar_left_arrow"
             android:layout_width="50dp"
-            android:layout_height="44dp"
-            style="?styleCaldroidLeftArrow" />
+            android:layout_height="25dp"
+            style="?styleCaldroidLeftArrow"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/calendar_prev_arrow"
+            android:scaleType="fitStart"/>
 
         <TextView
             android:id="@+id/calendar_month_year_textview"
@@ -25,20 +31,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textIsSelectable="true"
-            style="?styleCaldroidMonthName"/>
+            style="?styleCaldroidMonthName"
+            android:layout_alignParentRight="false"
+            android:layout_alignParentTop="false"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentBottom="false"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:textSize="18dp"/>
 
-        <Button
+        <ImageView
             android:id="@+id/calendar_right_arrow"
             android:layout_width="50dp"
-            android:layout_height="44dp"
-            style="?styleCaldroidRightArrow" />
+            android:layout_height="25dp"
+            style="?styleCaldroidRightArrow"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/calendar_next_arrow"
+            android:scaleType="fitEnd"/>
     </RelativeLayout>
 
     <GridView
         android:id="@+id/weekday_gridview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="-10dp"
+        android:layout_marginTop="10dp"
         android:numColumns="7"
         android:stretchMode="columnWidth" >
     </GridView>

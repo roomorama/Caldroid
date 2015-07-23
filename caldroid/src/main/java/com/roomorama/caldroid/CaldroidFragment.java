@@ -20,6 +20,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.antonyt.infiniteviewpager.InfinitePagerAdapter;
@@ -116,8 +117,8 @@ public class CaldroidFragment extends DialogFragment {
     /**
      * Caldroid view components
      */
-    private Button leftArrowButton;
-    private Button rightArrowButton;
+    private ImageView leftArrowButton;
+    private ImageView rightArrowButton;
     private TextView monthTitleTextView;
     private GridView weekdayGridView;
     private InfiniteViewPager dateViewPager;
@@ -296,11 +297,11 @@ public class CaldroidFragment extends DialogFragment {
     /**
      * To let user customize the navigation buttons
      */
-    public Button getLeftArrowButton() {
+    public ImageView getLeftArrowButton() {
         return leftArrowButton;
     }
 
-    public Button getRightArrowButton() {
+    public ImageView getRightArrowButton() {
         return rightArrowButton;
     }
 
@@ -1193,9 +1194,8 @@ public class CaldroidFragment extends DialogFragment {
                 .findViewById(R.id.calendar_month_year_textview);
 
         // For the left arrow button
-        leftArrowButton = (Button) view.findViewById(R.id.calendar_left_arrow);
-        rightArrowButton = (Button) view
-                .findViewById(R.id.calendar_right_arrow);
+        leftArrowButton = (ImageView) view.findViewById(R.id.calendar_left_arrow);
+        rightArrowButton = (ImageView) view.findViewById( R.id.calendar_right_arrow );
 
         // Navigate to previous month when user click
         leftArrowButton.setOnClickListener(new OnClickListener() {
