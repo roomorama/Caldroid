@@ -2,6 +2,7 @@ package com.roomorama.caldroid;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,11 +18,12 @@ import java.util.List;
  * Customize the weekday gridview
  */
 public class WeekdayArrayAdapter extends ArrayAdapter<String> {
-    public static int textColor = Color.LTGRAY;
+    LayoutInflater localInflater;
 
     public WeekdayArrayAdapter(Context context, int textViewResourceId,
-                               List<String> objects) {
+                               List<String> objects, int themeResource) {
         super(context, textViewResourceId, objects);
+        localInflater = getLayoutInflater(getContext(), themeResource);
     }
 
     // To prevent cell highlighted when clicked
@@ -38,16 +40,19 @@ public class WeekdayArrayAdapter extends ArrayAdapter<String> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // To customize text size and color
-        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        TextView textView = (TextView) inflater.inflate(R.layout.weekday_textview, null);
+        TextView textView = (TextView) localInflater.inflate(R.layout.weekday_textview, null);
 
         // Set content
         String item = getItem(position);
         textView.setText(item);
 
-        textView.setTextColor(textColor);
-        textView.setGravity(Gravity.CENTER);
         return textView;
+    }
+
+    private LayoutInflater getLayoutInflater(Context context, int themeResource) {
+        Context wrapped = new ContextThemeWrapper(context, themeResource);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        return inflater.cloneInContext(wrapped);
     }
 
 }
