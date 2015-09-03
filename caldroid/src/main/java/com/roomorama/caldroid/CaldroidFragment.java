@@ -774,6 +774,42 @@ public class CaldroidFragment extends DialogFragment {
                 .getDateFromString(toDateString, dateFormat);
         setSelectedDates(fromDate, toDate);
     }
+    
+    /**
+     * Select single date
+     * @author Alov Maxim <alovmax@yandex.ru>
+     */
+    public void setSelectedDate(Date date) {
+        if (date == null) {
+            return;
+        }
+        DateTime dateTime = CalendarHelper.convertDateToDateTime(date);
+        selectedDates.add(dateTime);
+    }
+    
+    /**
+     * Clear selection of the specified date
+     * @author Alov Maxim <alovmax@yandex.ru>
+     */
+    public void clearSelectedDate(Date date) {
+        if (date == null) {
+            return;
+        }
+        DateTime dateTime = CalendarHelper.convertDateToDateTime(date);
+        selectedDates.remove(dateTime);
+    }
+    
+    /**
+     * Checks whether the specified date is selected
+     * @author Alov Maxim <alovmax@yandex.ru>
+     */
+    public boolean isSelectedDate(Date date) {
+        if (date == null) {
+            return false;
+        }
+        DateTime dateTime = CalendarHelper.convertDateToDateTime(date);
+        return selectedDates.contains(dateTime);
+    }
 
     /**
      * Check if the navigation arrow is shown
