@@ -21,14 +21,14 @@ Setup
 
 To use in your project, reference the child library project as a library. If you see JAR mismatched error, replace your android-support-v4.jar to the jar inside Caldroid. Make sure you compile the project against Android 4.2 and above to allow nested fragment. See more at http://developer.android.com/about/versions/android-4.2.html#NestedFragments
 
-**For Android Studio user**: add `compile 'com.roomorama:caldroid:2.1.0'` to your gradle build file.
+**For Android Studio user**: add `compile 'com.roomorama:caldroid:2.2.0'` to your gradle build file.
 
 **For Maven user**:
 ```
 <dependency>
     <groupId>com.roomorama</groupId>
     <artifactId>caldroid</artifactId>
-    <version>2.1.0</version>
+    <version>2.2.0</version>
 </dependency>
 ```
 
@@ -68,7 +68,7 @@ t.commit();
 
 You can also embed caldroid fragment as a child in your fragment.
 
-Caldroid accepts numerous arguments during start up: 
+Caldroid accepts numerous arguments during start up:
 
 ``` java
 public final static String
@@ -88,7 +88,7 @@ public final static String
             THEME_RESOURCE = "themeResource";
 ```
 
-To customize the startDayOfWeek, just use 
+To customize the startDayOfWeek, just use
 
 ``` java
 Bundle args = new Bundle();
@@ -220,7 +220,7 @@ If you need to customize more for the cell, you can [supply your own cell design
 
 ## Set min / max date
 
-Client can use below methods: 
+Client can use below methods:
 
 ``` java
 public void setMinDate(Date minDate);
@@ -282,7 +282,7 @@ public void moveToDateTime(DateTime dateTime);
 
 ##Allow user to select a date and inform listener
 
-Caldroid inform clients via CaldroidListener. 
+Caldroid inform clients via CaldroidListener.
 
 ``` java
 final CaldroidListener listener = new CaldroidListener() {
@@ -448,7 +448,7 @@ public View getView(int position, View convertView, ViewGroup parent) {
   // Get your data here
   ArrayList yourCustomData1 = (ArrayList) extraData.get("YOUR_CUSTOM_DATA_KEY1");
   String yourCustomData2 = (String) extraData.get("YOUR_CUSTOM_DATA_KEY2");
-  
+
   // Continue to build your customized view
 }
 ```
@@ -458,14 +458,14 @@ Basic Structure
 ===============
 
 Caldroid fragment includes 4 main parts:
-  
+
 1) Month title view: show the month and year (e.g MARCH, 2013)
-  
+
 2) Navigation arrows: to navigate to next month or previous month
-  
+
 3) Weekday gridview: contains only 1 row and 7 columns. To display
   "SUN, MON, TUE, WED, THU, FRI, SAT"
-  
+
 4) An infinite view pager that allow user to swipe left/right to change month. This library is taken from https://github.com/antonyt/InfiniteViewPager
 
 This infinite view pager recycles 4 fragment, each fragment contains a gridview with 7 columns to display the dates in month. Whenever user swipes different screen, the date grid views are updated.
@@ -473,7 +473,7 @@ This infinite view pager recycles 4 fragment, each fragment contains a gridview 
 
 Others
 ======
-  
+
 Caldroid code is simple and clean partly because of powerful [date4j](http://www.date4j.net/) library!
 
 
@@ -493,4 +493,3 @@ App uses Caldroid
 [Moon Calendar](https://play.google.com/store/apps/details?id=fr.calendrierlunaire.android)
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/roomorama/caldroid/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
