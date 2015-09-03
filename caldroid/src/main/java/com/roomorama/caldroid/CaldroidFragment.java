@@ -233,6 +233,22 @@ public class CaldroidFragment extends DialogFragment {
      */
     private CaldroidListener caldroidListener;
 
+    /**
+     * Retrieve current month
+     * @return
+     */
+    public int getMonth() {
+        return month;
+    }
+
+    /**
+     * Retrieve current year
+     * @return
+     */
+    public int getYear() {
+        return year;
+    }
+
     public CaldroidListener getCaldroidListener() {
         return caldroidListener;
     }
