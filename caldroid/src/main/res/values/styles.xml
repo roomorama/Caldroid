@@ -18,7 +18,7 @@
     </style>
 
     <style name="CaldroidDefaultArrowButton">
-        <item name="android:layout_width">50dp</item>
+        <item name="android:layout_width">44dp</item>
         <item name="android:layout_height">44dp</item>
     </style>
 
@@ -36,7 +36,7 @@
         <item name="android:textColor">@android:color/black</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">6dp</item>
+        <item name="android:layout_marginTop">8dp</item>
         <item name="android:gravity">center_horizontal</item>
         <item name="android:textSize">21sp</item>
     </style>
