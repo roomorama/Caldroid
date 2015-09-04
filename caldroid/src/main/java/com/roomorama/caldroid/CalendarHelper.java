@@ -1,13 +1,13 @@
 package com.roomorama.caldroid;
 
-import hirondelle.date4j.DateTime;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+
+import hirondelle.date4j.DateTime;
 
 /**
  * Convenient helper to work with date, Date4J DateTime and String
@@ -16,11 +16,11 @@ import java.util.Locale;
  */
 public class CalendarHelper {
 
-    public static SimpleDateFormat yyyyMMddFormat = new SimpleDateFormat(
-            "yyyy-MM-dd", Locale.ENGLISH);
+    private static SimpleDateFormat yyyyMMddFormat;
 
-    public static SimpleDateFormat MMMFormat = new SimpleDateFormat(
-            "MMM", Locale.getDefault());
+    public static void setup() {
+        yyyyMMddFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+    }
 
     /**
      * Retrieve all the dates for a given calendar month Include previous month,
@@ -145,6 +145,10 @@ public class CalendarHelper {
             throws ParseException {
         SimpleDateFormat formatter;
         if (dateFormat == null) {
+            if (yyyyMMddFormat == null) {
+                setup();
+            }
+
             formatter = yyyyMMddFormat;
         } else {
             formatter = new SimpleDateFormat(dateFormat, Locale.ENGLISH);

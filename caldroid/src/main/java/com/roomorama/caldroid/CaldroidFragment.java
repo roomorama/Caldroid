@@ -1075,6 +1075,9 @@ public class CaldroidFragment extends DialogFragment {
     protected void retrieveInitialArgs() {
         // Get arguments
         Bundle args = getArguments();
+
+        CalendarHelper.setup();
+
         if (args != null) {
             // Get month, year
             month = args.getInt(MONTH, -1);
@@ -1127,7 +1130,7 @@ public class CaldroidFragment extends DialogFragment {
                 disableDates.clear();
                 for (String dateString : disableDateStrings) {
                     DateTime dt = CalendarHelper.getDateTimeFromString(
-                            dateString, "yyyy-MM-dd");
+                            dateString, null);
                     disableDates.add(dt);
                 }
             }
@@ -1139,7 +1142,7 @@ public class CaldroidFragment extends DialogFragment {
                 selectedDates.clear();
                 for (String dateString : selectedDateStrings) {
                     DateTime dt = CalendarHelper.getDateTimeFromString(
-                            dateString, "yyyy-MM-dd");
+                            dateString, null);
                     selectedDates.add(dt);
                 }
             }
