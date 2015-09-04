@@ -1026,7 +1026,7 @@ public class CaldroidFragment extends DialogFragment {
         // Refresh title view
         firstMonthTime.year = year;
         firstMonthTime.month = month - 1;
-        firstMonthTime.monthDay = 1;
+        firstMonthTime.monthDay = 15;
         long millis = firstMonthTime.toMillis(true);
 
         // This is the method used by the platform Calendar app to get a
