@@ -484,6 +484,8 @@ See LICENSE.md
 
 App uses Caldroid
 =================
+[SilentMe](https://play.google.com/store/apps/details?id=com.mindlens.alarmmanagerdemo&hl=en)
+
 [Work Mate](http://play.google.com/store/apps/details?id=com.michaelmcneildev.workmate)
 
 [Attendance Register (students)](https://play.google.com/store/apps/details?id=com.rudra.attendanceRegister)
