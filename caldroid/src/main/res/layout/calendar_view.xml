@@ -5,10 +5,11 @@
     style="?styleCaldroidViewLayout"
     android:orientation="vertical" >
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/calendar_title_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/calendar_left_arrow"
@@ -16,16 +17,12 @@
 
         <TextView
             android:id="@+id/calendar_month_year_textview"
-            android:layout_toLeftOf="@+id/calendar_right_arrow"
-            android:layout_toStartOf="@+id/calendar_right_arrow"
-            android:layout_toRightOf="@+id/calendar_left_arrow"
-            android:layout_toEndOf="@+id/calendar_left_arrow"
             style="?styleCaldroidMonthName"/>
 
         <Button
             android:id="@+id/calendar_right_arrow"
             style="?styleCaldroidRightArrow" />
-    </RelativeLayout>
+    </LinearLayout>
 
     <GridView
         android:id="@+id/weekday_gridview"

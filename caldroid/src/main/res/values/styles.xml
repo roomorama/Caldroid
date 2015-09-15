@@ -34,14 +34,17 @@
 
     <style name="CaldroidDefaultMonthName">
         <item name="android:textColor">@android:color/black</item>
-        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginTop">3dp</item>
         <item name="android:gravity">center_horizontal</item>
         <item name="android:textSize">21sp</item>
     </style>
 
     <style name="CaldroidDefaultGridView">
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:gravity">center_horizontal</item>
         <item name="android:listSelector">@null</item>
         <item name="android:background">@color/caldroid_lighter_gray</item>
         <item name="android:horizontalSpacing">1dp</item>

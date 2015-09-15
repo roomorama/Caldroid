@@ -3,8 +3,6 @@
     android:id="@+id/calendar_gridview"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:adjustViewBounds="true"
-    android:gravity="center_horizontal"
     android:numColumns="7"
     android:stretchMode="columnWidth"
     style="?styleCaldroidGridView" />
