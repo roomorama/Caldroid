@@ -20,9 +20,11 @@ Depois de uma análise critica e detalhada de tudo o que envolve o projeto chega
 
 Desta forma, iremos tentar a implementação das seguintes funcionalidades:
 
-1.permitir a criação de eventos em cada dia por parte do utilizador;
-2.permitir que a aplicação avise o utilizador que determinado evento se aproxima;
-3.melhorar a interface com o utilizador.
+<ol>
+  <li>permitir a criação de eventos em cada dia por parte do utilizador;</li>
+  <li>permitir que a aplicação avise o utilizador que determinado evento se aproxima;</li>
+  <li>melhorar a interface com o utilizador.</li>
+</ol>
 
 Com tudo isto esperamos, melhorar o projeto referido com os conhecimentos que vamos adquirir nesta unidade curricular e obter experiência na área.
 
