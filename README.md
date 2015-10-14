@@ -320,6 +320,33 @@ caldroidFragment.setCaldroidListener(listener);
 
 ```
 
+User can also customize the navigation arrows and month title textView: font, size, onClickListener, onLongClickListener, etc. Client can supply different adapter to the weekdayGridView. Make sure you only access these methods after Caldroid has been successfully attached to view, otherwise you will see NullPointerException.
+
+```java
+final CaldroidListener listener = new CaldroidListener() {
+
+    @Override
+    public void onSelectDate(Date date, View view) {
+        // Do something
+    }
+
+    @Override
+    public void onCaldroidViewCreated() {
+        // Supply your own adapter to weekdayGridView (SUN, MON, etc)
+        caldroidFragment.getWeekdayGridView().setAdapter(YOUR_ADAPTER);
+
+        Button leftButton = caldroidFragment.getLeftArrowButton();
+        Button rightButton = caldroidFragment.getRightArrowButton();
+        TextView textView = caldroidFragment.getMonthTitleTextView();
+
+        // Do customization here
+    }
+
+};
+
+caldroidFragment.setCaldroidListener(listener);
+```
+
 ##Handle screen rotation
 
 To handle rotation properly, Caldroid provides method to get current states of the fragment:
