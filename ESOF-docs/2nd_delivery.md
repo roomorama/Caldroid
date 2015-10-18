@@ -2,7 +2,7 @@
 ![ScreenShot](https://raw.githubusercontent.com/carvalhofilipe1995/Caldroid/master/ESOF-docs/Use%20Case%20Model.bmp)
 
 ##UML de classes
-![ScreenShot](https://raw.githubusercontent.com/carvalhofilipe1995/Caldroid/master/ESOF-docs/UML%Diagram.jpg)
+<img src="https://raw.github.com/carvalhofilipe1995/Caldroid/master/ESOF-docs/UML-Diagram.jpg">
 
 ##Análise
 
