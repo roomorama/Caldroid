@@ -8,10 +8,10 @@ Requirements Management - ESOF 2015/2016
 
 
 ##Diagrama de Casos de Utilização	 <a name="cases"></a>
-![ScreenShot](https://raw.githubusercontent.com/carvalhofilipe1995/Caldroid/master/ESOF-docs/Use%20Case%20Model.bmp)
+![ScreenShot](https://raw.githubusercontent.com/carvalhofilipe1995/Caldroid/master/ESOF-docs/resources/Use%20Case%20Model.bmp)
 
 ##UML de classes	 <a name="uml"></a>
-<img src="https://raw.github.com/carvalhofilipe1995/Caldroid/master/ESOF-docs/UML-Diagram.jpg">
+<img src="https://raw.github.com/carvalhofilipe1995/Caldroid/master/ESOF-docs/resources/UML-Diagram.jpg">
 
 ##Análise	 <a name="analise"></a>
 
