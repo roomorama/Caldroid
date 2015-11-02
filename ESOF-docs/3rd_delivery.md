@@ -15,8 +15,7 @@ Architectural design - ESO 2015/2016
 * *"4 + 1"* é um modelo de arquitetura de software que foi desenvolvido por Philippe Kruchten com o intuito de analisarmos melhor a evolução e 
 o desenvolvimento do projeto.
 
-* Os quatros principais aspectos deste modelo são: **Logical View** (funcionalidade), **Implementation View** (programmer's perspective), **Deployment View** e 
-**Process View**.
+* Os quatros principais aspectos deste modelo são: **Logical View** (funcionality), **Implementation View** (programmer's perspective), **Deployment View** (system hardware) e **Process View** (run-time).
 
 
 ## Logical View  			<a name="logic"></a>
