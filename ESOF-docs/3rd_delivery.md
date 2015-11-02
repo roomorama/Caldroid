@@ -1,4 +1,4 @@
-Architectural design - ESO 2015/2016
+Architectural design - ESOF 2015/2016
 ==================
 
 # Conteúdos
@@ -7,7 +7,6 @@ Architectural design - ESO 2015/2016
 3. [Implementation View](#implementation)
 4. [Deployment View](#deployment)
 5. [Process View](#process)
-
 
 
 ##Introdução	 			<a name="introduction"></a>
