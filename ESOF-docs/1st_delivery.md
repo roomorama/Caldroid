@@ -2,17 +2,17 @@ First Delivery - ESOF 2015/2016
 ========
 
 # Table of Contents
-1. [Descrição do projecto]
-2. [Processo]
-3. [Análise Critica]
+1. [Descrição do projecto](#descricao)
+2. [Processo](#process)
+3. [Análise Critica](#analise)
 
-##Descrição do projecto
+##Descrição do projecto  <a name="descricao"></a>
 
 O trabalho escolhido para estudo/exploração nas aulas teórica-praticas desta UC foi a aplicação CalDroid. Este projecto é open source e conta com cerca de 20 contribuidores.
 CalDroid é um calendário para dispositivos móveis. Possui os 12 meses do ano, e respectivos dias. É de fácil utilização e possui 2 temas diferentes (Dark e Light). 
 
 
-##Processo
+##Processo  <a name="process"></a>
 
 Iremos descrever como a arquitetura de CalDroid é mantida e como as contribuições são realizadas.
 Este projecto é gerido através do Github e é através deste que é possível o desenvolvimento/melhoramento do projecto. Estes melhoramentos podem ser propostas e/ou erros encontrados no código (bugs). Os intervinientes são colaboradores externos ou o criador do projecto.
@@ -21,7 +21,7 @@ Novas “pull request” passam sempre num processo de triagem, o que significa 
 Em relação ao processo de engenharia de software usado, depois de termos entrado em contacto com um dos “main contributors” deste projeto e termos analisado os commits, chegamos à conclusão que o projecto não segue rigorosamente um processo mas a abordagem aproximasse ao modelo “waterfall” que consiste num modelo de desenvolvimento de software sequencial no qual o desenvolvimento é visto como um fluir constante para frente (como uma cascata) através das fases de análise de requisitos do projecto, validação, integração, e manutenção do software.
 
 
-##Análise Critica
+##Análise Critica  <a name="analise"></a>
 
 Depois de uma análise critica e detalhada de tudo o que envolve o projeto chegamos à conclusão que este pode receber muitas melhorias da nossa parte uma vez que são poucas as funcionalidades que esta aplicação dispõe e também corrigir alguns “bugs” com que nos iremos deparar no desenvolvimento mais aprofundado do mesmo.
 	
