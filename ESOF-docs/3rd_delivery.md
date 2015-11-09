@@ -21,10 +21,10 @@ o desenvolvimento do projeto.
 
 
 ## Implementation View		<a name="implementation"></a>
-<img src="https://raw.github.com/carvalhofilipe1995/Caldroid/master/ESOF-docs/resources/ImplementationView.jpg">
+<img src="https://raw.github.com/carvalhofilipe1995/Caldroid/master/ESOF-docs/resources/ImplementationView.png">
 
 ## Deployment View 			<a name="deployment"></a>
-<img src="https://raw.github.com/carvalhofilipe1995/Caldroid/master/ESOF-docs/resources/DeploymentView.jpg">
+<img src="https://raw.github.com/carvalhofilipe1995/Caldroid/master/ESOF-docs/resources/DeploymentView.png">
 
 ## Process View				<a name="process"></a>
-<img src="https://raw.github.com/carvalhofilipe1995/Caldroid/master/ESOF-docs/resources/ProcessView.jpg">
+<img src="https://raw.github.com/carvalhofilipe1995/Caldroid/master/ESOF-docs/resources/ProcessView.png">
