@@ -15,11 +15,13 @@ complexidade dos produtos e às inúmeras dificuldades relacionadas ao processo 
 desenvolvimento, pois envolve questões humanas, técnicas, burocráticas, de negócio e políticas.
 
 * Como consequência, testar um software permite aumentar a credibilidade do
-mesmo e permite a avaliação de características externas(ex: performance).
+mesmo e permite a avaliação da qualidade das características externas (ex: performance).
 
 ## Test Phases  <a name="phases"></a>
 
 * **Unit Testing**
+
+O principal objectivo é detectar erros funcionais e estruturais no software.
 
 * **Integration testing**
 
