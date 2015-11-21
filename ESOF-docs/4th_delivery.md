@@ -44,17 +44,26 @@ aceite.
 
     *Esta fase permite uma fácil localização dos erros e tem como principal objectivo detectar erros que occorram na unidade interface do software.*
 
+    * Depois de uma intensa análise e comunicação com os detentores do projeto, verificamos que esta fase de teste não se encontra
+    presente no [Caldroid](https://github.com/roomorama/Caldroid) .
+
 * **System testing**
 
     *Testes realizados em todas as unidades do software para avaliar conformidade do sistema com os requisitos especificados.*
+
+    * Esta fase de teste é efectuada no projeto [Caldroid](https://github.com/roomorama/Caldroid) com o intuito de verificar se a mudança não influenciou negativamente o funcionamento global do programa.
 
 * **Acceptance testing**
 
     *Esta fase de teste é utilizada para determinar se o sistema satisfaz os critérios de aceitação impostos pelo cliente ou qualquer outra entidade que irá usufruir do software.*
 
+    * No projeto [Caldroid](https://github.com/roomorama/Caldroid) o cliente pode editar o software de acordo com os seus requisitos o que leva a que não seja necessário a realização de *Acceptance testing*.
+
 
 * **Regression testing**
 
     *Esta análise é efectuada com o intuito de verificar se as modificações realizadas não causaram efeitos que pusessem em causa os requisistos especificados pelo cliente.*
+
+    * No projeto [Caldroid](https://github.com/roomorama/Caldroid), sempre que uma alteração é proposta alguém irá ser responsável por testá-la e avaliá-la, sendo que o principal objectivo é que esta mudança não provoque erros nas restantes funções implementadas.
 
 ## Bug Report  <a name="bug_report"></a>
