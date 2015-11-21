@@ -54,6 +54,11 @@ O grau de testabilidade está dividido nas seguintes secções:
 
   * *Fase em que o componente a ser testado tem uma responsabilidade única a qual se encontra bem definda.*
 
+  O projecto [Caldroid](https://github.com/roomorama/Caldroid) apresenta uma divisão em conceitos bem definida. Os responsáveis
+  optaram pela divisão em 2 packages e toda a estrutura de código é realizada da forma mais simples evitando repetição de
+  código e também a criação de código que não tenha qualquer utilidade. Desta forma, a equipa tenta ao máximo a reutilização de
+  código para evitar a introdução de bugs no software.
+
 ## Perceptibilidade <a name="percp"></a>
 
   * *Fase em que o componente a ser testado se encontra bem documentado e auto-explicativo.*
