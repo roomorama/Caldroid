@@ -6,6 +6,7 @@ Testes de Software - ESOF 2015/2016
 2. [Grau de testabilidade do software do programa](#degree)
 3. [Estatísticas de Teste](#statistics)
 4. [Bug report](#bug_report)
+5. [Bibliografia](#bli)
 
 
 ## *Introdução* <a name="introdução"></a>
@@ -128,4 +129,11 @@ aceite.
 ## *Bug Report*  <a name="bug_report"></a>
 
   *Neste secção iremos abordar casos de teste aplicados ao projeto bem como toda a análise efectuada pelo grupo  aos seus
-  resultados*
+  resultados.*
+
+
+
+## *Bibliografia*  <a name="bli"></a>
+
+  * **[SOFTWARE VERIFICATION AND VALIDATION](http://moodle.up.pt/pluginfile.php/74998/mod_resource/content/2/ESOF-VV%20-%20Part%20I.pdf)**
+  * **[SOFTWARE TESTING](https://moodle.up.pt/pluginfile.php/74999/mod_resource/content/2/ESOF-VV%20-%20Part%20II.pdf)**
