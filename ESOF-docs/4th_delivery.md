@@ -20,6 +20,7 @@ mesmo e permite a avaliação da qualidade das características externas (ex: pe
 ## Grau de testabilidade do software do programa  <a name="degree"></a>
 
   A análise do grau de testabilidade está dividida nas seguintes secções:
+#
 1. [Controlabilidade](#control)
 2. [Observabilidade](#obs)
 3. [Capacidade de Isolamento](#cap)
