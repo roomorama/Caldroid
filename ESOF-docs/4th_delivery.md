@@ -24,7 +24,7 @@ testes devem abordar todos os componentes envolventes no software.
 
 Sendo os teste um grande método para garantir a qualidade do projeto é necessário percebermos a sua utilidade.
 
-O grau de testabilidade dividido nas seguintes secções:
+O grau de testabilidade está dividido nas seguintes secções:
 #
 1. [Controlabilidade](#control)
 2. [Observabilidade](#obs)
@@ -32,6 +32,19 @@ O grau de testabilidade dividido nas seguintes secções:
 4. [Separação de conceitos](#sep)
 5. [Perceptibilidade](#percp)
 6. [Heterogenidade](#heter)
+
+
+## Controlabilidade <a name="control"></a>
+
+## Observabilidade <a name="obs"></a>
+
+## Capacidade de Isolamento <a name="cap"></a>
+
+## Separação de conceitos <a name="sep"></a>
+
+## Perceptibilidade <a name="percp"></a>
+
+## Heterogenidade <a name="heter"></a>
 
 
 ## Estatísticas de Teste  <a name="statistics"></a>
