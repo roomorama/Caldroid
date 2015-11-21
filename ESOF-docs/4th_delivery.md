@@ -19,6 +19,9 @@ mesmo e permite a avaliação da qualidade das características externas (ex: pe
 
 ## Test Phases  <a name="phases"></a>
 
+
+## Test Statistics  <a name="degree"></a>
+
 * **Unit Testing**
 
     O principal objectivo é detectar erros funcionais e estruturais no software.
@@ -43,8 +46,5 @@ mesmo e permite a avaliação da qualidade das características externas (ex: pe
     Reanálise selectiva de um componente ou sistema para verificar que modificações não
     causaram efeitos não intencionais e que o sistema ou componente continua a cumprir a sua
     especificado requisitos
-
-
-## Test Statistics  <a name="degree"></a>
 
 ## Bug Report  <a name="bug_report"></a>
