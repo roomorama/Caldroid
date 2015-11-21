@@ -67,7 +67,8 @@ O grau de testabilidade está dividido nas seguintes secções:
   * *Fase em que requer o uso de diversos métodos de ensaio e ferramentas em paralelo.*
 
   A utilização de ferramentas em paralelo e de métodos de ensaio requer uma maior necessidade de comunicação entre os
-  intervenientes uma vez que está sujeita à acção de vários contribuidores(no caso do Caldroid são 20 o número de contribuidores).
+  intervenientes uma vez que está sujeita à acção de vários contribuidores (no caso do Caldroid são 20 o número total de
+  contribuidores).
 
   Como o [Caldroid](https://github.com/roomorama/Caldroid) é um projeto open-source, é estritamente necessário necessário que
   depois da aceitação de um *pull request* o sistema permaneça operacional de forma a ser efectuada.
