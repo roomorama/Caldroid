@@ -21,15 +21,28 @@ mesmo e permite a avaliação da qualidade das características externas (ex: pe
 
 * **Unit Testing**
 
-O principal objectivo é detectar erros funcionais e estruturais no software.
+    O principal objectivo é detectar erros funcionais e estruturais no software.
 
 * **Integration testing**
 
+    Esta fase permite uma fácil localização dos erros e tem como principal objectivo detectar erros que occorram na unidade interface do software.
+
 * **System testing**
+
+  Testes conduzidos em um sistema completo e integrado para avaliar a conformidade do sistema
+  com os requisitos especificados
 
 * **Acceptance testing**
 
+    Teste formal conduzida para determinar se ou não um sistema satisfaça os seus critérios de
+    aceitação e permitir uma cliente , um usuário ou outra entidade autorizada a determinar
+    se deve ou não aceitar o sistema
+
 * **Regression testing**
+
+    Reanálise selectiva de um componente ou sistema para verificar que modificações não
+    causaram efeitos não intencionais e que o sistema ou componente continua a cumprir a sua
+    especificado requisitos
 
 
 ## Test Statistics  <a name="degree"></a>
