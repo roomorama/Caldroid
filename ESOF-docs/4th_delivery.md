@@ -38,6 +38,10 @@ O grau de testabilidade está dividido nas seguintes secções:
 
   * *Fase em que é possível controlar o estado do componente que irá ser testado (CUT) em conformidade com o teste.*
 
+  Dado que o [Caldroid](https://github.com/roomorama/Caldroid) não realiza testes não podemos falar concretamente para os módulos
+  existentes. Desta forma podemos apenas afirmar que quanto maior a profundidade do componente, em relação à posição no código,
+  maior deverá ser a sua controlabilidade.
+
 ## Observabilidade <a name="obs"></a>
 
   * *Fase em que é possível analisar os resultados intermediários e finais dos testes.*
@@ -54,9 +58,19 @@ O grau de testabilidade está dividido nas seguintes secções:
 
   * *Fase em que o componente a ser testado se encontra bem documentado e auto-explicativo.*
 
+  Em projetos de grande dimensão e com um grande número de contribuidores, torna-se necessário que todos os intervenientes sigam
+  uma determinada conduta de forma a tornar o projeto [Caldroid](https://github.com/roomorama/Caldroid) mais consistente e
+  exato.
+
 ## Heterogenidade <a name="heter"></a>
 
   * *Fase em que requer o uso de diversos métodos de ensaio e ferramentas em paralelo.*
+
+  A utilização de ferramentas em paralelo e de métodos de ensaio requer uma maior necessidade de comunicação entre os
+  intervenientes uma vez que está sujeita à acção de vários contribuidores(no caso do Caldroid são 20 o número de contribuidores).
+
+  Como o [Caldroid](https://github.com/roomorama/Caldroid) é um projeto open-source, é estritamente necessário necessário que
+  depois da aceitação de um *pull request* o sistema permaneça operacional de forma a ser efectuada.
 
 
 ## *Estatísticas de Teste*  <a name="statistics"></a>
