@@ -8,7 +8,7 @@ Testes de Software - ESOF 2015/2016
 4. [Bug report](#bug_report)
 
 
-## Introdução <a name="introdução"></a>
+## *Introdução* <a name="introdução"></a>
 
 * Controlar a qualidade dos sistemas de software é um grande desafio devido à alta
 complexidade dos produtos e às inúmeras dificuldades relacionadas ao processo de
@@ -17,7 +17,7 @@ desenvolvimento, pois envolve questões humanas, técnicas, burocráticas, de ne
 * Como consequência, testar um software permite aumentar a credibilidade do
 mesmo e permite a avaliação da qualidade das características externas (ex: performance).
 
-## Grau de testabilidade do software do programa  <a name="degree"></a>
+## *Grau de testabilidade do software do programa*  <a name="degree"></a>
 
 A análise do grau de testabilidade é algo importante, e visto que o projeto em análise é portador de uma grande complexidade os
 testes devem abordar todos os componentes envolventes no software.
@@ -47,7 +47,7 @@ O grau de testabilidade está dividido nas seguintes secções:
 ## Heterogenidade <a name="heter"></a>
 
 
-## Estatísticas de Teste  <a name="statistics"></a>
+## *Estatísticas de Teste*  <a name="statistics"></a>
 
 Esta fase de teste é realizada com o intuito de avaliar a qualidade do software, bem como a
 eficiência e fiabilidade do mesmo.
@@ -93,4 +93,4 @@ aceite.
 
     * No projeto [Caldroid](https://github.com/roomorama/Caldroid), sempre que uma alteração é proposta alguém irá ser responsável por testá-la e avaliá-la, sendo que o principal objectivo é que esta mudança não provoque erros nas restantes funções implementadas.
 
-## Bug Report  <a name="bug_report"></a>
+## *Bug Report*  <a name="bug_report"></a>
