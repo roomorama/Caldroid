@@ -19,7 +19,12 @@ mesmo e permite a avaliação da qualidade das características externas (ex: pe
 
 ## Grau de testabilidade do software do programa  <a name="degree"></a>
 
-  A análise do grau de testabilidade está dividida nas seguintes secções:
+A análise do grau de testabilidade é algo importante, e visto que o projeto em análise é portador de uma grande complexidade os
+testes devem abordar todos os componentes envolventes no software.
+
+Sendo os teste um grande método para garantir a qualidade do projeto é necessário percebermos a sua utilidade.
+
+  Está dividido nas seguintes secções:
 #
 1. [Controlabilidade](#control)
 2. [Observabilidade](#obs)
