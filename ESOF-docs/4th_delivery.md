@@ -36,27 +36,27 @@ O grau de testabilidade está dividido nas seguintes secções:
 
 ## Controlabilidade <a name="control"></a>
 
-  * **Fase em que é possível controlar o estado do componente que irá ser testado (CUT) em conformidade com o teste.**
+  * *Fase em que é possível controlar o estado do componente que irá ser testado (CUT) em conformidade com o teste.*
 
 ## Observabilidade <a name="obs"></a>
 
-  * **Fase em que é possível analisar os resultados intermediários e finais dos testes.**
+  * *Fase em que é possível analisar os resultados intermediários e finais dos testes.*
 
 ## Capacidade de Isolamento <a name="cap"></a>
 
-  * **Fase em que é possível testar o CUT de forma isolada.**
+  * *Fase em que é possível testar o CUT de forma isolada.*
 
 ## Separação de conceitos <a name="sep"></a>
 
-  * **Fase em que o componente a ser testado tem uma responsabilidade única a qual se encontra bem definda.**
+  * *Fase em que o componente a ser testado tem uma responsabilidade única a qual se encontra bem definda.*
 
 ## Perceptibilidade <a name="percp"></a>
 
-  * **Fase em que o componente a ser testado se encontra bem documentado e auto-explicativo.**
+  * *Fase em que o componente a ser testado se encontra bem documentado e auto-explicativo.*
 
 ## Heterogenidade <a name="heter"></a>
 
-  * **Fase em que requer o uso de diversos métodos de ensaio e ferramentas em paralelo.**
+  * *Fase em que requer o uso de diversos métodos de ensaio e ferramentas em paralelo.*
 
 
 ## *Estatísticas de Teste*  <a name="statistics"></a>
