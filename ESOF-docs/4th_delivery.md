@@ -22,15 +22,23 @@ mesmo e permite a avaliação da qualidade das características externas (ex: pe
 
 ## Test Statistics  <a name="statistics"></a>
 
-  Esta fase de teste é realizada com o intuito de avaliar a qualidade do software, bem como a
+    Esta fase de teste é realizada com o intuito de avaliar a qualidade do software, bem como a
   eficiência e fiabilidade do mesmo.
 
-  No [Caldroid](https://github.com/roomorama/Caldroid), as alterações só são aceites se trouxeram resposta aos requisitos especificados e contribuírem para o aumento da qualidade do sistema, não sendo realizada uma análise rigorosa e detalhada o que na nossa opinião não está correto.
+    No [Caldroid](https://github.com/roomorama/Caldroid), as alterações só são aceites se
+trouxeram resposta aos requisitos especificados e contribuírem para o aumento da qualidade
+ou fiabilidade do sistema, não sendo realizada uma análise rigorosa e detalhada do código
+aceite.
 
 
 * **Unit Testing**
 
     *O principal objectivo é detectar erros funcionais e estruturais no software.*
+
+    * Para um *pull request* ser aceite pelo master, este é o caso de teste mais importante ou talvez até o único
+    utilizado no projeto [Caldroid](https://github.com/roomorama/Caldroid). Desta forma, qualquer nova alteração é aceite desde que
+    não traga qualquer tipo de  erros funcionais e estruturais ao software e responda aos requisitos especificados por parte do
+    cliente/utilizador.
 
 * **Integration testing**
 
