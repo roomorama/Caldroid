@@ -58,9 +58,9 @@ O grau de testabilidade está dividido nas seguintes secções:
 
   * *Fase em que o componente a ser testado se encontra bem documentado e auto-explicativo.*
 
-  Em projetos de grande dimensão e com um grande número de contribuidores, torna-se necessário que todos os intervenientes sigam
-  uma determinada conduta de forma a tornar o projeto [Caldroid](https://github.com/roomorama/Caldroid) mais consistente e
-  exato.
+  Em projetos de grande dimensão e com um grande número de contribuidores tal com o
+  [Caldroid](https://github.com/roomorama/Caldroid), torna-se necessário que todos os intervenientes sigam uma determinada conduta
+  de forma a tornar o projeto mais consistente e exato.
 
 ## Heterogenidade <a name="heter"></a>
 
