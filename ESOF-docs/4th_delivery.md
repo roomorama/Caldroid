@@ -126,3 +126,6 @@ aceite.
     * No projeto [Caldroid](https://github.com/roomorama/Caldroid), sempre que uma alteração é proposta alguém irá ser responsável por testá-la e avaliá-la, sendo que o principal objectivo é que esta mudança não provoque erros nas restantes funções implementadas.
 
 ## *Bug Report*  <a name="bug_report"></a>
+
+  *Neste secção iremos abordar casos de teste aplicados ao projeto bem como toda a análise efectuada pelo grupo  aos seus
+  resultados*
