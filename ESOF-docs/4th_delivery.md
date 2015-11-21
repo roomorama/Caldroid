@@ -2,10 +2,10 @@ Testes de Software - ESOF 2015/2016
 ========
 
 # Conteúdos
-  1. [Introdução](#introdução)
-  2. [Test Phases](#phases)
-  3. [Test Statistics](#statistics)
-  4. [Bug report](#bug_report)
+1. [Introdução](#introdução)
+2. [Test Phases](#phases)
+3. [Test Statistics](#statistics)
+4. [Bug report](#bug_report)
 
 
 ## Introdução <a name="introdução"></a>
