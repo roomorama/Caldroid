@@ -34,17 +34,17 @@ O grau de testabilidade está dividido nas seguintes secções:
 6. [Heterogenidade](#heter)
 
 
-* Controlabilidade <a name="control"></a>
+## Controlabilidade <a name="control"></a>
 
-* Observabilidade <a name="obs"></a>
+## Observabilidade <a name="obs"></a>
 
-* Capacidade de Isolamento <a name="cap"></a>
+## Capacidade de Isolamento <a name="cap"></a>
 
-* Separação de conceitos <a name="sep"></a>
+## Separação de conceitos <a name="sep"></a>
 
-* Perceptibilidade <a name="percp"></a>
+## Perceptibilidade <a name="percp"></a>
 
-* Heterogenidade <a name="heter"></a>
+## Heterogenidade <a name="heter"></a>
 
 
 ## *Estatísticas de Teste*  <a name="statistics"></a>
