@@ -3,8 +3,8 @@ Testes de Software - ESOF 2015/2016
 
 # Conteúdos
 1. [Introdução](#introdução)
-2. [Test Phases](#phases)
-3. [Test Statistics](#statistics)
+2. [Grau de testabilidade do software do programa](#degree)
+3. [Estatísticas de Teste](#statistics)
 4. [Bug report](#bug_report)
 
 
@@ -17,10 +17,18 @@ desenvolvimento, pois envolve questões humanas, técnicas, burocráticas, de ne
 * Como consequência, testar um software permite aumentar a credibilidade do
 mesmo e permite a avaliação da qualidade das características externas (ex: performance).
 
-## Test Phases  <a name="phases"></a>
+## Grau de testabilidade do software do programa  <a name="degree"></a>
+
+#A análise do grau de testabilidade está dividida nas seguintes secções:
+1. [Controlabilidade](#control)
+2. [Observabilidade](#obs)
+3. [Capacidade de Isolamento](#cap)
+4. [Separação de conceitos](#sep)
+5. [Perceptibilidade](#percp)
+6. [Heterogenidade](#heter)
 
 
-## Test Statistics  <a name="statistics"></a>
+## Estatísticas de Teste  <a name="statistics"></a>
 
 Esta fase de teste é realizada com o intuito de avaliar a qualidade do software, bem como a
 eficiência e fiabilidade do mesmo.
