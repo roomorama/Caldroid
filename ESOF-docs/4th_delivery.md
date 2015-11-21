@@ -24,7 +24,7 @@ testes devem abordar todos os componentes envolventes no software.
 
 Sendo os teste um grande método para garantir a qualidade do projeto é necessário percebermos a sua utilidade.
 
-  Está dividido nas seguintes secções:
+O grau de testabilidade dividido nas seguintes secções:
 #
 1. [Controlabilidade](#control)
 2. [Observabilidade](#obs)
