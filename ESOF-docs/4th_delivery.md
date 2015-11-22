@@ -76,7 +76,7 @@ O grau de testabilidade está dividido nas seguintes secções:
   intervenientes uma vez que está sujeita à acção de vários contribuidores (no caso do Caldroid são 20 o número total de
   contribuidores).
 
-  Como o [Caldroid](https://github.com/roomorama/Caldroid) é um projeto open-source, é estritamente necessário necessário que
+  Como o [Caldroid](https://github.com/roomorama/Caldroid) é um projeto open-source, é estritamente necessário que
   depois da aceitação de um *pull request* o sistema permaneça operacional de forma a ser efectuada.
 
 
@@ -85,10 +85,7 @@ O grau de testabilidade está dividido nas seguintes secções:
 Esta fase de teste é realizada com o intuito de avaliar a qualidade do software, bem como a
 eficiência e fiabilidade do mesmo.
 
-No [Caldroid](https://github.com/roomorama/Caldroid), as alterações só são aceites se
-trouxeram resposta aos requisitos especificados e contribuírem para o aumento da qualidade
-ou fiabilidade do sistema, não sendo realizada uma análise rigorosa e detalhada do código
-aceite.
+No [Caldroid](https://github.com/roomorama/Caldroid), as alterações só são aceites quando satisfazem os requisitos especificados e contribuem para o aumento da qualidade ou fiabilidade do sistema. Não é feita uma análise rigorosa e detalhada do código aceite.
 
 
 * **Unit Testing**
