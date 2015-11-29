@@ -59,6 +59,8 @@ public class CaldroidGridAdapter extends BaseAdapter {
      */
     protected HashMap<String, Object> extraData;
 
+	protected LayoutInflater localInflater;
+
     public void setAdapterDateTime(DateTime dateTime) {
         this.month = dateTime.getMonth();
         this.year = dateTime.getYear();
@@ -148,6 +150,10 @@ public class CaldroidGridAdapter extends BaseAdapter {
 
         // Get data from caldroidData
         populateFromCaldroidData();
+
+	    LayoutInflater inflater = (LayoutInflater) context
+			    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	    localInflater = CaldroidFragment.getLayoutInflater(context, inflater, themeResource);
     }
 
     /**
@@ -336,26 +342,21 @@ public class CaldroidGridAdapter extends BaseAdapter {
         return 0;
     }
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        CellView cellView = (CellView) convertView;
+	@Override
+	public View getView(int position, View convertView, ViewGroup parent) {
+		CellView cellView;
 
-        LayoutInflater localInflater = CaldroidFragment.getLayoutInflater(context, inflater, themeResource);
+		// For reuse
+		if (convertView == null) {
+			final int squareDateCellResource = squareTextViewCell ? R.layout.square_date_cell : R.layout.normal_date_cell;
+			cellView = (CellView) localInflater.inflate(squareDateCellResource, parent, false);
+		} else {
+			cellView = (CellView) convertView;
+		}
 
-        // For reuse
-        if (convertView == null) {
-            if (squareTextViewCell) {
-                cellView = (CellView) localInflater.inflate(R.layout.square_date_cell, null);
-            } else {
-                cellView = (CellView) localInflater.inflate(R.layout.normal_date_cell, null);
-            }
-        }
+		customizeTextView(position, cellView);
 
-        customizeTextView(position, cellView);
-
-        return cellView;
-    }
+		return cellView;
+	}
 
 }
