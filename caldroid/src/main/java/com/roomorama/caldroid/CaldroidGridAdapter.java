@@ -35,8 +35,8 @@ public class CaldroidGridAdapter extends BaseAdapter {
 
     // Use internally, to make the search for date faster instead of using
     // indexOf methods on ArrayList
-    protected HashMap<DateTime, Integer> disableDatesMap = new HashMap<DateTime, Integer>();
-    protected HashMap<DateTime, Integer> selectedDatesMap = new HashMap<DateTime, Integer>();
+    protected HashMap<DateTime, Integer> disableDatesMap = new HashMap<>();
+    protected HashMap<DateTime, Integer> selectedDatesMap = new HashMap<>();
 
     protected DateTime minDateTime;
     protected DateTime maxDateTime;
