@@ -315,7 +315,7 @@ public class CaldroidGridAdapter extends BaseAdapter {
         cellView.refreshDrawableState();
 
         // Set text
-        cellView.setText("" + dateTime.getDay());
+        cellView.setText(String.valueOf(dateTime.getDay()));
 
         // Set custom color if required
         setCustomResources(dateTime, cellView, cellView);
