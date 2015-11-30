@@ -20,3 +20,5 @@ Evolução de Software - ESOF 2015/2016
 ## *Submissão do patch* <a name="submission"></a>
 
 ## *Bibliografia*  <a name="bli"></a>
+
+  * **[Software Evolution](https://moodle.up.pt/pluginfile.php/80714/mod_resource/content/1/software_evolution.pdf)**
