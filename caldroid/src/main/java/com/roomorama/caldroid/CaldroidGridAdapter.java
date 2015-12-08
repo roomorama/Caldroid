@@ -35,8 +35,8 @@ public class CaldroidGridAdapter extends BaseAdapter {
 
     // Use internally, to make the search for date faster instead of using
     // indexOf methods on ArrayList
-    protected HashMap<DateTime, Integer> disableDatesMap = new HashMap<DateTime, Integer>();
-    protected HashMap<DateTime, Integer> selectedDatesMap = new HashMap<DateTime, Integer>();
+    protected HashMap<DateTime, Integer> disableDatesMap = new HashMap<>();
+    protected HashMap<DateTime, Integer> selectedDatesMap = new HashMap<>();
 
     protected DateTime minDateTime;
     protected DateTime maxDateTime;
@@ -58,6 +58,8 @@ public class CaldroidGridAdapter extends BaseAdapter {
      * extraData belongs to client
      */
     protected HashMap<String, Object> extraData;
+
+	protected LayoutInflater localInflater;
 
     public void setAdapterDateTime(DateTime dateTime) {
         this.month = dateTime.getMonth();
@@ -148,6 +150,10 @@ public class CaldroidGridAdapter extends BaseAdapter {
 
         // Get data from caldroidData
         populateFromCaldroidData();
+
+	    LayoutInflater inflater = (LayoutInflater) context
+			    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	    localInflater = CaldroidFragment.getLayoutInflater(context, inflater, themeResource);
     }
 
     /**
@@ -309,7 +315,7 @@ public class CaldroidGridAdapter extends BaseAdapter {
         cellView.refreshDrawableState();
 
         // Set text
-        cellView.setText("" + dateTime.getDay());
+        cellView.setText(String.valueOf(dateTime.getDay()));
 
         // Set custom color if required
         setCustomResources(dateTime, cellView, cellView);
@@ -336,26 +342,21 @@ public class CaldroidGridAdapter extends BaseAdapter {
         return 0;
     }
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        CellView cellView = (CellView) convertView;
+	@Override
+	public View getView(int position, View convertView, ViewGroup parent) {
+		CellView cellView;
 
-        LayoutInflater localInflater = CaldroidFragment.getLayoutInflater(context, inflater, themeResource);
+		// For reuse
+		if (convertView == null) {
+			final int squareDateCellResource = squareTextViewCell ? R.layout.square_date_cell : R.layout.normal_date_cell;
+			cellView = (CellView) localInflater.inflate(squareDateCellResource, parent, false);
+		} else {
+			cellView = (CellView) convertView;
+		}
 
-        // For reuse
-        if (convertView == null) {
-            if (squareTextViewCell) {
-                cellView = (CellView) localInflater.inflate(R.layout.square_date_cell, null);
-            } else {
-                cellView = (CellView) localInflater.inflate(R.layout.normal_date_cell, null);
-            }
-        }
+		customizeTextView(position, cellView);
 
-        customizeTextView(position, cellView);
-
-        return cellView;
-    }
+		return cellView;
+	}
 
 }

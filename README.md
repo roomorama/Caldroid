@@ -17,20 +17,20 @@ If you found bugs specific to Caldroid, please open a new issue on Github. Howev
 Setup
 =====
 
-**For Eclipse/ADT user**: please see tag [eclipse_project](https://github.com/roomorama/Caldroid/releases/tag/eclipse_project), download the source codes, check out the CaldroidSample to see how the library works. However you are strongly recommended to use Maven or gradle, because this tag is no longer supported.
-
-To use in your project, reference the child library project as a library. If you see JAR mismatched error, replace your android-support-v4.jar to the jar inside Caldroid. Make sure you compile the project against Android 4.2 and above to allow nested fragment. See more at http://developer.android.com/about/versions/android-4.2.html#NestedFragments
-
-**For Android Studio user**: add `compile 'com.roomorama:caldroid:2.2.0'` to your gradle build file.
+**For Android Studio user**: add `compile 'com.roomorama:caldroid:2.3.1'` to your gradle build file.
 
 **For Maven user**:
 ```
 <dependency>
     <groupId>com.roomorama</groupId>
     <artifactId>caldroid</artifactId>
-    <version>2.2.0</version>
+    <version>2.3.1</version>
 </dependency>
 ```
+
+**For Eclipse/ADT user**: please see tag [eclipse_project](https://github.com/roomorama/Caldroid/releases/tag/eclipse_project), download the source codes, check out the CaldroidSample to see how the library works. However you are strongly recommended to use Maven or gradle, because this tag is no longer supported.
+
+To use in your project, reference the child library project as a library. If you see JAR mismatched error, replace your android-support-v4.jar to the jar inside Caldroid. Make sure you compile the project against Android 4.2 and above to allow nested fragment. See more at http://developer.android.com/about/versions/android-4.2.html#NestedFragments
 
 Features
 ========
@@ -318,6 +318,33 @@ final CaldroidListener listener = new CaldroidListener() {
 
 caldroidFragment.setCaldroidListener(listener);
 
+```
+
+User can also customize the navigation arrows and month title textView: font, size, onClickListener, onLongClickListener, etc. Client can supply different adapter to the weekdayGridView. Make sure you only access these methods after Caldroid has been successfully attached to view, otherwise you will see NullPointerException.
+
+```java
+final CaldroidListener listener = new CaldroidListener() {
+
+    @Override
+    public void onSelectDate(Date date, View view) {
+        // Do something
+    }
+
+    @Override
+    public void onCaldroidViewCreated() {
+        // Supply your own adapter to weekdayGridView (SUN, MON, etc)
+        caldroidFragment.getWeekdayGridView().setAdapter(YOUR_ADAPTER);
+
+        Button leftButton = caldroidFragment.getLeftArrowButton();
+        Button rightButton = caldroidFragment.getRightArrowButton();
+        TextView textView = caldroidFragment.getMonthTitleTextView();
+
+        // Do customization here
+    }
+
+};
+
+caldroidFragment.setCaldroidListener(listener);
 ```
 
 ##Handle screen rotation
