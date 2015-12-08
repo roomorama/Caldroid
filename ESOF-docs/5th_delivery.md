@@ -11,7 +11,7 @@ Evolução de Software - ESOF 2015/2016
 
 ## *Introdução* <a name="introdução"></a>
 
-Nesta nova etapa do projecto vamos referir qual a feature escolhida para evoluir bem como todos os passos que levaram à sua implementação. Sendo esta uma fase em que teremos de escolher o que queremos melhorar/corrigir reparamos que o [Caldroid](https://github.com/roomorama/Caldroid) sendo uma aplicação de calendário apresentava muito poucas funcionalidades para os utilizadores e a decisão tornou-se difícil devido à existências de várias opções.
+  Nesta nova etapa do projecto vamos referir qual a feature escolhida para evoluir bem como todos os passos que levaram à sua implementação. Sendo esta uma fase em que teremos de escolher o que queremos melhorar/corrigir reparamos que o [Caldroid](https://github.com/roomorama/Caldroid) sendo uma aplicação de calendário apresentava muito poucas funcionalidades para os utilizadores e a decisão tornou-se difícil devido à existências de várias opções.
 
 ## *Feature a evoluir* <a name="feature"></a>
 
