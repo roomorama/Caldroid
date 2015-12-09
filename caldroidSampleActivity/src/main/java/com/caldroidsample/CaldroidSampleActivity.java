@@ -17,11 +17,18 @@ import android.widget.Toast;
 import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Properties;
 
 @SuppressLint("SimpleDateFormat")
 public class CaldroidSampleActivity extends AppCompatActivity {
@@ -30,6 +37,7 @@ public class CaldroidSampleActivity extends AppCompatActivity {
     private CaldroidFragment dialogCaldroidFragment;
     private TextView textView;
     private HashMap<Date,String> tasks = new HashMap<Date,String>();
+    Properties properties = new Properties();
 
     private LinearLayout mLayout;
 
@@ -58,6 +66,10 @@ public class CaldroidSampleActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // fazer load dos eventos já guardados
+        loadEvents();
+
+
         setContentView(R.layout.activity_main);
 
         final SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
@@ -131,6 +143,9 @@ public class CaldroidSampleActivity extends AppCompatActivity {
 
                             textView.append("\n" + editText.getText());
                             editText.setText("");
+
+                                saveEvents();
+
                             return false;
                         }
                         return true;
@@ -153,7 +168,6 @@ public class CaldroidSampleActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), text,
                         Toast.LENGTH_SHORT).show();
             }
-
             @Override
             public void onLongClickDate(Date date, View view) {
                 Toast.makeText(getApplicationContext(),
@@ -315,6 +329,13 @@ public class CaldroidSampleActivity extends AppCompatActivity {
             dialogCaldroidFragment.saveStatesToKey(outState,
                     "DIALOG_CALDROID_SAVED_STATE");
         }
+    }
+
+    public void saveEvents(){
+        
+    }
+    public void loadEvents() {
+
     }
 
 }
