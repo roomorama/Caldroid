@@ -24,6 +24,7 @@ public class CaldroidSampleActivity extends AppCompatActivity {
     private boolean undo = false;
     private CaldroidFragment caldroidFragment;
     private CaldroidFragment dialogCaldroidFragment;
+    private TextView textView;
 
     private void setCustomResourceForDates() {
         Calendar cal = Calendar.getInstance();
@@ -105,6 +106,9 @@ public class CaldroidSampleActivity extends AppCompatActivity {
             @Override
             public void onSelectDate(Date date, View view) {
                 System.out.println("temos de fazer aparecer um ecra para escrita aqui");
+
+
+                textView.setText("New text: " + formatter.format(date));
                 /*Toast.makeText(getApplicationContext(), formatter.format(date),
                         Toast.LENGTH_SHORT).show();*/
 
@@ -140,7 +144,7 @@ public class CaldroidSampleActivity extends AppCompatActivity {
         // Setup Caldroid
         caldroidFragment.setCaldroidListener(listener);
 
-        final TextView textView = (TextView) findViewById(R.id.textview);
+         textView = (TextView) findViewById(R.id.textview);
 
         final Button customizeButton = (Button) findViewById(R.id.customize_button);
 
