@@ -103,8 +103,9 @@ public class CaldroidSampleActivity extends AppCompatActivity {
 
             @Override
             public void onSelectDate(Date date, View view) {
-                Toast.makeText(getApplicationContext(), formatter.format(date),
-                        Toast.LENGTH_SHORT).show();
+                System.out.println("temos de fazer aparecer um ecra para escrita aqui");
+                /*Toast.makeText(getApplicationContext(), formatter.format(date),
+                        Toast.LENGTH_SHORT).show();*/
 
             }
 
