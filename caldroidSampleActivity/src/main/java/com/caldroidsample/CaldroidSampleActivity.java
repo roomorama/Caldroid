@@ -126,11 +126,12 @@ public class CaldroidSampleActivity extends AppCompatActivity {
             public void onSelectDate(Date date, View view) {
                 //System.out.println("temos de fazer aparecer um ecra para escrita aqui");
                 final EditText editText = (EditText) findViewById(R.id.editText);
+                editText.setText("");
                 textView.setText("Tasks of: " + formatter.format(date));
                 final Date temp = date;
                 final String taskTxt = tasks.get(date);
                 if(taskTxt != null)
-                    textView.append(taskTxt);
+                   editText.append(taskTxt);
 
                 editText.setOnEditorActionListener(new EditText.OnEditorActionListener() {
                     @Override
@@ -140,9 +141,6 @@ public class CaldroidSampleActivity extends AppCompatActivity {
                                 tasks.put(temp,"\n" +editText.getText());
                             else
                             tasks.put(temp,taskTxt+ "\n" + editText.getText());
-
-                            textView.append("\n" + editText.getText());
-                            editText.setText("");
 
                                 saveEvents();
 
