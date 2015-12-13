@@ -1,7 +1,9 @@
 package com.caldroidsample;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -30,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 @SuppressLint("SimpleDateFormat")
@@ -38,7 +41,7 @@ public class CaldroidSampleActivity extends AppCompatActivity {
     private CaldroidFragment caldroidFragment;
     private CaldroidFragment dialogCaldroidFragment;
     private TextView textView;
-    private HashMap<Date,String> tasks = new HashMap<Date,String>();
+    private HashMap<String,String> tasks = new HashMap<String,String>();
     Properties properties = new Properties();
 
     private LinearLayout mLayout;
@@ -69,7 +72,11 @@ public class CaldroidSampleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // fazer load dos eventos já guardados
-        loadEvents();
+        try {
+            loadEvents();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
         setContentView(R.layout.activity_main);
@@ -130,8 +137,8 @@ public class CaldroidSampleActivity extends AppCompatActivity {
                 final EditText editText = (EditText) findViewById(R.id.editText);
                 editText.setText("");
                 textView.setText("Tasks of: " + formatter.format(date) +" (hold return to save)" );
-                final Date temp = date;
-                final String taskTxt = tasks.get(date);
+                final String temp = formatter.format(date);
+                final String taskTxt = tasks.get(temp);
                 if(taskTxt != null)
                    editText.append(taskTxt);
 
@@ -144,7 +151,11 @@ public class CaldroidSampleActivity extends AppCompatActivity {
                             else
                             tasks.put(temp,taskTxt+ "\n" + editText.getText());
 
-                                saveEvents();
+                        try {
+                            saveEvents();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                         imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
                             return false;
@@ -330,10 +341,24 @@ public class CaldroidSampleActivity extends AppCompatActivity {
         }
     }
 
-    public void saveEvents(){
-        
+    public void saveEvents() throws IOException {
+        Properties properties = new Properties();
+
+        for (Map.Entry<String,String> entry : tasks.entrySet()) {
+            properties.put(entry.getKey(), entry.getValue());
+        }
+
+        properties.store(new FileOutputStream("tasks.properties"), null);
     }
-    public void loadEvents() {
+    @TargetApi(Build.VERSION_CODES.GINGERBREAD)
+    public void loadEvents() throws IOException {
+        tasks = new HashMap<String, String>();
+        Properties properties = new Properties();
+        properties.load(new FileInputStream("tasks.properties"));
+
+        for (String key : properties.stringPropertyNames()) {
+            tasks.put(key, properties.get(key).toString());
+        }
 
     }
 
