@@ -129,7 +129,7 @@ public class CaldroidSampleActivity extends AppCompatActivity {
                 //System.out.println("temos de fazer aparecer um ecra para escrita aqui");
                 final EditText editText = (EditText) findViewById(R.id.editText);
                 editText.setText("");
-                textView.setText("Tasks of: " + formatter.format(date) +"(hold return to save)" );
+                textView.setText("Tasks of: " + formatter.format(date) +" (hold return to save)" );
                 final Date temp = date;
                 final String taskTxt = tasks.get(date);
                 if(taskTxt != null)
