@@ -1,28 +1,50 @@
 package com.caldroidsample;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
+import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
 
 @SuppressLint("SimpleDateFormat")
 public class CaldroidSampleActivity extends AppCompatActivity {
     private boolean undo = false;
     private CaldroidFragment caldroidFragment;
     private CaldroidFragment dialogCaldroidFragment;
+    private TextView textView;
+    private HashMap<String,String> tasks = new HashMap<String,String>();
+    Properties properties = new Properties();
+
+    private LinearLayout mLayout;
 
     private void setCustomResourceForDates() {
         Calendar cal = Calendar.getInstance();
@@ -49,6 +71,14 @@ public class CaldroidSampleActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // fazer load dos eventos já guardados
+        try {
+            loadEvents();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
         setContentView(R.layout.activity_main);
 
         final SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
@@ -103,8 +133,42 @@ public class CaldroidSampleActivity extends AppCompatActivity {
 
             @Override
             public void onSelectDate(Date date, View view) {
-                Toast.makeText(getApplicationContext(), formatter.format(date),
-                        Toast.LENGTH_SHORT).show();
+                //System.out.println("temos de fazer aparecer um ecra para escrita aqui");
+                final EditText editText = (EditText) findViewById(R.id.editText);
+                editText.setText("");
+                textView.setText("Tasks of: " + formatter.format(date) +" (hold return to save)" );
+                final String temp = formatter.format(date);
+                final String taskTxt = tasks.get(temp);
+                if(taskTxt != null)
+                   editText.append(taskTxt);
+
+                editText.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+                    @Override
+                    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+
+                            if (taskTxt == null)
+                                tasks.put(temp, editText.getText()+"\n");
+                            else
+                            tasks.put(temp,taskTxt+ "\n" + editText.getText());
+
+                        try {
+                            saveEvents();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                            return false;
+                    }
+                });
+
+
+
+                //editText.setText("teste");
+                /*Toast.makeText(getApplicationContext(), formatter.format(date),
+                        Toast.LENGTH_SHORT).show();*/
+
+
 
             }
 
@@ -114,7 +178,6 @@ public class CaldroidSampleActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), text,
                         Toast.LENGTH_SHORT).show();
             }
-
             @Override
             public void onLongClickDate(Date date, View view) {
                 Toast.makeText(getApplicationContext(),
@@ -136,7 +199,7 @@ public class CaldroidSampleActivity extends AppCompatActivity {
         // Setup Caldroid
         caldroidFragment.setCaldroidListener(listener);
 
-        final TextView textView = (TextView) findViewById(R.id.textview);
+         textView = (TextView) findViewById(R.id.textview);
 
         final Button customizeButton = (Button) findViewById(R.id.customize_button);
 
@@ -256,6 +319,8 @@ public class CaldroidSampleActivity extends AppCompatActivity {
                         dialogTag);
             }
         });
+
+
     }
 
     /**
@@ -274,6 +339,27 @@ public class CaldroidSampleActivity extends AppCompatActivity {
             dialogCaldroidFragment.saveStatesToKey(outState,
                     "DIALOG_CALDROID_SAVED_STATE");
         }
+    }
+
+    public void saveEvents() throws IOException {
+        Properties properties = new Properties();
+
+        for (Map.Entry<String,String> entry : tasks.entrySet()) {
+            properties.put(entry.getKey(), entry.getValue());
+        }
+
+        properties.store(new FileOutputStream("tasks.properties"), null);
+    }
+    @TargetApi(Build.VERSION_CODES.GINGERBREAD)
+    public void loadEvents() throws IOException {
+        tasks = new HashMap<String, String>();
+        Properties properties = new Properties();
+        properties.load(new FileInputStream("tasks.properties"));
+
+        for (String key : properties.stringPropertyNames()) {
+            tasks.put(key, properties.get(key).toString());
+        }
+
     }
 
 }

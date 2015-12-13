@@ -41,7 +41,7 @@ public abstract class CaldroidListener {
      * @param year
      */
     public void onChangeMonth(int month, int year) {
-        // Do nothing
+
     }
 
     ;
