@@ -1,6 +1,7 @@
 package com.caldroidsample;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -127,7 +129,7 @@ public class CaldroidSampleActivity extends AppCompatActivity {
                 //System.out.println("temos de fazer aparecer um ecra para escrita aqui");
                 final EditText editText = (EditText) findViewById(R.id.editText);
                 editText.setText("");
-                textView.setText("Tasks of: " + formatter.format(date));
+                textView.setText("Tasks of: " + formatter.format(date) +"(hold return to save)" );
                 final Date temp = date;
                 final String taskTxt = tasks.get(date);
                 if(taskTxt != null)
@@ -136,17 +138,16 @@ public class CaldroidSampleActivity extends AppCompatActivity {
                 editText.setOnEditorActionListener(new EditText.OnEditorActionListener() {
                     @Override
                     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                        if (actionId == EditorInfo.IME_ACTION_DONE && !editText.getText().equals("")) {
+
                             if (taskTxt == null)
-                                tasks.put(temp,"\n" +editText.getText());
+                                tasks.put(temp, editText.getText()+"\n");
                             else
                             tasks.put(temp,taskTxt+ "\n" + editText.getText());
 
                                 saveEvents();
-
+                        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
                             return false;
-                        }
-                        return true;
                     }
                 });
 
