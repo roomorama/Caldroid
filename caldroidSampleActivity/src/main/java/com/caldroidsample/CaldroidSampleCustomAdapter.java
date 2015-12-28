@@ -11,15 +11,15 @@ import android.widget.TextView;
 import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidGridAdapter;
 
-import java.util.HashMap;
+import java.util.Map;
 
 import hirondelle.date4j.DateTime;
 
 public class CaldroidSampleCustomAdapter extends CaldroidGridAdapter {
 
 	public CaldroidSampleCustomAdapter(Context context, int month, int year,
-			HashMap<String, Object> caldroidData,
-			HashMap<String, Object> extraData) {
+			Map<String, Object> caldroidData,
+			Map<String, Object> extraData) {
 		super(context, month, year, caldroidData, extraData);
 	}
 

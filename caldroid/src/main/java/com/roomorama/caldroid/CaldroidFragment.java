@@ -13,8 +13,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.text.format.DateUtils;
 import android.text.format.Time;
-import android.view.*;
+import android.view.ContextThemeWrapper;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -35,6 +39,7 @@ import java.util.Formatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.TimeZone;
 
 import hirondelle.date4j.DateTime;
@@ -169,22 +174,22 @@ public class CaldroidFragment extends DialogFragment {
     /**
      * caldroidData belongs to Caldroid
      */
-    protected HashMap<String, Object> caldroidData = new HashMap<String, Object>();
+    protected Map<String, Object> caldroidData = new HashMap<>();
 
     /**
      * extraData belongs to client
      */
-    protected HashMap<String, Object> extraData = new HashMap<String, Object>();
+    protected Map<String, Object> extraData = new HashMap<>();
 
     /**
      * backgroundForDateMap holds background resource for each date
      */
-    protected HashMap<DateTime, Integer> backgroundForDateTimeMap = new HashMap<DateTime, Integer>();
+    protected Map<DateTime, Integer> backgroundForDateTimeMap = new HashMap<>();
 
     /**
      * textColorForDateMap holds color for text for each date
      */
-    protected HashMap<DateTime, Integer> textColorForDateTimeMap = new HashMap<DateTime, Integer>();
+    protected Map<DateTime, Integer> textColorForDateTimeMap = new HashMap<>();
     ;
 
     /**
@@ -301,11 +306,11 @@ public class CaldroidFragment extends DialogFragment {
     /*
      * For client to access background and text color maps
      */
-    public HashMap<DateTime, Integer> getBackgroundForDateTimeMap() {
+    public Map<DateTime, Integer> getBackgroundForDateTimeMap() {
         return backgroundForDateTimeMap;
     }
 
-    public HashMap<DateTime, Integer> getTextColorForDateTimeMap() {
+    public Map<DateTime, Integer> getTextColorForDateTimeMap() {
         return textColorForDateTimeMap;
     }
 
@@ -346,7 +351,7 @@ public class CaldroidFragment extends DialogFragment {
      *
      * @return
      */
-    public HashMap<String, Object> getCaldroidData() {
+    public Map<String, Object> getCaldroidData() {
         caldroidData.clear();
         caldroidData.put(DISABLE_DATES, disableDates);
         caldroidData.put(SELECTED_DATES, selectedDates);
@@ -372,7 +377,7 @@ public class CaldroidFragment extends DialogFragment {
      *
      * @return
      */
-    public HashMap<String, Object> getExtraData() {
+    public Map<String, Object> getExtraData() {
         return extraData;
     }
 
@@ -381,7 +386,7 @@ public class CaldroidFragment extends DialogFragment {
      *
      * @param extraData
      */
-    public void setExtraData(HashMap<String, Object> extraData) {
+    public void setExtraData(Map<String, Object> extraData) {
         this.extraData = extraData;
     }
 
@@ -389,7 +394,7 @@ public class CaldroidFragment extends DialogFragment {
      * Set backgroundForDateMap
      */
     public void setBackgroundResourceForDates(
-            HashMap<Date, Integer> backgroundForDateMap) {
+            Map<Date, Integer> backgroundForDateMap) {
         if (backgroundForDateMap == null || backgroundForDateMap.size() == 0) {
             return;
         }
@@ -414,7 +419,7 @@ public class CaldroidFragment extends DialogFragment {
     }
 
     public void setBackgroundResourceForDateTimes(
-            HashMap<DateTime, Integer> backgroundForDateTimeMap) {
+            Map<DateTime, Integer> backgroundForDateTimeMap) {
         this.backgroundForDateTimeMap.putAll(backgroundForDateTimeMap);
     }
 
@@ -450,7 +455,7 @@ public class CaldroidFragment extends DialogFragment {
      *
      * @return
      */
-    public void setTextColorForDates(HashMap<Date, Integer> textColorForDateMap) {
+    public void setTextColorForDates(Map<Date, Integer> textColorForDateMap) {
         if (textColorForDateMap == null || textColorForDateMap.size() == 0) {
             return;
         }
@@ -473,7 +478,7 @@ public class CaldroidFragment extends DialogFragment {
     }
 
     public void setTextColorForDateTimes(
-            HashMap<DateTime, Integer> textColorForDateTimeMap) {
+            Map<DateTime, Integer> textColorForDateTimeMap) {
         this.textColorForDateTimeMap.putAll(textColorForDateTimeMap);
     }
 
