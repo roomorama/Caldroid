@@ -17,6 +17,7 @@ import com.caldroid.R;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 import hirondelle.date4j.DateTime;
 
@@ -35,8 +36,8 @@ public class CaldroidGridAdapter extends BaseAdapter {
 
     // Use internally, to make the search for date faster instead of using
     // indexOf methods on ArrayList
-    protected HashMap<DateTime, Integer> disableDatesMap = new HashMap<>();
-    protected HashMap<DateTime, Integer> selectedDatesMap = new HashMap<>();
+    protected Map<DateTime, Integer> disableDatesMap = new HashMap<>();
+    protected Map<DateTime, Integer> selectedDatesMap = new HashMap<>();
 
     protected DateTime minDateTime;
     protected DateTime maxDateTime;
@@ -53,11 +54,11 @@ public class CaldroidGridAdapter extends BaseAdapter {
     /**
      * caldroidData belongs to Caldroid
      */
-    protected HashMap<String, Object> caldroidData;
+    protected Map<String, Object> caldroidData;
     /**
      * extraData belongs to client
      */
-    protected HashMap<String, Object> extraData;
+    protected Map<String, Object> extraData;
 
 	protected LayoutInflater localInflater;
 
@@ -109,22 +110,22 @@ public class CaldroidGridAdapter extends BaseAdapter {
         return themeResource;
     }
 
-    public HashMap<String, Object> getCaldroidData() {
+    public Map<String, Object> getCaldroidData() {
         return caldroidData;
     }
 
-    public void setCaldroidData(HashMap<String, Object> caldroidData) {
+    public void setCaldroidData(Map<String, Object> caldroidData) {
         this.caldroidData = caldroidData;
 
         // Reset parameters
         populateFromCaldroidData();
     }
 
-    public HashMap<String, Object> getExtraData() {
+    public Map<String, Object> getExtraData() {
         return extraData;
     }
 
-    public void setExtraData(HashMap<String, Object> extraData) {
+    public void setExtraData(Map<String, Object> extraData) {
         this.extraData = extraData;
     }
 
@@ -138,8 +139,8 @@ public class CaldroidGridAdapter extends BaseAdapter {
      * @param extraData
      */
     public CaldroidGridAdapter(Context context, int month, int year,
-                               HashMap<String, Object> caldroidData,
-                               HashMap<String, Object> extraData) {
+                               Map<String, Object> caldroidData,
+                               Map<String, Object> extraData) {
         super();
         this.month = month;
         this.year = year;
@@ -236,7 +237,7 @@ public class CaldroidGridAdapter extends BaseAdapter {
     protected void setCustomResources(DateTime dateTime, View backgroundView,
                                       TextView textView) {
         // Set custom background resource
-        HashMap<DateTime, Integer> backgroundForDateTimeMap = (HashMap<DateTime, Integer>) caldroidData
+        Map<DateTime, Integer> backgroundForDateTimeMap = (Map<DateTime, Integer>) caldroidData
                 .get(CaldroidFragment._BACKGROUND_FOR_DATETIME_MAP);
         if (backgroundForDateTimeMap != null) {
             // Get background resource for the dateTime
@@ -249,7 +250,7 @@ public class CaldroidGridAdapter extends BaseAdapter {
         }
 
         // Set custom text color
-        HashMap<DateTime, Integer> textColorForDateTimeMap = (HashMap<DateTime, Integer>) caldroidData
+        Map<DateTime, Integer> textColorForDateTimeMap = (Map<DateTime, Integer>) caldroidData
                 .get(CaldroidFragment._TEXT_COLOR_FOR_DATETIME_MAP);
         if (textColorForDateTimeMap != null) {
             // Get textColor for the dateTime
