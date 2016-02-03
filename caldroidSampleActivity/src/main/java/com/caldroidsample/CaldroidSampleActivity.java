@@ -106,6 +106,8 @@ public class CaldroidSampleActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), formatter.format(date),
                         Toast.LENGTH_SHORT).show();
 
+                caldroidFragment.setBackgroundResourceForDate(0xffff0000, date);
+                caldroidFragment.refreshView();
             }
 
             @Override
