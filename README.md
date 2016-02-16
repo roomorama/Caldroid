@@ -185,7 +185,7 @@ public void setTextColorForDate(int textColorRes, Date date);
 public void setTextColorForDateTime(int textColorRes, DateTime dateTime);
 ```
 
-To use these methods, you should define your colors in ```color.xml``` and background in ```drawable``` folder:
+To use these methods, you can define your colors in ```color.xml``` and background in ```drawable``` folder:
 
 ``` java
 ColorDrawable blue = new ColorDrawable(getResources().getColor(R.color.blue));
@@ -194,7 +194,8 @@ caldroidFragment.setBackgroundDrawableForDate(blue, blueDate);
 caldroidFragment.setBackgroundDrawableForDate(green, greenDate);
 
 caldroidFragment.setTextColorForDate(R.color.white, blueDate);
-caldroidFragment.setTextColorForDate(R.color.white, greenDate);```
+caldroidFragment.setTextColorForDate(R.color.white, greenDate);
+```
 
 You need to call ```refreshView()``` after above methods to update calendar appearance.
 
