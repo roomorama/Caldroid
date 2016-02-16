@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.util.TypedValue;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -154,7 +156,7 @@ public class CaldroidGridAdapter extends BaseAdapter {
 
 	    LayoutInflater inflater = (LayoutInflater) context
 			    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-	    localInflater = CaldroidFragment.getLayoutInflater(context, inflater, themeResource);
+	    localInflater = CaldroidFragment.getThemeInflater(context, inflater, themeResource);
     }
 
     /**
@@ -237,24 +239,18 @@ public class CaldroidGridAdapter extends BaseAdapter {
     protected void setCustomResources(DateTime dateTime, View backgroundView,
                                       TextView textView) {
         // Set custom background resource
-        Map<DateTime, Integer> backgroundForDateTimeMap = (Map<DateTime, Integer>) caldroidData
+        Map<DateTime, Drawable> backgroundForDateTimeMap = (Map<DateTime, Drawable>) caldroidData
                 .get(CaldroidFragment._BACKGROUND_FOR_DATETIME_MAP);
         if (backgroundForDateTimeMap != null) {
             // Get background resource for the dateTime
-            Integer backgroundResource = backgroundForDateTimeMap.get(dateTime);
+            Drawable drawable = backgroundForDateTimeMap.get(dateTime);
 
             // Set it
-            if (backgroundResource != null) {
-                try
-                {
-                    String tmp = this.context.getResources().getResourceName(backgroundResource);
-                    // have resource
-                    backgroundView.setBackgroundResource(backgroundResource);
-                }
-                catch(Resources.NotFoundException e)
-                {
-                    // doesn't have resource, use like color
-                    backgroundView.setBackgroundColor(backgroundResource);
+            if (drawable != null) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    backgroundView.setBackground(drawable);
+                } else {
+                    backgroundView.setBackgroundDrawable(drawable);
                 }
             }
         }

@@ -1,6 +1,8 @@
 package com.caldroidsample;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -37,10 +39,10 @@ public class CaldroidSampleActivity extends AppCompatActivity {
         Date greenDate = cal.getTime();
 
         if (caldroidFragment != null) {
-            caldroidFragment.setBackgroundResourceForDate(R.color.blue,
-                    blueDate);
-            caldroidFragment.setBackgroundResourceForDate(R.color.green,
-                    greenDate);
+            ColorDrawable blue = new ColorDrawable(getResources().getColor(R.color.blue));
+            ColorDrawable green = new ColorDrawable(Color.GREEN);
+            caldroidFragment.setBackgroundDrawableForDate(blue, blueDate);
+            caldroidFragment.setBackgroundDrawableForDate(green, greenDate);
             caldroidFragment.setTextColorForDate(R.color.white, blueDate);
             caldroidFragment.setTextColorForDate(R.color.white, greenDate);
         }
@@ -105,9 +107,6 @@ public class CaldroidSampleActivity extends AppCompatActivity {
             public void onSelectDate(Date date, View view) {
                 Toast.makeText(getApplicationContext(), formatter.format(date),
                         Toast.LENGTH_SHORT).show();
-
-                caldroidFragment.setBackgroundResourceForDate(0xffff0000, date);
-                caldroidFragment.refreshView();
             }
 
             @Override

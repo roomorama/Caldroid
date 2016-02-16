@@ -94,7 +94,7 @@ public class DateGridFragment extends Fragment {
         }
 
         if (gridView == null) {
-            LayoutInflater localInflater = CaldroidFragment.getLayoutInflater(getActivity(),
+            LayoutInflater localInflater = CaldroidFragment.getThemeInflater(getActivity(),
                     inflater, themeResource);
             gridView = (GridView) localInflater.inflate(gridViewRes, container, false);
             setupGridView();

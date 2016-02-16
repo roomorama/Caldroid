@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -78,8 +79,6 @@ import hirondelle.date4j.DateTime;
 
 @SuppressLint("DefaultLocale")
 public class CaldroidFragment extends DialogFragment {
-    public String TAG = "CaldroidFragment";
-
     /**
      * Weekday conventions
      */
@@ -184,7 +183,7 @@ public class CaldroidFragment extends DialogFragment {
     /**
      * backgroundForDateMap holds background resource for each date
      */
-    protected Map<DateTime, Integer> backgroundForDateTimeMap = new HashMap<>();
+    protected Map<DateTime, Drawable> backgroundForDateTimeMap = new HashMap<>();
 
     /**
      * textColorForDateMap holds color for text for each date
@@ -306,7 +305,7 @@ public class CaldroidFragment extends DialogFragment {
     /*
      * For client to access background and text color maps
      */
-    public Map<DateTime, Integer> getBackgroundForDateTimeMap() {
+    public Map<DateTime, Drawable> getBackgroundForDateTimeMap() {
         return backgroundForDateTimeMap;
     }
 
@@ -357,9 +356,8 @@ public class CaldroidFragment extends DialogFragment {
         caldroidData.put(SELECTED_DATES, selectedDates);
         caldroidData.put(_MIN_DATE_TIME, minDateTime);
         caldroidData.put(_MAX_DATE_TIME, maxDateTime);
-        caldroidData.put(START_DAY_OF_WEEK, Integer.valueOf(startDayOfWeek));
-        caldroidData.put(SIX_WEEKS_IN_CALENDAR,
-                Boolean.valueOf(sixWeeksInCalendar));
+        caldroidData.put(START_DAY_OF_WEEK, startDayOfWeek);
+        caldroidData.put(SIX_WEEKS_IN_CALENDAR, sixWeeksInCalendar);
         caldroidData.put(SQUARE_TEXT_VIEW_CELL, squareTextViewCell);
         caldroidData.put(THEME_RESOURCE, themeResource);
 
@@ -393,8 +391,8 @@ public class CaldroidFragment extends DialogFragment {
     /**
      * Set backgroundForDateMap
      */
-    public void setBackgroundResourceForDates(
-            Map<Date, Integer> backgroundForDateMap) {
+    public void setBackgroundDrawableForDates(
+            Map<Date, Drawable> backgroundForDateMap) {
         if (backgroundForDateMap == null || backgroundForDateMap.size() == 0) {
             return;
         }
@@ -402,28 +400,28 @@ public class CaldroidFragment extends DialogFragment {
         backgroundForDateTimeMap.clear();
 
         for (Date date : backgroundForDateMap.keySet()) {
-            Integer resource = backgroundForDateMap.get(date);
+            Drawable drawable = backgroundForDateMap.get(date);
             DateTime dateTime = CalendarHelper.convertDateToDateTime(date);
-            backgroundForDateTimeMap.put(dateTime, resource);
+            backgroundForDateTimeMap.put(dateTime, drawable);
         }
     }
 
-    public void clearBackgroundResourceForDates(List<Date> dates) {
+    public void clearBackgroundDrawableForDates(List<Date> dates) {
         if (dates == null || dates.size() == 0) {
             return;
         }
 
         for (Date date : dates) {
-            clearBackgroundResourceForDate(date);
+            clearBackgroundDrawableForDate(date);
         }
     }
 
-    public void setBackgroundResourceForDateTimes(
-            Map<DateTime, Integer> backgroundForDateTimeMap) {
+    public void setBackgroundDrawableForDateTimes(
+            Map<DateTime, Drawable> backgroundForDateTimeMap) {
         this.backgroundForDateTimeMap.putAll(backgroundForDateTimeMap);
     }
 
-    public void clearBackgroundResourceForDateTimes(List<DateTime> dateTimes) {
+    public void clearBackgroundDrawableForDateTimes(List<DateTime> dateTimes) {
         if (dateTimes == null || dateTimes.size() == 0) return;
 
         for (DateTime dateTime : dateTimes) {
@@ -431,22 +429,22 @@ public class CaldroidFragment extends DialogFragment {
         }
     }
 
-    public void setBackgroundResourceForDate(int backgroundRes, Date date) {
+    public void setBackgroundDrawableForDate(Drawable drawable, Date date) {
         DateTime dateTime = CalendarHelper.convertDateToDateTime(date);
-        backgroundForDateTimeMap.put(dateTime, backgroundRes);
+        backgroundForDateTimeMap.put(dateTime, drawable);
     }
 
-    public void clearBackgroundResourceForDate(Date date) {
+    public void clearBackgroundDrawableForDate(Date date) {
         DateTime dateTime = CalendarHelper.convertDateToDateTime(date);
         backgroundForDateTimeMap.remove(dateTime);
     }
 
-    public void setBackgroundResourceForDateTime(int backgroundRes,
+    public void setBackgroundDrawableForDateTime(Drawable drawable,
                                                  DateTime dateTime) {
-        backgroundForDateTimeMap.put(dateTime, backgroundRes);
+        backgroundForDateTimeMap.put(dateTime, drawable);
     }
 
-    public void clearBackgroundResourceForDateTime(DateTime dateTime) {
+    public void clearBackgroundDrawableForDateTime(DateTime dateTime) {
         backgroundForDateTimeMap.remove(dateTime);
     }
 
@@ -1222,7 +1220,7 @@ public class CaldroidFragment extends DialogFragment {
         return themeResource;
     }
 
-    public static LayoutInflater getLayoutInflater(Context context, LayoutInflater origInflater, int themeResource) {
+    public static LayoutInflater getThemeInflater(Context context, LayoutInflater origInflater, int themeResource) {
         Context wrapped = new ContextThemeWrapper(context, themeResource);
         return origInflater.cloneInContext(wrapped);
     }
@@ -1244,7 +1242,12 @@ public class CaldroidFragment extends DialogFragment {
             }
         }
 
-        LayoutInflater localInflater = getLayoutInflater(getActivity(), inflater, themeResource);
+        LayoutInflater localInflater = getThemeInflater(getActivity(), inflater, themeResource);
+
+        // This is a hack to fix issue localInflater doesn't use the themeResource, make Android
+        // complain about layout_width and layout_height missing. I'm unsure about its impact
+        // for app that wants to change theme dynamically.
+        getActivity().setTheme(themeResource);
 
         View view = localInflater.inflate(R.layout.calendar_view, container, false);
 

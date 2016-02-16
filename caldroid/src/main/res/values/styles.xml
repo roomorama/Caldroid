@@ -83,7 +83,7 @@
         <item name="styleCaldroidGridView">@style/CaldroidDefaultDarkGridView</item>
     </style>
 
-    <style name="CaldroidDefaultDarkCalendarViewLayout">
+    <style name="CaldroidDefaultDarkCalendarViewLayout" parent="CaldroidDefaultCalendarViewLayout">
         <item name="android:background">@android:color/black</item>
     </style>
 
