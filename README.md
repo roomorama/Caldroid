@@ -17,14 +17,14 @@ If you found bugs specific to Caldroid, please open a new issue on Github. Howev
 Setup
 =====
 
-**For Android Studio user**: add `compile 'com.roomorama:caldroid:2.3.1'` to your gradle build file.
+**For Android Studio user**: add `compile 'com.roomorama:caldroid:3.0.0'` to your gradle build file.
 
 **For Maven user**:
 ```
 <dependency>
     <groupId>com.roomorama</groupId>
     <artifactId>caldroid</artifactId>
-    <version>2.3.1</version>
+    <version>3.0.0</version>
 </dependency>
 ```
 
@@ -173,10 +173,10 @@ It is very easy to supply different backgrounds and text colors for different da
 
 ``` java
 // You can use any of below methods to set background colors
-public void setBackgroundResourceForDates(HashMap<Date, Integer> backgroundForDateMap);
-public void setBackgroundResourceForDateTimes(HashMap<DateTime, Integer> backgroundForDateTimeMap);
-public void setBackgroundResourceForDate(int backgroundRes, Date date);
-public void setBackgroundResourceForDateTime(int backgroundRes, DateTime dateTime);
+public void setBackgroundDrawableForDates(HashMap<Date, Drawable> backgroundForDateMap);
+public void setBackgroundDrawableForDateTimes(HashMap<DateTime, Drawable> backgroundForDateTimeMap);
+public void setBackgroundDrawableForDate(Drawable drawable, Date date);
+public void setBackgroundDrawableForDateTime(Drawable drawable, DateTime dateTime);
 
 // Below methods is to set text color
 public void setTextColorForDates(HashMap<Date, Integer> textColorForDateMap);
@@ -188,18 +188,20 @@ public void setTextColorForDateTime(int textColorRes, DateTime dateTime);
 To use these methods, you should define your colors in ```color.xml``` and background in ```drawable``` folder:
 
 ``` java
-caldroidFragment.setBackgroundResourceForDate(R.color.blue, blueDate);
-caldroidFragment.setBackgroundResourceForDate(R.color.green, greenDate);
+ColorDrawable blue = new ColorDrawable(getResources().getColor(R.color.blue));
+ColorDrawable green = new ColorDrawable(Color.GREEN);
+caldroidFragment.setBackgroundDrawableForDate(blue, blueDate);
+caldroidFragment.setBackgroundDrawableForDate(green, greenDate);
+
 caldroidFragment.setTextColorForDate(R.color.white, blueDate);
-caldroidFragment.setTextColorForDate(R.color.white, greenDate);
-```
+caldroidFragment.setTextColorForDate(R.color.white, greenDate);```
 
 You need to call ```refreshView()``` after above methods to update calendar appearance.
 
 You can also clear the background and text color:
 ```java
-public void clearBackgroundResourceForDate(Date date);
-public void clearBackgroundResourceForDates(List<Date> dates);
+public void clearBackgroundDrawableForDate(Date date);
+public void clearBackgroundDrawableForDates(List<Date> dates);
 public void clearTextColorForDates(List<Date> dates);
 public void clearTextColorForDate(Date date);
 ```
@@ -212,7 +214,7 @@ Caldroid is simply an UI library and it does *not* connect to user calendar data
 
 - Design a drawable for the date with event. See more here for all types of drawable you can create: http://developer.android.com/guide/topics/resources/drawable-resource.html
 
-- Use above `setBackgroundResourceForDate` method to set the event drawable to correct date
+- Use above `setBackgroundDrawableForDate` method to set the event drawable to correct date
 
 - Call `refreshView()` to update calendar appearance
 
