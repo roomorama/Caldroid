@@ -97,10 +97,6 @@ public class CaldroidFragment extends DialogFragment {
     private static final int MONTH_YEAR_FLAG = DateUtils.FORMAT_SHOW_DATE
             | DateUtils.FORMAT_NO_MONTH_DAY | DateUtils.FORMAT_SHOW_YEAR;
 
-    /**
-     * First day of month time
-     */
-    private Time firstMonthTime = new Time();
 
     /**
      * Reuse formatter to print "MMMM yyyy" format
@@ -1032,10 +1028,9 @@ public class CaldroidFragment extends DialogFragment {
      */
     protected void refreshMonthTitleTextView() {
         // Refresh title view
-        firstMonthTime.year = year;
-        firstMonthTime.month = month - 1;
-        firstMonthTime.monthDay = 15;
-        long millis = firstMonthTime.toMillis(true);
+        Calendar c2 = Calendar.getInstance();
+        c2.set(year, month - 1, 15, 0, 0, 0);
+        long millis = c2.getTimeInMillis();
 
         // This is the method used by the platform Calendar app to get a
         // correctly localized month name for display on a wall calendar
