@@ -1,3 +1,8 @@
+3.0.1
+=====
+
+- Fix issue #367: Caldroid now saves SQUARE_TEXT_VIEW_CELL properly during rotation.
+
 3.0.0
 =====
 

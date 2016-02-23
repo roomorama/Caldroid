@@ -17,14 +17,14 @@ If you found bugs specific to Caldroid, please open a new issue on Github. Howev
 Setup
 =====
 
-**For Android Studio user**: add `compile 'com.roomorama:caldroid:3.0.0'` to your gradle build file.
+**For Android Studio user**: add `compile 'com.roomorama:caldroid:3.0.1'` to your gradle build file.
 
 **For Maven user**:
 ```
 <dependency>
     <groupId>com.roomorama</groupId>
     <artifactId>caldroid</artifactId>
-    <version>3.0.0</version>
+    <version>3.0.1</version>
 </dependency>
 ```
 

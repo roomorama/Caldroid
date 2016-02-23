@@ -532,6 +532,11 @@ public class CaldroidFragment extends DialogFragment {
         bundle.putBoolean(SIX_WEEKS_IN_CALENDAR, sixWeeksInCalendar);
         bundle.putInt(THEME_RESOURCE, themeResource);
 
+        Bundle args = getArguments();
+        if (args != null && args.containsKey(SQUARE_TEXT_VIEW_CELL)) {
+            bundle.putBoolean(SQUARE_TEXT_VIEW_CELL, args.getBoolean(SQUARE_TEXT_VIEW_CELL));
+        }
+
         return bundle;
     }
 
