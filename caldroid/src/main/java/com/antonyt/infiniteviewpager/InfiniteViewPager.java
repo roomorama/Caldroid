@@ -130,6 +130,9 @@ public class InfiniteViewPager extends ViewPager {
 					.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
 
 			rowHeight = firstChild.getMeasuredHeight();
+			if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN
+					&& firstChild instanceof GridView)
+				rowHeight += ((GridView)firstChild).getVerticalSpacing();
 		}
 
 		// Calculate height of the calendar
