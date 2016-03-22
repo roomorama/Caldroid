@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -1043,7 +1044,11 @@ public class CaldroidFragment extends DialogFragment {
         String monthTitle = DateUtils.formatDateRange(getActivity(),
                 monthYearFormatter, millis, millis, MONTH_YEAR_FLAG).toString();
 
-        monthTitleTextView.setText(monthTitle.toUpperCase(Locale.getDefault()));
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            monthTitle = monthTitle.toUpperCase(Locale.getDefault());
+        }
+
+        monthTitleTextView.setText(monthTitle);
     }
 
     /**
