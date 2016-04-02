@@ -135,6 +135,7 @@ public class CaldroidFragment extends DialogFragment {
      */
     public final static String
             DIALOG_TITLE = "dialogTitle",
+            DIALOG_TITLE_CUSTOM_VIEW = "dialogTitleCustomView",
             MONTH = "month",
             YEAR = "year",
             SHOW_NAVIGATION_ARROWS = "showNavigationArrows",
@@ -162,6 +163,7 @@ public class CaldroidFragment extends DialogFragment {
      * Initial data
      */
     protected String dialogTitle;
+    protected int dialogTitleCustomView;
     protected int month = -1;
     protected int year = -1;
     protected ArrayList<DateTime> disableDates = new ArrayList<DateTime>();
@@ -1094,7 +1096,12 @@ public class CaldroidFragment extends DialogFragment {
             Dialog dialog = getDialog();
             if (dialog != null) {
                 if (dialogTitle != null) {
-                    dialog.setTitle(dialogTitle);
+                    dialogTitleCustomView = args.getInt(DIALOG_TITLE_CUSTOM_VIEW);
+                    if (dialogTitleCustomView == 0) {
+                        dialog.setTitle(dialogTitle);
+                    } else {
+                        dialog.requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
+                    }
                 } else {
                     // Don't display title bar if user did not supply
                     // dialogTitle
@@ -1310,6 +1317,15 @@ public class CaldroidFragment extends DialogFragment {
 			caldroidListener.onCaldroidViewCreated();
 		}
 	}
+
+  @Override
+  public void onActivityCreated(Bundle savedInstanceState) {
+      super.onActivityCreated(savedInstanceState);
+      if (dialogTitleCustomView != 0) {
+          getDialog().getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, dialogTitleCustomView);
+          ((TextView) getDialog().findViewById(android.R.id.title)).setText(dialogTitle);
+      }
+  }
 
 	/**
      * This method can be used to provide different gridview.
