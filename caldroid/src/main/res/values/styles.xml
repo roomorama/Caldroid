@@ -9,6 +9,7 @@
         <item name="styleCaldroidNormalCell">@style/CaldroidDefaultNormalCell</item>
         <item name="styleCaldroidSquareCell">@style/CaldroidDefaultSquareCell</item>
         <item name="styleCaldroidWeekdayView">@style/CaldroidDefaultWeekday</item>
+        <item name="android:windowNoTitle">false</item>
     </style>
 
     <style name="CaldroidDefaultCalendarViewLayout">
