@@ -147,7 +147,8 @@ public class CaldroidFragment extends DialogFragment {
             SIX_WEEKS_IN_CALENDAR = "sixWeeksInCalendar",
             ENABLE_CLICK_ON_DISABLED_DATES = "enableClickOnDisabledDates",
             SQUARE_TEXT_VIEW_CELL = "squareTextViewCell",
-            THEME_RESOURCE = "themeResource";
+            THEME_RESOURCE = "themeResource",
+            ENABLE_STRICT_WRAP_CONTENT = "enableStrictWrapContent";
 
     /**
      * For internal use
@@ -213,6 +214,12 @@ public class CaldroidFragment extends DialogFragment {
     protected boolean enableSwipe = true;
     protected boolean showNavigationArrows = true;
     protected boolean enableClickOnDisabledDates = false;
+
+
+    /**
+     * Enable strict wrap content for date view pager
+     */
+    protected boolean enableStrictWrapContent = true;
 
     /**
      * To use SquareTextView to display Date cell.By default, it is true,
@@ -531,6 +538,7 @@ public class CaldroidFragment extends DialogFragment {
         bundle.putInt(START_DAY_OF_WEEK, startDayOfWeek);
         bundle.putBoolean(SIX_WEEKS_IN_CALENDAR, sixWeeksInCalendar);
         bundle.putInt(THEME_RESOURCE, themeResource);
+        bundle.putBoolean(ENABLE_STRICT_WRAP_CONTENT, enableStrictWrapContent);
 
         Bundle args = getArguments();
         if (args != null && args.containsKey(SQUARE_TEXT_VIEW_CELL)) {
@@ -861,6 +869,20 @@ public class CaldroidFragment extends DialogFragment {
     }
 
     /**
+     * Enable / Disable strict wrap content logic for cells
+     *
+     * @return
+     */
+    public boolean isEnableStrictWrapContent() {
+        return enableStrictWrapContent;
+    }
+
+    public void setEnableStrictWrapContent(boolean enableStrictWrapContent) {
+        this.enableStrictWrapContent = enableStrictWrapContent;
+        dateViewPager.setEnabledStrictWrapContent(enableStrictWrapContent);
+    }
+
+    /**
      * Enable / Disable swipe to navigate different months
      *
      * @return
@@ -1170,6 +1192,9 @@ public class CaldroidFragment extends DialogFragment {
 
             // Get theme
             themeResource = args.getInt(THEME_RESOURCE, R.style.CaldroidDefault);
+
+            // get enabled strict wrap content
+            enableStrictWrapContent = args.getBoolean(ENABLE_STRICT_WRAP_CONTENT, true);
         }
         if (month == -1 || year == -1) {
             DateTime dateTime = DateTime.today(TimeZone.getDefault());
@@ -1386,12 +1411,15 @@ public class CaldroidFragment extends DialogFragment {
         // height correctly
         dateViewPager.setDatesInMonth(dateInMonthsList);
 
+        dateViewPager.setEnabledStrictWrapContent(enableStrictWrapContent);
+
         // MonthPagerAdapter actually provides 4 real fragments. The
         // InfinitePagerAdapter only recycles fragment provided by this
         // MonthPagerAdapter
         final MonthPagerAdapter pagerAdapter = new MonthPagerAdapter(
                 getChildFragmentManager());
 
+                
         // Provide initial data to the fragments, before they are attached to
         // view.
         fragments = pagerAdapter.getFragments();

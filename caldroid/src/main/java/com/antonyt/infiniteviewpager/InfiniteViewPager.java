@@ -32,6 +32,11 @@ public class InfiniteViewPager extends ViewPager {
 	private boolean enabled = true;
 
 	/**
+	 * Enable wrap content strict adjusting
+	 */
+	private boolean enabledStrictWrapContent = true;
+
+	/**
 	 * A calendar height is not fixed, it may have 4, 5 or 6 rows. Set
 	 * fitAllMonths to true so that the calendar will always have 6 rows
 	 */
@@ -49,6 +54,14 @@ public class InfiniteViewPager extends ViewPager {
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+
+	public boolean isEnabledStrictWrapContent() {
+		return enabledStrictWrapContent;
+	}
+
+	public void setEnabledStrictWrapContent(boolean enabledStrictWrapContent) {
+		this.enabledStrictWrapContent = enabledStrictWrapContent;
 	}
 
 	public boolean isSixWeeksInCalendar() {
@@ -113,6 +126,10 @@ public class InfiniteViewPager extends ViewPager {
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+		if(!enabledStrictWrapContent) {
+			return;
+		}
 
 		// Calculate row height
 		int rows = datesInMonth.size() / 7;
