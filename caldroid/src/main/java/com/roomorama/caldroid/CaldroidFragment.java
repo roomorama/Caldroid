@@ -1392,6 +1392,9 @@ public class CaldroidFragment extends DialogFragment {
         final MonthPagerAdapter pagerAdapter = new MonthPagerAdapter(
                 getChildFragmentManager());
 
+        // Use old fragments if possible
+        pagerAdapter.setFragments(fragments);
+
         // Provide initial data to the fragments, before they are attached to
         // view.
         fragments = pagerAdapter.getFragments();
