@@ -1,11 +1,13 @@
 package com.antonyt.infiniteviewpager;
 
 import android.content.Context;
+import android.os.Build;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.GridView;
 
 import java.util.ArrayList;
 
@@ -41,6 +43,7 @@ public class InfiniteViewPager extends ViewPager {
 	 * Use internally to decide height of the calendar
 	 */
 	private int rowHeight = 0;
+	private int rowSpacing = 0;
 
 	// ******* Setter and getters *********
 	public boolean isEnabled() {
@@ -130,6 +133,11 @@ public class InfiniteViewPager extends ViewPager {
 					.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
 
 			rowHeight = firstChild.getMeasuredHeight();
+
+			// Consider gridview vertical spacing (Available on API >= 16 only)
+			if (firstChild instanceof GridView && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+				rowSpacing = ((GridView)firstChild).getVerticalSpacing();
+			}
 		}
 
 		// Calculate height of the calendar
@@ -137,13 +145,16 @@ public class InfiniteViewPager extends ViewPager {
 
 		// If fit 6 weeks, we need 6 rows
 		if (sixWeeksInCalendar) {
-			calHeight = rowHeight * 6;
+			calHeight = (rowHeight * 6) + (rowSpacing * 5);
 		} else { // Otherwise we return correct number of rows
-			calHeight = rowHeight * rows;
+			calHeight = (rowHeight * rows) + (rowSpacing * (rows-1));
 		}
 
-		// Prevent small vertical scroll
-		calHeight -= 12;
+		// Prevent small vertical scroll (if we couldnt find vertical spacing)
+		if (rowSpacing == 0) {
+			calHeight -= 12;
+		}
+
 		heightMeasureSpec = MeasureSpec.makeMeasureSpec(calHeight,
 				MeasureSpec.EXACTLY);
 
