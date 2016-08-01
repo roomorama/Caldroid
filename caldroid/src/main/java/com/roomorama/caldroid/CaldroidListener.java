@@ -54,4 +54,13 @@ public abstract class CaldroidListener {
     public void onCaldroidViewCreated() {
         // Do nothing
     }
+
+    /**
+     * Inform client that the viewpager is scrolling. Give the app the chance to
+     * disable a swipe refresh layout, or do other checking
+     * @param scrolling
+     */
+    public void pagerScrolling(boolean scrolling) {
+
+    }
 }

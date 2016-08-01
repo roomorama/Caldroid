@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,8 +22,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 @SuppressLint("SimpleDateFormat")
-public class CaldroidSampleActivity extends AppCompatActivity {
+public class CaldroidSampleActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
     private boolean undo = false;
+    private SwipeRefreshLayout refresh;
     private CaldroidFragment caldroidFragment;
     private CaldroidFragment dialogCaldroidFragment;
 
@@ -54,6 +56,9 @@ public class CaldroidSampleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         final SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
+
+        refresh = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
+        refresh.setOnRefreshListener(this);
 
         // Setup caldroid fragment
         // **** If you want normal CaldroidFragment, use below line ****
@@ -132,6 +137,10 @@ public class CaldroidSampleActivity extends AppCompatActivity {
                 }
             }
 
+            @Override
+            public void pagerScrolling(boolean scrolling) {
+                refresh.setEnabled(!scrolling);
+            }
         };
 
         // Setup Caldroid
@@ -277,4 +286,8 @@ public class CaldroidSampleActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onRefresh() {
+        refresh.setRefreshing(false);
+    }
 }
