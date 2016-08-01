@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.text.format.DateUtils;
 import android.text.format.Time;
@@ -1385,6 +1386,24 @@ public class CaldroidFragment extends DialogFragment {
         // Set the numberOfDaysInMonth to dateViewPager so it can calculate the
         // height correctly
         dateViewPager.setDatesInMonth(dateInMonthsList);
+
+        // Set callback to allow app to disable swiperefresh or other uses
+        dateViewPager.addOnPageChangeListener(new OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                if (caldroidListener != null) {
+                    caldroidListener.pagerScrolling(state != ViewPager.SCROLL_STATE_IDLE);
+                }
+            }
+        });
 
         // MonthPagerAdapter actually provides 4 real fragments. The
         // InfinitePagerAdapter only recycles fragment provided by this
