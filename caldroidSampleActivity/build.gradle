@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    compileSdkVersion 24
+    buildToolsVersion "25.0.2"
 
     defaultConfig {
         applicationId "com.caldroidsample"
-        minSdkVersion 8
-        targetSdkVersion 22
+        minSdkVersion 7
+        targetSdkVersion 24
     }
 
     buildTypes {
@@ -20,6 +20,6 @@ android {
 
 dependencies {
     compile project(':caldroid')
-    compile 'com.android.support:support-v4:22.2.0'
-    compile 'com.android.support:appcompat-v7:22.2.0'
+    compile 'com.android.support:support-v4:24.1.1'
+    compile 'com.android.support:appcompat-v7:24.1.1'
 }
