@@ -7,7 +7,7 @@ It's very easy to customize look and feel of Caldroid using your own theme, than
 
 Caldroid is fully localized. You can customize start day of the week for different countries. By default calendar start on Sunday.
 
-Caldroid can be used with Android 2.2 and above. It is extracted from [official Roomorama application](https://play.google.com/store/apps/details?id=com.roomorama)
+Caldroid can be used with Android 2.1 and above. It is extracted from [official Roomorama application](https://play.google.com/store/apps/details?id=com.roomorama)
 
 <img src="https://raw.github.com/roomorama/Caldroid/master/screenshot/1.png" width="270" style="margin-right:10px;">
 <img src="https://raw.github.com/roomorama/Caldroid/master/screenshot/dark.png" width="270">
@@ -36,7 +36,7 @@ Features
 ========
 
 ##Flexible setup: can be embedded or shown as dialog
-If you support Android 2.2 and above, you can embed caldroid fragment in your activity with below code:
+If you support Android 2.1 and above, you can embed caldroid fragment in your activity with below code:
 
 ``` java
 CaldroidFragment caldroidFragment = new CaldroidFragment();
