@@ -35,7 +35,7 @@ To use in your project, reference the child library project as a library. If you
 Features
 ========
 
-##Flexible setup: can be embedded or shown as dialog
+## Flexible setup: can be embedded or shown as dialog
 If you support Android 2.2 and above, you can embed caldroid fragment in your activity with below code:
 
 ``` java
@@ -249,7 +249,7 @@ To clear the disabled dates:
 public void clearDisableDates();
 ```
 
-##Select dates within a range
+## Select dates within a range
 To select dates within a range:
 
 ``` java
@@ -263,7 +263,7 @@ public void clearSelectedDates();
 ```
 
 
-##Show / Hide the navigation arrows to move to previous or next month
+## Show / Hide the navigation arrows to move to previous or next month
 To show/hide the navigation arrows:
 
 ``` java
@@ -283,7 +283,7 @@ public void moveToDate(Date date);
 public void moveToDateTime(DateTime dateTime);
 ```
 
-##Allow user to select a date and inform listener
+## Allow user to select a date and inform listener
 
 Caldroid inform clients via CaldroidListener.
 
@@ -350,7 +350,7 @@ final CaldroidListener listener = new CaldroidListener() {
 caldroidFragment.setCaldroidListener(listener);
 ```
 
-##Handle screen rotation
+## Handle screen rotation
 
 To handle rotation properly, Caldroid provides method to get current states of the fragment:
 
@@ -425,7 +425,7 @@ if (savedInstanceState != null) {
 
 Refer to the CaldroidSampleActivity for more detail.
 
-##Allow customized cell for the dates gridView
+## Allow customized cell for the dates gridView
 
 Caldroid provides flexible API to supply your own cell view. What you have to do is:
 
