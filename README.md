@@ -525,3 +525,5 @@ App uses Caldroid
 [Moon Calendar](https://play.google.com/store/apps/details?id=fr.calendrierlunaire.android)
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/roomorama/caldroid/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
+[eMoods Bipolar Mood Tracker](https://play.google.com/store/apps/details?id=my.tracker&hl=en)
