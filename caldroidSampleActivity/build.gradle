@@ -22,4 +22,5 @@ dependencies {
     implementation project(':caldroid')
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.appcompat:appcompat:1.1.0-alpha01'
+    implementation 'com.darwinsys:hirondelle-date4j:1.5.1'
 }

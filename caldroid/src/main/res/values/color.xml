@@ -20,4 +20,7 @@
     <color name="caldroid_555">#555</color>
     <color name="caldroid_light_red">#ff7f7f</color>
 
+    <color name="sleekrhr_today">#FFFCF8E3</color>
+    <color name="sleekrhr_selected">#FF3E83FF</color>
+
 </resources>
