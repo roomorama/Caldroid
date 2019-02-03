@@ -11,7 +11,27 @@
     <!--<item android:drawable="@color/caldroid_holo_blue_light" android:state_pressed="true"/>-->
     <!--<item android:drawable="@color/caldroid_white" android:state_pressed="false"/>-->
 
-    <item android:drawable="@color/sleekrhr_selected" android:state_pressed="false" caldroid:state_date_selected="true"/>
+    <item android:state_pressed="false" caldroid:state_date_selected="true">
+        <layer-list>
+            <item>
+                <shape android:shape="rectangle">
+                    <solid android:color="@color/caldroid_white"/>
+                </shape>
+            </item>
+            <item
+                android:top="8dp"
+                android:bottom="8dp"
+                android:left="8dp"
+                android:right="8dp">
+                <shape android:shape="oval">
+                    <size
+                        android:width="2dp"
+                        android:height="2dp"/>
+                    <solid android:color="@color/sleekrhr_selected"/>
+                </shape>
+            </item>
+        </layer-list>
+    </item>
     <item android:drawable="@color/sleekrhr_today" android:state_pressed="false" caldroid:state_date_today="true"/>
     <item android:drawable="@drawable/disable_cell" caldroid:state_date_disabled="true"/>
     <item android:drawable="@color/caldroid_white" android:state_pressed="false"/>
