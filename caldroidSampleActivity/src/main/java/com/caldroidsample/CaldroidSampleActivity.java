@@ -184,7 +184,7 @@ public class CaldroidSampleActivity extends AppCompatActivity {
 
                 // To Date
                 cal = Calendar.getInstance();
-                cal.add(Calendar.DATE, 3);
+                cal.add(Calendar.DATE, 4);
                 Date toDate = cal.getTime();
 
                 // Set disabled dates

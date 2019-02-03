@@ -315,8 +315,20 @@ public class CaldroidGridAdapter extends BaseAdapter {
         }
 
         // Customize for selected dates
-        if (selectedDates != null && selectedDatesMap.containsKey(dateTime)) {
+        /*if (selectedDates != null && selectedDatesMap.containsKey(dateTime)) {
             cellView.addCustomState(CellView.STATE_SELECTED);
+        }*/
+
+        if (selectedDates != null && selectedDatesMap.containsKey(dateTime)) {
+            if (selectedDatesMap.size() == 1) cellView.addCustomState(CellView.STATE_SELECTED);
+            else {
+                boolean hasPrevDate = selectedDatesMap.containsKey(dateTime.minusDays(1));
+                boolean hasNextDate = selectedDatesMap.containsKey(dateTime.plusDays(1));
+
+                if (hasPrevDate && hasNextDate) cellView.addCustomState(CellView.STATE_SELECTED_RANGE);
+                else if (hasPrevDate && !hasNextDate) cellView.addCustomState(CellView.STATE_SELECTED_END);
+                else if (!hasPrevDate && hasNextDate) cellView.addCustomState(CellView.STATE_SELECTED_START);
+            }
         }
 
         cellView.refreshDrawableState();
