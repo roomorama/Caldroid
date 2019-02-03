@@ -1,11 +1,14 @@
 package com.roomorama.caldroid;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.widget.TextView;
 import com.caldroid.R;
 
 import java.util.ArrayList;
+
+import androidx.core.content.ContextCompat;
 
 /**
  * Created by crocodile2u on 3/30/15.
@@ -69,5 +72,18 @@ public class CellView extends TextView {
         } else {
             return super.onCreateDrawableState(extraSpace);
         }
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        if (customStates.contains(STATE_SELECTED) ||
+            customStates.contains(STATE_SELECTED_START) ||
+            customStates.contains(STATE_SELECTED_RANGE) ||
+            customStates.contains(STATE_SELECTED_END)) {
+            setTextColor(ContextCompat.getColor(getContext(), R.color.sleekrhr_white));
+        }
+        else setTextColor(ContextCompat.getColor(getContext(), R.color.sleekrhr_black));
+
+        super.onDraw(canvas);
     }
 }

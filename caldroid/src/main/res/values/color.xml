@@ -25,4 +25,8 @@
     <color name="sleekrhr_holiday">#40D4442D</color>
     <color name="sleekrhr_time_off">#BFE7D7</color>
 
+
+    <color name="sleekrhr_black">#212121</color>
+    <color name="sleekrhr_white">#FFFFFF</color>
+
 </resources>
