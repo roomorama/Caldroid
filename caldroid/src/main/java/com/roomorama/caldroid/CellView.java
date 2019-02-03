@@ -18,6 +18,8 @@ public class CellView extends TextView {
     public static final int STATE_SELECTED_END = R.attr.state_date_selected_end;
     public static final int STATE_SELECTED_RANGE = R.attr.state_date_selected_range;
     public static final int STATE_DISABLED = R.attr.state_date_disabled;
+    public static final int STATE_HOLIDAY = R.attr.state_date_holiday;
+    public static final int STATE_TIME_OFF = R.attr.state_date_time_off;
     public static final int STATE_PREV_NEXT_MONTH = R.attr.state_date_prev_next_month;
 
     private ArrayList<Integer> customStates = new ArrayList<Integer>();

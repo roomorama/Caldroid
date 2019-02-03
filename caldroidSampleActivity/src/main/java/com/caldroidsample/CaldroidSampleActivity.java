@@ -153,6 +153,8 @@ public class CaldroidSampleActivity extends AppCompatActivity {
                     // Reset calendar
                     caldroidFragment.clearDisableDates();
                     caldroidFragment.clearSelectedDates();
+                    caldroidFragment.clearHolidayDates();
+                    caldroidFragment.clearTimeOffDates();
                     caldroidFragment.setMinDate(null);
                     caldroidFragment.setMaxDate(null);
                     caldroidFragment.setShowNavigationArrows(true);
@@ -195,11 +197,29 @@ public class CaldroidSampleActivity extends AppCompatActivity {
                     disabledDates.add(cal.getTime());
                 }
 
+                // Set holiday dates
+                ArrayList<Date> holidayDates = new ArrayList<Date>();
+                for (int i = 9; i < 12; i++) {
+                    cal = Calendar.getInstance();
+                    cal.add(Calendar.DATE, i);
+                    holidayDates.add(cal.getTime());
+                }
+
+                // Set time off dates
+                ArrayList<Date> timeOffDates = new ArrayList<Date>();
+                for (int i = 13; i < 17; i++) {
+                    cal = Calendar.getInstance();
+                    cal.add(Calendar.DATE, i);
+                    timeOffDates.add(cal.getTime());
+                }
+
                 // Customize
                 caldroidFragment.setMinDate(minDate);
                 caldroidFragment.setMaxDate(maxDate);
                 caldroidFragment.setDisableDates(disabledDates);
                 caldroidFragment.setSelectedDates(fromDate, toDate);
+                caldroidFragment.setHolidayDates(holidayDates);
+                caldroidFragment.setTimeOffDates(timeOffDates);
                 caldroidFragment.setShowNavigationArrows(false);
                 caldroidFragment.setEnableSwipe(false);
 
@@ -218,6 +238,12 @@ public class CaldroidSampleActivity extends AppCompatActivity {
                 text += "Select To Date: " + formatter.format(toDate) + "\n";
                 for (Date date : disabledDates) {
                     text += "Disabled Date: " + formatter.format(date) + "\n";
+                }
+                for (Date date : holidayDates) {
+                    text += "Holiday Date: " + formatter.format(date) + "\n";
+                }
+                for (Date date : timeOffDates) {
+                    text += "Time Off Date: " + formatter.format(date) + "\n";
                 }
 
                 textView.setText(text);

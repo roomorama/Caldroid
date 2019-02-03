@@ -35,11 +35,15 @@ public class CaldroidGridAdapter extends BaseAdapter {
     protected Context context;
     protected ArrayList<DateTime> disableDates;
     protected ArrayList<DateTime> selectedDates;
+    protected ArrayList<DateTime> holidayDates;
+    protected ArrayList<DateTime> timeOffDates;
 
     // Use internally, to make the search for date faster instead of using
     // indexOf methods on ArrayList
     protected Map<DateTime, Integer> disableDatesMap = new HashMap<>();
     protected Map<DateTime, Integer> selectedDatesMap = new HashMap<>();
+    protected Map<DateTime, Integer> holidayDatesMap = new HashMap<>();
+    protected Map<DateTime, Integer> timeOffDatesMap = new HashMap<>();
 
     protected DateTime minDateTime;
     protected DateTime maxDateTime;
@@ -182,6 +186,24 @@ public class CaldroidGridAdapter extends BaseAdapter {
             }
         }
 
+        holidayDates = (ArrayList<DateTime>) caldroidData
+                .get(CaldroidFragment.HOLIDAY_DATES);
+        if (holidayDates != null) {
+            holidayDatesMap.clear();
+            for (DateTime dateTime : holidayDates) {
+                holidayDatesMap.put(dateTime, 1);
+            }
+        }
+
+        timeOffDates = (ArrayList<DateTime>) caldroidData
+                .get(CaldroidFragment.TIME_OFF_DATES);
+        if (timeOffDates != null) {
+            timeOffDatesMap.clear();
+            for (DateTime dateTime : timeOffDates) {
+                timeOffDatesMap.put(dateTime, 1);
+            }
+        }
+
         minDateTime = (DateTime) caldroidData
                 .get(CaldroidFragment._MIN_DATE_TIME);
         maxDateTime = (DateTime) caldroidData
@@ -314,12 +336,9 @@ public class CaldroidGridAdapter extends BaseAdapter {
             cellView.addCustomState(CellView.STATE_DISABLED);
         }
 
-        // Customize for selected dates
-        /*if (selectedDates != null && selectedDatesMap.containsKey(dateTime)) {
-            cellView.addCustomState(CellView.STATE_SELECTED);
-        }*/
-
-        if (selectedDates != null && selectedDatesMap.containsKey(dateTime)) {
+        if (holidayDatesMap.containsKey(dateTime)) cellView.addCustomState(CellView.STATE_HOLIDAY);
+        else if (timeOffDatesMap.containsKey(dateTime)) cellView.addCustomState(CellView.STATE_TIME_OFF);
+        else if (selectedDates != null && selectedDatesMap.containsKey(dateTime)) {
             if (selectedDatesMap.size() == 1) cellView.addCustomState(CellView.STATE_SELECTED);
             else {
                 boolean hasPrevDate = selectedDatesMap.containsKey(dateTime.minusDays(1));

@@ -21,6 +21,8 @@
     <color name="caldroid_light_red">#ff7f7f</color>
 
     <color name="sleekrhr_today">#FFFCF8E3</color>
-    <color name="sleekrhr_selected">#FF3E83FF</color>
+    <color name="sleekrhr_selected">#FF7A60E9</color>
+    <color name="sleekrhr_holiday">#40D4442D</color>
+    <color name="sleekrhr_time_off">#BFE7D7</color>
 
 </resources>

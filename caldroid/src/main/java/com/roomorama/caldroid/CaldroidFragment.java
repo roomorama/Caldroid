@@ -140,6 +140,8 @@ public class CaldroidFragment extends DialogFragment {
             SHOW_NAVIGATION_ARROWS = "showNavigationArrows",
             DISABLE_DATES = "disableDates",
             SELECTED_DATES = "selectedDates",
+            HOLIDAY_DATES = "holidayDates",
+            TIME_OFF_DATES = "timeOffDates",
             MIN_DATE = "minDate",
             MAX_DATE = "maxDate",
             ENABLE_SWIPE = "enableSwipe",
@@ -166,6 +168,8 @@ public class CaldroidFragment extends DialogFragment {
     protected int year = -1;
     protected ArrayList<DateTime> disableDates = new ArrayList<DateTime>();
     protected ArrayList<DateTime> selectedDates = new ArrayList<DateTime>();
+    protected ArrayList<DateTime> holidayDates = new ArrayList<DateTime>();
+    protected ArrayList<DateTime> timeOffDates = new ArrayList<DateTime>();
     protected DateTime minDateTime;
     protected DateTime maxDateTime;
     protected ArrayList<DateTime> dateInMonthsList;
@@ -354,6 +358,8 @@ public class CaldroidFragment extends DialogFragment {
         caldroidData.clear();
         caldroidData.put(DISABLE_DATES, disableDates);
         caldroidData.put(SELECTED_DATES, selectedDates);
+        caldroidData.put(HOLIDAY_DATES, holidayDates);
+        caldroidData.put(TIME_OFF_DATES, timeOffDates);
         caldroidData.put(_MIN_DATE_TIME, minDateTime);
         caldroidData.put(_MAX_DATE_TIME, maxDateTime);
         caldroidData.put(START_DAY_OF_WEEK, startDayOfWeek);
@@ -516,6 +522,16 @@ public class CaldroidFragment extends DialogFragment {
         if (disableDates != null && disableDates.size() > 0) {
             bundle.putStringArrayList(DISABLE_DATES,
                     CalendarHelper.convertToStringList(disableDates));
+        }
+
+        if (holidayDates != null && holidayDates.size() > 0) {
+            bundle.putStringArrayList(HOLIDAY_DATES,
+                    CalendarHelper.convertToStringList(holidayDates));
+        }
+
+        if (timeOffDates != null && timeOffDates.size() > 0) {
+            bundle.putStringArrayList(TIME_OFF_DATES,
+                    CalendarHelper.convertToStringList(timeOffDates));
         }
 
         if (minDateTime != null) {
@@ -779,6 +795,54 @@ public class CaldroidFragment extends DialogFragment {
             dateTime = dateTime.plusDays(1);
         }
         selectedDates.add(toDateTime);
+    }
+
+    /**
+     * Select the Holiday Dates. Notice this does not refresh the calendar, need
+     * to explicitly call refreshView()
+     *
+     * @param holidayDateList list of holiday date
+     */
+    public void setHolidayDates(List<Date> holidayDateList) {
+
+        holidayDates.clear();
+
+        for (Date date : holidayDateList) {
+            DateTime dateTime = CalendarHelper.convertDateToDateTime(date);
+            holidayDates.add(dateTime);
+        }
+    }
+
+    /**
+     * Clear all holiday dates. Notice this does not refresh the calendar, need
+     * to explicitly call refreshView()
+     */
+    public void clearHolidayDates() {
+        holidayDates.clear();
+    }
+
+    /**
+     * Select the Time off Dates. Notice this does not refresh the calendar, need
+     * to explicitly call refreshView()
+     *
+     * @param timeoffDateList list of time off date
+     */
+    public void setTimeOffDates(List<Date> timeOffDateList) {
+
+        timeOffDates.clear();
+
+        for (Date date : timeOffDateList) {
+            DateTime dateTime = CalendarHelper.convertDateToDateTime(date);
+            timeOffDates.add(dateTime);
+        }
+    }
+
+    /**
+     * Clear all time off dates. Notice this does not refresh the calendar, need
+     * to explicitly call refreshView()
+     */
+    public void clearTimeOffDates() {
+        timeOffDates.clear();
     }
 
     /**
@@ -1152,6 +1216,30 @@ public class CaldroidFragment extends DialogFragment {
                     DateTime dt = CalendarHelper.getDateTimeFromString(
                             dateString, null);
                     selectedDates.add(dt);
+                }
+            }
+
+            // Get holiday dates
+            ArrayList<String> holidayDateStrings = args
+                    .getStringArrayList(HOLIDAY_DATES);
+            if (holidayDateStrings != null && holidayDateStrings.size() > 0) {
+                holidayDates.clear();
+                for (String dateString : holidayDateStrings) {
+                    DateTime dt = CalendarHelper.getDateTimeFromString(
+                            dateString, null);
+                    holidayDates.add(dt);
+                }
+            }
+
+            // Get time off dates
+            ArrayList<String> timeOffDateStrings = args
+                    .getStringArrayList(TIME_OFF_DATES);
+            if (timeOffDateStrings != null && timeOffDateStrings.size() > 0) {
+                timeOffDates.clear();
+                for (String dateString : timeOffDateStrings) {
+                    DateTime dt = CalendarHelper.getDateTimeFromString(
+                            dateString, null);
+                    timeOffDates.add(dt);
                 }
             }
 

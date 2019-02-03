@@ -35,6 +35,18 @@
         caldroid:state_date_selected_range="true"
         android:drawable="@drawable/cell_bg_selected_range"/>
 
+    <!--HOLIDAY-->
+    <item
+        android:state_pressed="false"
+        caldroid:state_date_holiday="true"
+        android:drawable="@drawable/cell_bg_selected_holiday"/>
+
+    <!--TIME_OFF-->
+    <item
+        android:state_pressed="false"
+        caldroid:state_date_time_off="true"
+        android:drawable="@drawable/cell_bg_selected_time_off"/>
+
     <!--TODAY-->
     <item
         android:state_pressed="false"
