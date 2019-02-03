@@ -5,7 +5,7 @@
         <item name="styleCaldroidLeftArrow">@style/CaldroidDefaultLeftButton</item>
         <item name="styleCaldroidRightArrow">@style/CaldroidDefaultRightButton</item>
         <item name="styleCaldroidMonthName">@style/CaldroidDefaultMonthName</item>
-        <item name="styleCaldroidGridView">@style/CaldroidDefaultGridView</item>
+        <item name="styleCaldroidGridView">@style/SleekrHRDefaultGridView</item>
         <item name="styleCaldroidNormalCell">@style/CaldroidDefaultNormalCell</item>
         <item name="styleCaldroidSquareCell">@style/CaldroidDefaultSquareCell</item>
         <item name="styleCaldroidWeekdayView">@style/CaldroidDefaultWeekday</item>
@@ -50,6 +50,14 @@
         <item name="android:horizontalSpacing">1dp</item>
         <item name="android:padding">1dp</item>
         <item name="android:verticalSpacing">1dp</item>
+    </style>
+
+    <style name="SleekrHRDefaultGridView">
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:listSelector">@null</item>
+        <item name="android:background">@color/caldroid_lighter_gray</item>
+        <item name="android:padding">1dp</item>
     </style>
 
     <style name="CaldroidDefaultCell">
