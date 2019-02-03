@@ -36,27 +36,11 @@
         android:drawable="@drawable/cell_bg_selected_range"/>
 
     <!--TODAY-->
-    <item android:state_pressed="false" caldroid:state_date_today="true">
-        <layer-list>
-            <item>
-                <shape android:shape="rectangle">
-                    <solid android:color="@color/caldroid_white"/>
-                </shape>
-            </item>
-            <item
-                android:top="8dp"
-                android:bottom="8dp"
-                android:left="8dp"
-                android:right="8dp">
-                <shape android:shape="oval">
-                    <size
-                        android:width="2dp"
-                        android:height="2dp"/>
-                    <solid android:color="@color/sleekrhr_today"/>
-                </shape>
-            </item>
-        </layer-list>
-    </item>
+    <item
+        android:state_pressed="false"
+        caldroid:state_date_today="true"
+        android:drawable="@drawable/cell_bg_today"/>
+
     <item android:drawable="@drawable/disable_cell" caldroid:state_date_disabled="true"/>
     <item android:drawable="@color/caldroid_white" android:state_pressed="false"/>
 
