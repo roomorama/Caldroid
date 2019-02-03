@@ -11,27 +11,31 @@
     <!--<item android:drawable="@color/caldroid_holo_blue_light" android:state_pressed="true"/>-->
     <!--<item android:drawable="@color/caldroid_white" android:state_pressed="false"/>-->
 
-    <item android:state_pressed="false" caldroid:state_date_selected="true">
-        <layer-list>
-            <item>
-                <shape android:shape="rectangle">
-                    <solid android:color="@color/caldroid_white"/>
-                </shape>
-            </item>
-            <item
-                android:top="8dp"
-                android:bottom="8dp"
-                android:left="8dp"
-                android:right="8dp">
-                <shape android:shape="oval">
-                    <size
-                        android:width="2dp"
-                        android:height="2dp"/>
-                    <solid android:color="@color/sleekrhr_selected"/>
-                </shape>
-            </item>
-        </layer-list>
-    </item>
+    <!--SELECTED-->
+    <item
+        android:state_pressed="false"
+        caldroid:state_date_selected="true"
+        android:drawable="@drawable/cell_bg_selected"/>
+
+    <!--SELECTED START-->
+    <item
+        android:state_pressed="false"
+        caldroid:state_date_selected_start="true"
+        android:drawable="@drawable/cell_bg_selected_start"/>
+
+    <!--SELECTED END-->
+    <item
+        android:state_pressed="false"
+        caldroid:state_date_selected_end="true"
+        android:drawable="@drawable/cell_bg_selected_end"/>
+
+    <!--SELECTED RANGE-->
+    <item
+        android:state_pressed="false"
+        caldroid:state_date_selected_range="true"
+        android:drawable="@drawable/cell_bg_selected_range"/>
+
+    <!--TODAY-->
     <item android:state_pressed="false" caldroid:state_date_today="true">
         <layer-list>
             <item>
