@@ -31,7 +31,6 @@ import com.antonyt.infiniteviewpager.InfinitePagerAdapter;
 import com.antonyt.infiniteviewpager.InfiniteViewPager;
 import com.caldroid.R;
 
-import java.lang.reflect.Field;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -1603,22 +1602,5 @@ public class CaldroidFragment extends DialogFragment {
             dateInMonthsList.addAll(currentAdapter.getDatetimeList());
         }
 
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-
-        try {
-            Field childFragmentManager = Fragment.class
-                    .getDeclaredField("mChildFragmentManager");
-            childFragmentManager.setAccessible(true);
-            childFragmentManager.set(this, null);
-
-        } catch (NoSuchFieldException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
     }
 }
