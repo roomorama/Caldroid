@@ -22,6 +22,7 @@
         <item name="android:layout_width">44dp</item>
         <item name="android:layout_height">44dp</item>
         <item name="android:layout_margin">2dp</item>
+        <item name="iconPadding">0dp</item>
         <item name="iconTint">#18567D</item>
         <item name="iconGravity">textStart</item>
         <item name="backgroundTint">#00000000</item>
