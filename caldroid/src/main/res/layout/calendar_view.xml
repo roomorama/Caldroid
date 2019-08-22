@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Button
+        <android.support.design.button.MaterialButton
             android:id="@+id/calendar_left_arrow"
             style="?styleCaldroidLeftArrow" />
 
@@ -19,7 +19,7 @@
             android:id="@+id/calendar_month_year_textview"
             style="?styleCaldroidMonthName"/>
 
-        <Button
+        <android.support.design.button.MaterialButton
             android:id="@+id/calendar_right_arrow"
             style="?styleCaldroidRightArrow" />
     </LinearLayout>
