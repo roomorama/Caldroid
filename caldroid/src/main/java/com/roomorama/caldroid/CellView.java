@@ -2,7 +2,6 @@ package com.roomorama.caldroid;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.widget.TextView;
 import com.caldroid.R;
 
 import java.util.ArrayList;
@@ -10,14 +9,14 @@ import java.util.ArrayList;
 /**
  * Created by crocodile2u on 3/30/15.
  */
-public class CellView extends TextView {
+public class CellView extends android.support.v7.widget.AppCompatTextView {
 
     public static final int STATE_TODAY = R.attr.state_date_today;
     public static final int STATE_SELECTED = R.attr.state_date_selected;
     public static final int STATE_DISABLED = R.attr.state_date_disabled;
     public static final int STATE_PREV_NEXT_MONTH = R.attr.state_date_prev_next_month;
 
-    private ArrayList<Integer> customStates = new ArrayList<Integer>();
+    private ArrayList<Integer> customStates = new ArrayList<>();
 
     public CellView(Context context) {
         super(context);
@@ -34,7 +33,7 @@ public class CellView extends TextView {
     }
 
     private void init() {
-        if (null == customStates) customStates = new ArrayList<Integer>();
+        if (null == customStates) customStates = new ArrayList<>();
     }
 
     public void resetCustomStates() {
